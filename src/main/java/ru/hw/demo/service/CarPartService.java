@@ -10,9 +10,9 @@ import java.util.Optional;
 public interface CarPartService {
     /**
      * @param vendorCode каталожный номер
-     * @return возвращает найденную запчасть по её {@code vendorCode}, иначе Optional.empty()
+     * @return возвращает найденную запчасть по её {@code vendorCode}
      */
-    Optional<CarPartRecommendedDto> getByVendorCode(String vendorCode);
+    CarPartRecommendedDto getByVendorCode(String vendorCode);
 
     /**
      * @param filter фильтр поиска по марке, модели, году выпуска или двигатель.
@@ -22,7 +22,7 @@ public interface CarPartService {
 
     /**
      * @param cpPreviewDto предварительный просмотр запчасти
-     * @return возвращает дополнительную информацию по {@code cpPreviewDto}
+     * @return возвращает расширенную информацию по {@code cpPreviewDto}
      */
-    Optional<CarPartFullInfoDto> getAddInfoById(CarPartRecommendedDto cpPreviewDto);
+    Optional<CarPartFullInfoDto> getExtendedInfoById(CarPartRecommendedDto cpPreviewDto);
 }

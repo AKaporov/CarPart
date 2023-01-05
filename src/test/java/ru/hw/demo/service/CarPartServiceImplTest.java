@@ -14,6 +14,7 @@ import ru.hw.demo.pojo.FilterCarPart;
 import ru.hw.demo.repository.CarPartRepository;
 import ru.hw.demo.service.component.CarPartSpecification;
 import ru.hw.demo.service.convert.ConvertCarPartToRecommendedDto;
+import ru.hw.demo.service.exception.CarPartNotFoundException;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -23,13 +24,14 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("Сервис по работе с запчастями")
 class CarPartServiceImplTest {
 
-    private static final String VENDOR_CODE = "202212-2103238563";
+    public static final String VENDOR_CODE_NOT_VALIDATE = "VendorCode";
 
     private CarPartServiceImpl carPartService;
 
@@ -49,7 +51,7 @@ class CarPartServiceImplTest {
     @DisplayName("должен находить запчасть по каталожному номеру")
     void shouldFindCarPartByVendorCode() {
         CarPart carPart = CarPartGenerate.getUaz446(789L);
-        when(carPartRepository.findByVendorCode(VENDOR_CODE)).thenReturn(Optional.of(carPart));
+        when(carPartRepository.findByVendorCode(carPart.getVendorCode())).thenReturn(Optional.of(carPart));
 
         CarPartRecommendedDto expectedCarPart = CarPartRecommendedDto.builder()
                 .vendorCode(carPart.getVendorCode())
@@ -61,12 +63,18 @@ class CarPartServiceImplTest {
                 .build();
         when(toRecommendedDto.convertToRecommendedDto(List.of(carPart))).thenReturn(List.of(expectedCarPart));
 
-        Optional<CarPartRecommendedDto> actualCarPart = carPartService.getByVendorCode(VENDOR_CODE);
+        CarPartRecommendedDto actualCarPart = carPartService.getByVendorCode(carPart.getVendorCode());
 
-        assertThat(actualCarPart).isNotEmpty()
-                .get()
+        assertThat(actualCarPart).isNotNull()
                 .usingRecursiveComparison()
                 .isEqualTo(expectedCarPart);
+    }
+
+    @Test
+    @DisplayName("должен вернуть CarPartNotFoundException, если по переданному vendorCode не была найдена запчасть")
+    void shouldReturnCarPartNotFoundExceptionIfVendorCodeNotValid(){
+        when(carPartRepository.findByVendorCode(VENDOR_CODE_NOT_VALIDATE)).thenReturn(Optional.empty());
+        assertThatThrownBy(() -> carPartService.getByVendorCode(VENDOR_CODE_NOT_VALIDATE)).isInstanceOf(CarPartNotFoundException.class);
     }
 
     @Test

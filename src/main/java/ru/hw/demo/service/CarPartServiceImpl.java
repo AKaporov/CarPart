@@ -10,9 +10,11 @@ import ru.hw.demo.pojo.FilterCarPart;
 import ru.hw.demo.repository.CarPartRepository;
 import ru.hw.demo.service.component.CarPartSpecification;
 import ru.hw.demo.service.convert.ConvertCarPartToRecommendedDto;
+import ru.hw.demo.service.exception.CarPartNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -25,12 +27,13 @@ public class CarPartServiceImpl implements CarPartService {
 
     /**
      * @param vendorCode каталожный номер
-     * @return возвращает найденную запчасть по её {@code vendorCode}, иначе Optional.empty()
+     * @return возвращает найденную запчасть по её {@code vendorCode}
      */
     @Override
-    public Optional<CarPartRecommendedDto> getByVendorCode(String vendorCode) {
+    public CarPartRecommendedDto getByVendorCode(String vendorCode) {
         return carPartRepository.findByVendorCode(vendorCode)
-                .map(cp -> toRecommendedDto.convertToRecommendedDto(List.of(cp)).get(0));
+                .map(cp -> toRecommendedDto.convertToRecommendedDto(List.of(cp)).get(0))
+                .orElseThrow(() -> new CarPartNotFoundException(vendorCode));
     }
 
     /**
@@ -39,7 +42,7 @@ public class CarPartServiceImpl implements CarPartService {
      */
     @Override
     public List<CarPartRecommendedDto> getByFilter(FilterCarPart filter) {
-        if (filter == null) {
+        if (Objects.isNull(filter)) {
             return new ArrayList<>(1);
         }
 
@@ -51,10 +54,10 @@ public class CarPartServiceImpl implements CarPartService {
 
     /**
      * @param cpPreviewDto предварительный просмотр запчасти
-     * @return возвращает дополнительную информацию по {@code cpPreviewDto}
+     * @return возвращает расширенную информацию по {@code cpPreviewDto}
      */
     @Override
-    public Optional<CarPartFullInfoDto> getAddInfoById(CarPartRecommendedDto cpPreviewDto) {
+    public Optional<CarPartFullInfoDto> getExtendedInfoById(CarPartRecommendedDto cpPreviewDto) {
         return Optional.empty();
     }
 }
