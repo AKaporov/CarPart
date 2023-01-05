@@ -9,6 +9,6 @@ import java.util.List;
  * @author Artem
  * Интерфейс для конвертации CarPart в CarPartToRecommendedDto
  */
-public interface ConvertCarPartToRecommendedDto {
+public interface ConvertCarPartToRecommendedDtoService {
     List<CarPartRecommendedDto> convertToRecommendedDto(List<CarPart> carPartList);
 }

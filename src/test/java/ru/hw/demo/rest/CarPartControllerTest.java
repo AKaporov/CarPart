@@ -111,4 +111,37 @@ class CarPartControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(mapper.writeValueAsString(expectedResult)));
     }
+
+    @Transactional
+    @Test
+    @DisplayName("должен вернуть найденную запчасть по её VendorCode переданную через PathVariable")
+    void shouldReturnCarPartFoundByVendorCodeInPathVariable() throws Exception {
+        CarPart cpThree = carPartRepository.getOne(3L);  // 'URL-4320-02'
+
+        CarPartRecommendedDto expectedResult = CarPartRecommendedDto.builder()
+                .vendorCode(cpThree.getVendorCode())
+                .sku(cpThree.getSku())
+                .name(cpThree.getName())
+                .id(cpThree.getId())
+                .rating(cpThree.getRating())
+                .price(cpThree.getPrice())
+                .build();
+
+        mvc.perform(
+                        get("/api/v1/carparts/{VendorCode}", cpThree.getVendorCode())
+                )
+                .andExpect(status().isOk())
+                .andExpect(content().json(mapper.writeValueAsString(expectedResult)));
+    }
+
+    @Test
+    @DisplayName("должен вернуть CarPartNotFoundException, если по переданному VendorCode не была найдена запчасть. " +
+            "VendorCode передан через PathVariable")
+    void shouldReturnCarPartNotFoundExceptionIfVendorCodeNotValidInPathVariable() throws Exception {
+        mvc.perform(
+                        get("/api/v1/carparts/{VendorCode}", VENDOR_CODE_NOT_VALIDATE)
+                )
+                .andExpect(status().isBadRequest())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof CarPartNotFoundException));
+    }
 }

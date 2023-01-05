@@ -1,12 +1,12 @@
 package ru.hw.demo.dto;
 
+import lombok.Builder;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+@Builder
 @Data
-@RequiredArgsConstructor
 public class CarPartFullInfoDto {
     private final long id;
 
@@ -73,5 +73,5 @@ public class CarPartFullInfoDto {
     /**
      * аналоги
      */
-    private final List<AnalogDto> analogList;
+    private final List<AnalogDto> analogDtoList;
 }

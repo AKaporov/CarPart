@@ -3,30 +3,32 @@ package ru.hw.demo.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.hw.demo.domain.CarPart;
 import ru.hw.demo.dto.CarPartFullInfoDto;
 import ru.hw.demo.dto.CarPartRecommendedDto;
 import ru.hw.demo.pojo.FilterCarPart;
 import ru.hw.demo.repository.CarPartRepository;
 import ru.hw.demo.service.component.CarPartSpecification;
-import ru.hw.demo.service.convert.ConvertCarPartToRecommendedDto;
+import ru.hw.demo.service.convert.ConvertCarPartToFullInfoDtoService;
+import ru.hw.demo.service.convert.ConvertCarPartToRecommendedDtoService;
 import ru.hw.demo.service.exception.CarPartNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class CarPartServiceImpl implements CarPartService {
 
     private final CarPartRepository carPartRepository;
-    private final ConvertCarPartToRecommendedDto toRecommendedDto;
+    private final ConvertCarPartToRecommendedDtoService toRecommendedDto;
     private final CarPartSpecification carPartSpecification;
+    private final ConvertCarPartToFullInfoDtoService toFullInfoDto;
 
     /**
-     * @param vendorCode каталожный номер
+     * @param vendorCode каталожный номер запчасти
      * @return возвращает найденную запчасть по её {@code vendorCode}
      */
     @Override
@@ -53,11 +55,14 @@ public class CarPartServiceImpl implements CarPartService {
     }
 
     /**
-     * @param cpPreviewDto предварительный просмотр запчасти
-     * @return возвращает расширенную информацию по {@code cpPreviewDto}
+     * @param vendorCode каталожный номер запчасти
+     * @return возвращает расширенную информацию по {@code vendorCode}
      */
+    @Transactional(readOnly = true)
     @Override
-    public Optional<CarPartFullInfoDto> getExtendedInfoById(CarPartRecommendedDto cpPreviewDto) {
-        return Optional.empty();
+    public CarPartFullInfoDto getExtendedInfoByVendorCode(String vendorCode) {
+        return carPartRepository.findByVendorCode(vendorCode)
+                .map(toFullInfoDto::convertToFullInfoDto)
+                .orElseThrow(() -> new CarPartNotFoundException(vendorCode));
     }
 }

@@ -100,7 +100,6 @@ public class CarPart {
     @JoinColumn(name = "car_part_id", nullable = true)
     private List<Photo> photoList;
 
-//    v.2
     /**
      * аналоги
      */

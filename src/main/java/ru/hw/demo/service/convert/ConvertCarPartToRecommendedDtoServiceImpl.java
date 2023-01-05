@@ -11,8 +11,9 @@ import java.util.stream.Collectors;
  * @author Artem
  * Сервис для конвертации CarPart в CarPartToRecommendedDto
  */
+
 @Service
-public class ConvertCarPartToRecommendedDtoImpl implements ConvertCarPartToRecommendedDto {
+public class ConvertCarPartToRecommendedDtoServiceImpl implements ConvertCarPartToRecommendedDtoService {
     @Override
     public List<CarPartRecommendedDto> convertToRecommendedDto(List<CarPart> carPartList) {
         return carPartList.stream()

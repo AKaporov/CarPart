@@ -12,12 +12,12 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Сервис для конвертации CarPart в CarPartToRecommendedDto")
-class ConvertCarPartToRecommendedDtoImplTest {
-    private ConvertCarPartToRecommendedDtoImpl toRecommendedDto;
+class ConvertCarPartToRecommendedDtoServiceImplTest {
+    private ConvertCarPartToRecommendedDtoServiceImpl toRecommendedDto;
 
     @BeforeEach
     void setUp() {
-        toRecommendedDto = new ConvertCarPartToRecommendedDtoImpl();
+        toRecommendedDto = new ConvertCarPartToRecommendedDtoServiceImpl();
     }
 
     @Test

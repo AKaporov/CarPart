@@ -5,11 +5,10 @@ import ru.hw.demo.dto.CarPartRecommendedDto;
 import ru.hw.demo.pojo.FilterCarPart;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface CarPartService {
     /**
-     * @param vendorCode каталожный номер
+     * @param vendorCode каталожный номер запчасти
      * @return возвращает найденную запчасть по её {@code vendorCode}
      */
     CarPartRecommendedDto getByVendorCode(String vendorCode);
@@ -21,8 +20,8 @@ public interface CarPartService {
     List<CarPartRecommendedDto> getByFilter(FilterCarPart filter);
 
     /**
-     * @param cpPreviewDto предварительный просмотр запчасти
-     * @return возвращает расширенную информацию по {@code cpPreviewDto}
+     * @param vendorCode каталожный номер запчасти
+     * @return возвращает расширенную информацию по {@code vendorCode}
      */
-    Optional<CarPartFullInfoDto> getExtendedInfoById(CarPartRecommendedDto cpPreviewDto);
+    CarPartFullInfoDto getExtendedInfoByVendorCode(String vendorCode);
 }

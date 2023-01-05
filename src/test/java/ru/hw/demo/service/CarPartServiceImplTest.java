@@ -13,7 +13,8 @@ import ru.hw.demo.generate.CarPartGenerate;
 import ru.hw.demo.pojo.FilterCarPart;
 import ru.hw.demo.repository.CarPartRepository;
 import ru.hw.demo.service.component.CarPartSpecification;
-import ru.hw.demo.service.convert.ConvertCarPartToRecommendedDto;
+import ru.hw.demo.service.convert.ConvertCarPartToFullInfoDtoService;
+import ru.hw.demo.service.convert.ConvertCarPartToRecommendedDtoService;
 import ru.hw.demo.service.exception.CarPartNotFoundException;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -38,13 +39,15 @@ class CarPartServiceImplTest {
     @Mock
     private CarPartRepository carPartRepository;
     @Mock
-    private ConvertCarPartToRecommendedDto toRecommendedDto;
+    private ConvertCarPartToRecommendedDtoService toRecommendedDto;
     @Mock
     private CarPartSpecification carPartSpecification;
+    @Mock
+    private ConvertCarPartToFullInfoDtoService toFullInfoDto;
 
     @BeforeEach
     void setUp() {
-        carPartService = new CarPartServiceImpl(carPartRepository, toRecommendedDto, carPartSpecification);
+        carPartService = new CarPartServiceImpl(carPartRepository, toRecommendedDto, carPartSpecification, toFullInfoDto);
     }
 
     @Test
@@ -72,7 +75,7 @@ class CarPartServiceImplTest {
 
     @Test
     @DisplayName("должен вернуть CarPartNotFoundException, если по переданному vendorCode не была найдена запчасть")
-    void shouldReturnCarPartNotFoundExceptionIfVendorCodeNotValid(){
+    void shouldReturnCarPartNotFoundExceptionIfVendorCodeNotValid() {
         when(carPartRepository.findByVendorCode(VENDOR_CODE_NOT_VALIDATE)).thenReturn(Optional.empty());
         assertThatThrownBy(() -> carPartService.getByVendorCode(VENDOR_CODE_NOT_VALIDATE)).isInstanceOf(CarPartNotFoundException.class);
     }
@@ -117,5 +120,13 @@ class CarPartServiceImplTest {
         assertThat(actualCarPart).isNotNull().isNotEmpty().hasSize(List.of(expectedCarPart).size())
                 .usingRecursiveComparison()
                 .isEqualTo(List.of(expectedCarPart));
+    }
+
+    @Test
+    @DisplayName("должен вернуть пустой список, если переданный filter = null")
+    void shouldReturnEmptyListIfFilterIsNull() {
+        List<CarPartRecommendedDto> actualList = carPartService.getByFilter(null);
+
+        assertThat(actualList).isNotNull().isEmpty();
     }
 }
