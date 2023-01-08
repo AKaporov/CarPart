@@ -6,7 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
+import ru.hw.demo.constant.MainConstant;
 import ru.hw.demo.domain.CarPart;
 import ru.hw.demo.dto.CarPartRecommendedDto;
 import ru.hw.demo.generate.CarPartGenerate;
@@ -33,6 +35,7 @@ import static org.mockito.Mockito.when;
 class CarPartServiceImplTest {
 
     public static final String VENDOR_CODE_NOT_VALIDATE = "VendorCode";
+    private static final Pageable SORT_BY_VENDOR_CODE_AND_ID = PageRequest.of(0, MainConstant.PAGE_REQUEST_SIZE, Sort.by("vendorCode", "id"));
 
     private CarPartServiceImpl carPartService;
 
@@ -100,10 +103,10 @@ class CarPartServiceImplTest {
                 return criteriaBuilder.equal(root.get("engine"), carPart.getEngine());
             }
         };
-        when(carPartSpecification.getCarPart(filter)).thenReturn(where);
+        when(carPartSpecification.getPredicateByFilter(filter)).thenReturn(where);
 
-        List<CarPart> cpFoundList = List.of(carPart);
-        when(carPartRepository.findAll(where)).thenReturn(cpFoundList);
+        Page<CarPart> cpFoundPages = new PageImpl<>(List.of(carPart));
+        when(carPartRepository.findAll(where, SORT_BY_VENDOR_CODE_AND_ID)).thenReturn(cpFoundPages);
 
         CarPartRecommendedDto expectedCarPart = CarPartRecommendedDto.builder()
                 .vendorCode(carPart.getVendorCode())

@@ -2,7 +2,6 @@ package ru.hw.demo.pojo;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 /**
  * @author Artem
@@ -11,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 
 @Builder
 @Data
-@RequiredArgsConstructor
 public class FilterCarPart {
     /**
      * Наименование марки

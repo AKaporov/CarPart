@@ -24,8 +24,12 @@ public class Analog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "car_part_id", nullable = false)
-    private Long carPartId;
+    /**
+     * полное описание аналога
+     */
+    @OneToOne(targetEntity = CarPart.class, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "car_part_id", nullable = false)
+    private CarPart carPart;
 
     /**
      * продавец

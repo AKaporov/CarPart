@@ -3,9 +3,9 @@ package ru.hw.demo.service.convert;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.hw.demo.domain.CarPart;
-import ru.hw.demo.domain.Photo;
 import ru.hw.demo.dto.AnalogDto;
 import ru.hw.demo.dto.CarPartFullInfoDto;
+import ru.hw.demo.dto.PhotoDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ConvertCarPartToFullInfoDtoServiceImpl implements ConvertCarPartToFullInfoDtoService {
     private final ConvertAnalogToDtoService toAnalogDtoService;
+    private final ConvertPhotoToDtoService toPhotoDtoService;
 
     @Override
     public CarPartFullInfoDto convertToFullInfoDto(CarPart carPart) {
@@ -26,8 +27,8 @@ public class ConvertCarPartToFullInfoDtoServiceImpl implements ConvertCarPartToF
                 .map(toAnalogDtoService::convertToAnalogDto)
                 .collect(Collectors.toList());
 
-        List<String> photoList = carPart.getPhotoList().stream()
-                .map(Photo::getPhotoUrl)
+        List<PhotoDto> photoDtoList = carPart.getPhotoList().stream()
+                .map(toPhotoDtoService::convertToPhotoDto)
                 .collect(Collectors.toList());
 
         return CarPartFullInfoDto.builder()
@@ -44,7 +45,7 @@ public class ConvertCarPartToFullInfoDtoServiceImpl implements ConvertCarPartToF
                 .rating(carPart.getRating())
                 .manufacturer(carPart.getManufacturer())
                 .modelName(carPart.getModel().getName())
-                .photoList(photoList)
+                .photoList(photoDtoList)
                 .build();
     }
 }

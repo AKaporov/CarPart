@@ -17,11 +17,11 @@ public class ConvertCarPartToRecommendedDtoServiceImpl implements ConvertCarPart
     @Override
     public List<CarPartRecommendedDto> convertToRecommendedDto(List<CarPart> carPartList) {
         return carPartList.stream()
-                .map(this::toRecommendedDto)
+                .map(this::getRecommendedDto)
                 .collect(Collectors.toList());
     }
 
-    private CarPartRecommendedDto toRecommendedDto(CarPart carPart) {
+    private CarPartRecommendedDto getRecommendedDto(CarPart carPart) {
         return CarPartRecommendedDto.builder()
                 .id(carPart.getId())
                 .name(carPart.getName())

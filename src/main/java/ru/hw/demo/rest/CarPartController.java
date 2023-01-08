@@ -62,7 +62,9 @@ public class CarPartController {
 
     @ExceptionHandler(CarPartNotFoundException.class)
     private ResponseEntity<String> handleCarPartNotFoundException(CarPartNotFoundException e) {
-        return ResponseEntity.badRequest().body(String.format("The CarPart with VendorCode = {%s} was not found. Check the request details.", e.getMessage()));
+        return ResponseEntity
+                .badRequest()
+                .body(String.format("The CarPart with VendorCode = {%s} was not found. Check the request details.", e.getMessage()));
     }
 
     @GetMapping(value = "/api/v1/carparts/{VendorCode}")

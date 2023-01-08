@@ -53,7 +53,7 @@
    kubernetes
 
 
-Команды для запуска в браузере (после запуска приложения) или в Terminal в IDEA:
+Команды для запуска в браузере (после запуска приложения):
 http://localhost:8080/api/v1/carparts?brandName=Ural
 http://localhost:8080/api/v1/carparts?brandName=Ural&modelName=Ural-4320&yearRelease=1977
 http://localhost:8080/api/v1/carparts?brandName=Ural&modelName=Ural-4320&yearRelease=19

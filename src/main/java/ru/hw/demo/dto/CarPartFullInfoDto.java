@@ -68,7 +68,7 @@ public class CarPartFullInfoDto {
     /**
      * фотографии
      */
-    private final List<String> photoList;
+    private final List<PhotoDto> photoList;
 
     /**
      * аналоги

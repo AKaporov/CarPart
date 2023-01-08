@@ -48,11 +48,11 @@ class CarPartRepositoryTest {
 
         List<Analog> analogList = new ArrayList<>(2);
         analogList.add(Analog.builder()
-                .carPartId(uaz446Saved.getId())
+                .carPart(uaz446Saved)
                 .vendor("Тамбовская область")
                 .build());
         analogList.add(Analog.builder()
-                .carPartId(moskvich2141Saved.getId())
+                .carPart(moskvich2141Saved)
                 .vendor("Кировская область")
                 .build());
 

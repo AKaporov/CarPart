@@ -35,7 +35,7 @@ public class CarPartSpecification {
     @Autowired
     private EngineRepository engineRepository;
 
-    public Specification<CarPart> getCarPart(FilterCarPart filterCarPart) {
+    public Specification<CarPart> getPredicateByFilter(FilterCarPart filterCarPart) {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicateList = new ArrayList<>(3);
 

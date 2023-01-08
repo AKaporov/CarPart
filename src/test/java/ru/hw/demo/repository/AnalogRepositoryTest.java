@@ -24,7 +24,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class AnalogRepositoryTest {
     private static final Long ANALOG_ID = 2L;
     private static final Integer EXPECTED_ANALOG_SIZE = 2;
-    private static final long CAR_PART_ID = 2L;
 
     @Autowired
     private AnalogRepository analogRepository;
@@ -51,11 +50,11 @@ class AnalogRepositoryTest {
 
         List<Analog> analogList = new ArrayList<>(2);
         analogList.add(Analog.builder()
-                .carPartId(uaz446Saved.getId())
+                .carPart(uaz446Saved)
                 .vendor("Тамбовская область")
                 .build());
         analogList.add(Analog.builder()
-                .carPartId(moskvich2141Saved.getId())
+                .carPart(moskvich2141Saved)
                 .vendor("Кировская область")
                 .build());
 
@@ -74,7 +73,7 @@ class AnalogRepositoryTest {
         Optional<Analog> actualAnalog = analogRepository.findById(ANALOG_ID);
 
         Analog expectedAnalog = Analog.builder()
-                .carPartId(CAR_PART_ID)
+                .carPart(actualAnalog.get().getCarPart())
                 .vendor("KAMAZ (Russia)")
                 .build();
 

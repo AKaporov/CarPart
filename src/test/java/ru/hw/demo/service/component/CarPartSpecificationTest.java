@@ -38,7 +38,7 @@ class CarPartSpecificationTest {
                 .engineName(expected.getEngine().getName())
                 .build();
 
-        Specification<CarPart> specification = carPartSpecification.getCarPart(filter);
+        Specification<CarPart> specification = carPartSpecification.getPredicateByFilter(filter);
 
         List<CarPart> actualList = carPartRepository.findAll(specification);
 
@@ -60,7 +60,7 @@ class CarPartSpecificationTest {
                 .yearRelease(carPartTwo.getModel().getYearRelease())
                 .build();
 
-        Specification<CarPart> specification = carPartSpecification.getCarPart(filter);
+        Specification<CarPart> specification = carPartSpecification.getPredicateByFilter(filter);
 
         List<CarPart> actualList = carPartRepository.findAll(specification);
 
@@ -82,7 +82,7 @@ class CarPartSpecificationTest {
                 .yearRelease(2050)
                 .build();
 
-        Specification<CarPart> specification = carPartSpecification.getCarPart(filter);
+        Specification<CarPart> specification = carPartSpecification.getPredicateByFilter(filter);
 
         List<CarPart> actualList = carPartRepository.findAll(specification);
 
