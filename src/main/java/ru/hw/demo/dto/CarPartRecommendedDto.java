@@ -1,5 +1,6 @@
 package ru.hw.demo.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,6 +11,7 @@ import lombok.Data;
 
 @Builder
 @Data
+@AllArgsConstructor
 public class CarPartRecommendedDto {
     private final long id;
 

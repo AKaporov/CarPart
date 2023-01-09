@@ -1,10 +1,12 @@
 package ru.hw.demo.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
 @Builder
 @Data
+@AllArgsConstructor
 public class AnalogDto {
     /**
      * каталожный номер
