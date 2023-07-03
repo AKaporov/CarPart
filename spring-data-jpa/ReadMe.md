@@ -1,4 +1,4 @@
-# В проекте применяется Spring Data JPA.
+# В проекте применяется Spring Data JPA:
 
 * [AssertJ](https://assertj.github.io/doc/)
 * [Spring Data JPA](https://spring.io/projects/spring-data-jpa)
