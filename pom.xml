@@ -8,41 +8,33 @@
 		<version>2.4.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+
 	<groupId>ru.hw</groupId>
-	<artifactId>carpartJPA</artifactId>
+	<artifactId>car-part</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>CarPart-JPA</name>
-	<description>Auto Parts Demo Project on Spring Boot with Spring Data JPA</description>
+	<name>Car-Part</name>
+	<description>Auto Parts Demo Project on Spring Boot</description>
+
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>Spring-Data-JPA</module>
+	</modules>
+
 	<properties>
 		<java.version>11</java.version>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<version>1.4.200</version>
 		</dependency>
 	</dependencies>
 
