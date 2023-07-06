@@ -18,6 +18,7 @@
 	<packaging>pom</packaging>
 
 	<modules>
+		<module>Spring-Data-JDBC</module>
 		<module>Spring-Data-JPA</module>
 	</modules>
 
