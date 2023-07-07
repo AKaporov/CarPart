@@ -18,7 +18,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(value = "brands")
+@Table(value = "BRANDS")
 public class Brand {
     @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +28,6 @@ public class Brand {
      * Наименование
      */
 //    @Column(name = "name", nullable = false, unique = true)
-    @Column(value = "name")
+    @Column(value = "NAME")
     private String name;
 }

@@ -18,7 +18,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(value = "analogs")
+@Table(value = "ANALOGS")
 public class Analog {
     @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,12 +27,12 @@ public class Analog {
     /**
      * Полное описание аналога
      */
-    @Column(value = "car_part_id")
+    @Column(value = "CAR_PART_ID")
     private CarPart carPart;
 
     /**
      * продавец
      */
-    @Column(value = "vendor")//, nullable = false)
+    @Column(value = "VENDOR")//, nullable = false)
     private String vendor;
 }

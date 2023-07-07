@@ -18,7 +18,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(value = "photos")
+@Table(value = "PHOTOS")
 public class Photo {
     @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +28,6 @@ public class Photo {
      * URL фотографии
      */
 //    @Column(name = "url", nullable = false, unique = true)
-    @Column(value = "url")
+    @Column(value = "URL")
     private String photoUrl;
 }

@@ -3,6 +3,7 @@ package ru.hw.demo.domain;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(value = "car_parts")
+@Table(value = "CAR_PARTS")
 @ToString(exclude = {"description", "brand", "model", "engine", "country", "photoList", "analogList"})
 public class CarPart {
     @Id
@@ -27,43 +28,43 @@ public class CarPart {
     /**
      * Каталожный номер
      */
-    @Column(value = "vendor_code")//, nullable = false, unique = true)
+    @Column(value = "VENDOR_CODE")//, nullable = false, unique = true)
     private String vendorCode;
 
     /**
      * артикул
      */
-    @Column(value = "sku")//, nullable = false, unique = true)
+    @Column(value = "SKU")//, nullable = false, unique = true)
     private String sku;
 
     /**
      * наименование
      */
-    @Column(value = "name")//, nullable = false)
+    @Column(value = "NAME")//, nullable = false)
     private String name;
 
     /**
      * описание
      */
-    @Column(value = "description")//, nullable = false)
+    @Column(value = "DESCRIPTION")//, nullable = false)
     private String description;
 
     /**
      * стоимость
      */
-    @Column(value = "price")//, nullable = false)
+    @Column(value = "PRICE")//, nullable = false)
     private double price;
 
     /**
      * производитель
      */
-    @Column(value = "manufacturer")//, nullable = false)
+    @Column(value = "MANUFACTURER")//, nullable = false)
     private String manufacturer;
 
     /**
      * рейтинг
      */
-    @Column(value = "rating") //, nullable = false)
+    @Column(value = "RATING") //, nullable = false)
     private double rating;
 
     /**
@@ -71,7 +72,7 @@ public class CarPart {
      */
 //    @ManyToOne(targetEntity = Brand.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    @JoinColumn(name = "brand_id", nullable = false)
-     @Column(value = "brand_id")
+     @Column(value = "BRAND_ID")
     private Brand brand;
 
     /**
@@ -79,7 +80,7 @@ public class CarPart {
      */
 //    @ManyToOne(targetEntity = Model.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    @JoinColumn(name = "model_id", nullable = false)
-    @Column(value = "model_id")
+    @Column(value = "MODEL_ID")
     private Model model;
 
     /**
@@ -87,15 +88,15 @@ public class CarPart {
      */
 //    @ManyToOne(targetEntity = Engine.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    @JoinColumn(name = "engine_id", nullable = false)
-    @Column(value = "engine_id")
+    @Column(value = "ENGINE_ID")
     private Engine engine;
 
     /**
-     * страна производства
+     * Страна производства
      */
 //    @ManyToOne(targetEntity = Country.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    @JoinColumn(name = "country_id", nullable = false)
-    @Column(value = "country_id")
+    @Column(value = "COUNTRY_ID")
     private Country country;
 
     /**
@@ -103,7 +104,8 @@ public class CarPart {
      */
 //    @OneToMany(targetEntity = Photo.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
 //    @JoinColumn(name = "car_part_id", nullable = true)
-    @Column(value = "car_part_id")
+//    @Column(value = "CAR_PART_ID")
+    @MappedCollection(idColumn = "CAR_PART_ID_PHOTO")
     private List<Photo> photoList;
 
     /**
@@ -113,6 +115,7 @@ public class CarPart {
 //    @JoinTable(name = "car_part_analogs",
 //            joinColumns = @JoinColumn(name = "car_part_id", referencedColumnName = "id"),
 //            inverseJoinColumns = @JoinColumn(name = "analog_id", referencedColumnName = "id"))
-    @Column(value = "car_part_analogs")
+//    @Column(value = "CAR_PART_ID")
+    @MappedCollection(idColumn = "CAR_PART_ID_ANALOG")
     private List<Analog> analogList;
 }

@@ -18,8 +18,8 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles("test")
-@JdbcTest
-@Import({AnalogRepositoryDataJdbcImpl.class})
+@DataJdbcTest
+//@Import({AnalogRepositoryDataJdbcImpl.class})
 @TestPropertySource(properties = {"spring.datasource.data=analog-test.sql"})
 @DisplayName("Репозиторий на основе Data JDBC по работе с Аналогами запчастей")
 class AnalogRepositoryDataJdbcTest {
@@ -31,11 +31,6 @@ class AnalogRepositoryDataJdbcTest {
     private AnalogRepositoryDataJdbcImpl analogRepository;
 //    @Autowired
 //    private CarPartRepositoryDataJdbc carPartRepository;
-
-
-    // TODO: 07.07.2023 Проверить работу теста shouldDeleteAll(). Не должно остаться данных в связанных таблицах от Удаленного аналога?
-//    @Autowired
-//    private CountryRepositoryDataJdbc countryRepository;
 
     @BeforeEach
     void setUp() {
@@ -136,6 +131,7 @@ class AnalogRepositoryDataJdbcTest {
     @Test
     @DisplayName("должен удалить все аналоги")
     void shouldDeleteAll() {
+        // TODO: 07.07.2023 Проверить работу теста shouldDeleteAll(). Не должно остаться данных в связанных таблицах от Удаленного аналога?
         Optional<Analog> before = analogRepository.findById(ANALOG_ID_VALID);
         assertThat(before).isNotEmpty();
 
@@ -144,8 +140,5 @@ class AnalogRepositoryDataJdbcTest {
 
         Optional<Analog> after = analogRepository.findById(ANALOG_ID_VALID);
         assertThat(after).isEmpty();
-
-//        Iterable<Country> all = countryRepository.findAll();
-//        System.out.println(all);
     }
 }

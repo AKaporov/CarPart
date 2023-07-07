@@ -18,7 +18,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(value = "engines")
+@Table(value = "ENGINES")
 public class Engine {
     @Id
     private Long id;
@@ -27,6 +27,6 @@ public class Engine {
      * Наименование
      */
 //    @Column(name = "name", nullable = false, unique = true)
-    @Column(value = "name")
+    @Column(value = "NAME")
     private String name;
 }
