@@ -18,7 +18,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(value = "countries")
+@Table(value = "COUNTRIES")
 public class Country {
     @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +28,6 @@ public class Country {
      * Наименование
      */
 //    @Column(name = "name", nullable = false, unique = true)
-    @Column(value = "name")
+    @Column(value = "NAME")
     private String name;
 }

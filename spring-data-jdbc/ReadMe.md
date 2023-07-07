@@ -1,14 +1,17 @@
 # В проекте применяется Spring Data JDBC (Java Database Connectivity)
 Поддержка интерфейсов JDBC для реляционных баз данных. 
 
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jdbc</artifactId>
 		</dependency>
 
 Spring Data предлагает к интерфейсу Repository также интерфейс CrudRepository, поэтому в Репозиториях можно 
-использовать CrudRepository<>.
+использовать CrudRepository<>. 
+
+Если используется метод из Repository/CrudRepository, то надо помнить, что в domain - сущности указание названия таблицы 
+(в @Table(value = "TABLE_NAME")), колонки (@Column(value = "COLUM_NAME")) регистрозависимо на схему БД (schema.sql). 
+В собственноручно написанных запросах регистрозависимость игнорируется. 
 
 * [Spring Data](https://spring.io/projects/spring-data)
 * [Spring Data JDBC](https://spring.io/projects/spring-data-jdbc)
