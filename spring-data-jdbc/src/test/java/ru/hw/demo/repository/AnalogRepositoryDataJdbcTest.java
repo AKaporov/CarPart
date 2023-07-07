@@ -5,8 +5,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import ru.hw.demo.domain.*;
 
@@ -15,18 +17,25 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@ActiveProfiles("test")
 @JdbcTest
 @Import({AnalogRepositoryDataJdbcImpl.class})
 @TestPropertySource(properties = {"spring.datasource.data=analog-test.sql"})
 @DisplayName("Репозиторий на основе Data JDBC по работе с Аналогами запчастей")
 class AnalogRepositoryDataJdbcTest {
-    private static final Long ANALOG_ID = 2L;
+    private static final Long ANALOG_ID_VALID = 2L;
     private static final Integer EXPECTED_ANALOG_SIZE = 2;
+    private static final Long ANALOG_ID_NOT_VALID = 777L;
 
     @Autowired
     private AnalogRepositoryDataJdbcImpl analogRepository;
 //    @Autowired
 //    private CarPartRepositoryDataJdbc carPartRepository;
+
+
+    // TODO: 07.07.2023 Проверить работу теста shouldDeleteAll(). Не должно остаться данных в связанных таблицах от Удаленного аналога?
+//    @Autowired
+//    private CountryRepositoryDataJdbc countryRepository;
 
     @BeforeEach
     void setUp() {
@@ -68,7 +77,7 @@ class AnalogRepositoryDataJdbcTest {
     @Test
     @DisplayName("должен находить аналог по его идентификатору")
     void shouldFindById() {
-        Optional<Analog> actualAnalog = analogRepository.findById(ANALOG_ID);
+        Optional<Analog> actualAnalog = analogRepository.findById(ANALOG_ID_VALID);
 
         Country expectedCountry = Country.builder()
                 .name("Russia")
@@ -107,12 +116,36 @@ class AnalogRepositoryDataJdbcTest {
         Analog expectedAnalog = Analog.builder()
                 .carPart(expectedCarPart)
                 .vendor("KAMAZ (Russia)")
-                .id(ANALOG_ID)
+                .id(ANALOG_ID_VALID)
                 .build();
 
         assertThat(actualAnalog).isNotEmpty()
                 .get()
                 .usingRecursiveComparison()
                 .isEqualTo(expectedAnalog);
+    }
+
+    @Test
+    @DisplayName("не должен находить аналог по его идентификатору")
+    void shouldNotFindById() {
+        Optional<Analog> actualAnalog = analogRepository.findById(ANALOG_ID_NOT_VALID);
+
+        assertThat(actualAnalog).isEmpty();
+    }
+
+    @Test
+    @DisplayName("должен удалить все аналоги")
+    void shouldDeleteAll() {
+        Optional<Analog> before = analogRepository.findById(ANALOG_ID_VALID);
+        assertThat(before).isNotEmpty();
+
+
+        analogRepository.deleteAll();
+
+        Optional<Analog> after = analogRepository.findById(ANALOG_ID_VALID);
+        assertThat(after).isEmpty();
+
+//        Iterable<Country> all = countryRepository.findAll();
+//        System.out.println(all);
     }
 }

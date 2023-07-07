@@ -7,7 +7,9 @@ import ru.hw.demo.domain.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -17,7 +19,7 @@ public class AnalogRepositoryDataJdbcImpl implements AnalogRepositoryDataJdbc {
 
     @Override
     public Optional<Analog> findById(Long id) {
-        Analog analog = jdbcTemplate.queryForObject("select a.id as analog_id, a.vendor as analog_vendor, " +
+        List<Analog> analogList = jdbcTemplate.query("select a.id as analog_id, a.vendor as analog_vendor, " +
 // car_parts
                 "cp.id as car_part_id, cp.vendor_code as car_part_vendor_code, cp.sku as car_part_sku, " +
                 "cp.name as car_part_name, cp.description as car_part_description, cp.price as car_part_price, " +
@@ -43,7 +45,7 @@ public class AnalogRepositoryDataJdbcImpl implements AnalogRepositoryDataJdbc {
                 "        on c.id = cp.country_id" +
                 " where a.id = ?", this::mapRowToAnalog, id);
 
-        return Optional.ofNullable(analog);
+        return analogList.isEmpty() ? Optional.empty() : Optional.ofNullable(analogList.get(0));
     }
 
     private Analog mapRowToAnalog(ResultSet resultSet, int i) throws SQLException {
@@ -95,6 +97,27 @@ public class AnalogRepositoryDataJdbcImpl implements AnalogRepositoryDataJdbc {
 
     @Override
     public void deleteAll() {
+//        List<CarPart> carPartList = getCarPartListForDeleteAll();
+//
+//        deleteAllBrand(carPartList);
+//        List<Brand> brandList = new ArrayList<>(carPartList.size());
+//        carPartList.stream().forEach(cp -> brandList.add(cp.getBrand()));
+//
+//        deleteAllModel(carPartList);
+//        List<Model> modelList = new ArrayList<>(carPartList.size());
+//        carPartList.stream().forEach(cp -> modelList.add(cp.getModel()));
+//
+//        deleteAllEngine();
+//        List<Engine> engineList = new ArrayList<>(carPartList.size());
+//        carPartList.stream().forEach(cp -> engineList.add(cp.getEngine()));
+//
+//        deleteCarPartAll();
+//        deleteCarPartAnalogAll();
+        deleteAnalogAll();
+    }
 
+    private void deleteAnalogAll() {
+        jdbcTemplate.update("delete from car_part_analogs where analog_id > 0");
+        jdbcTemplate.update("delete from analogs where id > 0");
     }
 }
