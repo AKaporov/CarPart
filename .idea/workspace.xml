@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="629b4b84-f78b-4971-90c2-b30c20adc4dd" name="Changes" comment="test: Удалил всё что не относится к текущему проекту" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JUnit5 Test Class" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="modules" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
+  }
+}</component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="b163df0c-a321-403b-a00c-5c75ec2fa0af" />
+        <option name="url" value="https://github.com/AKaporov/CarPart.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="C:/JavaSourceForWork/apache-maven-3.2.3" />
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="jdkForImporter" value="17" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectId" id="2JIpIP52wpkodfUbDJTffdVVGZU" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "ignore.virus.scanning.warn.message": "true",
+    "jdk.selected.JAVA_MODULE": "17",
+    "last_opened_file_path": "E:/Education/Programming/Java/CatPart/command-line-runner",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "MavenSettings"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="ru.hw.demo.service.exception" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Education\Programming\Java\CatPart\command-line-runner" />
+      <recent name="E:\Education\Programming\Java\CatPart\spring-jdbc" />
+      <recent name="E:\Education\Programming\Java\CatPart\spring-data-jdbc" />
+      <recent name="E:\Education\Programming\Java\CatPart" />
+      <recent name="E:\WORK\WorkHome\GitHub\CatPart" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Education\Programming\Java\CatPart\spring-jdbc" />
+      <recent name="E:\WORK\WorkHome\GitHub\CatPart\" />
+      <recent name="E:\WORK\WorkHome\GitHub\CatPart" />
+      <recent name="E:\WORK\WorkHome\GitHub\CatPart\Spring_Data_JPA" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="ru.hw.demo.rest" />
+      <recent name="ru.hw.demo.service.component" />
+      <recent name="ru.hw.demo.service.convert" />
+      <recent name="ru.hw.demo.service" />
+      <recent name="ru.hw.demo.repository" />
+    </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn validate" />
+    </option>
+  </component>
+  <component name="RunManager" selected="JUnit.All in car-part-jdbc">
+    <configuration name="All in car-part-jdbc" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="car-part-jdbc" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="All in car-part-jpa" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="car-part-jpa" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="java in car-part-jpa" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="car-part-jpa" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/spring-data-jpa/src/test/java" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.java in car-part-jpa" />
+        <item itemvalue="JUnit.All in car-part-jpa" />
+        <item itemvalue="JUnit.All in car-part-jdbc" />
+        <item itemvalue="JUnit.java in car-part-jpa" />
+        <item itemvalue="JUnit.All in car-part-jpa" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="629b4b84-f78b-4971-90c2-b30c20adc4dd" name="Changes" comment="" />
+      <created>1671775372309</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1671775372309</updated>
+    </task>
+    <task id="LOCAL-00001" summary="rest по фильтру">
+      <created>1672391697403</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1672391697403</updated>
+    </task>
+    <task id="LOCAL-00002" summary="убрал лишнее из main">
+      <created>1672391924365</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1672391924365</updated>
+    </task>
+    <task id="LOCAL-00003" summary="удалил help.md из gitignore">
+      <created>1672392084263</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1672392084263</updated>
+    </task>
+    <task id="LOCAL-00004" summary="add Rest getCarPartByVendorCode()">
+      <created>1672935133593</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1672935133593</updated>
+    </task>
+    <task id="LOCAL-00005" summary="add Rest getExtendedInfoByVendorCode()">
+      <created>1672941322780</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1672941322780</updated>
+    </task>
+    <task id="LOCAL-00006" summary="1) OneToOne in Analog; 2) create PhotoDto; 3) add sort in getByFilter()">
+      <created>1673178735988</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1673178735988</updated>
+    </task>
+    <task id="LOCAL-00007" summary="change HELP.md">
+      <created>1673179110290</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1673179110290</updated>
+    </task>
+    <task id="LOCAL-00008" summary="add AllArgsConstructor">
+      <created>1673249801312</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1673249801312</updated>
+    </task>
+    <task id="LOCAL-00009" summary="создание модульной системы">
+      <created>1688406148302</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1688406148302</updated>
+    </task>
+    <task id="LOCAL-00010" summary="создание модульной системы">
+      <created>1688406324511</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1688406324511</updated>
+    </task>
+    <task id="LOCAL-00011" summary="создание модуля Spring-Data-JPA и настройка pom.xml">
+      <created>1688408535906</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1688408535906</updated>
+    </task>
+    <task id="LOCAL-00012" summary="изменил ReadMe.md">
+      <created>1688408677351</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1688408677351</updated>
+    </task>
+    <task id="LOCAL-00013" summary="17 версия java">
+      <created>1688409564042</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1688409564042</updated>
+    </task>
+    <task id="LOCAL-00014" summary="ReadMe.md">
+      <created>1688410110486</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1688410110486</updated>
+    </task>
+    <task id="LOCAL-00015" summary="ReadMe.md">
+      <created>1688410121153</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1688410121153</updated>
+    </task>
+    <task id="LOCAL-00016" summary="dos: JPA ReadMe">
+      <option name="closed" value="true" />
+      <created>1688662803244</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1688662803245</updated>
+    </task>
+    <task id="LOCAL-00017" summary="dos: JPA ReadMe">
+      <option name="closed" value="true" />
+      <created>1688662926792</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1688662926792</updated>
+    </task>
+    <task id="LOCAL-00018" summary="style: JPA pom">
+      <option name="closed" value="true" />
+      <created>1688663998903</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1688663998903</updated>
+    </task>
+    <task id="LOCAL-00019" summary="feat: JDBC add pom and ReadMe">
+      <option name="closed" value="true" />
+      <created>1688664193740</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1688664193740</updated>
+    </task>
+    <task id="LOCAL-00020" summary="feat: JDBC add pom and ReadMe">
+      <option name="closed" value="true" />
+      <created>1688664250533</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1688664250533</updated>
+    </task>
+    <task id="LOCAL-00021" summary="feat: JDBC add pom and ReadMe">
+      <option name="closed" value="true" />
+      <created>1688664317263</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1688664317263</updated>
+    </task>
+    <task id="LOCAL-00022" summary="feat: JDBC add pom and ReadMe">
+      <option name="closed" value="true" />
+      <created>1688665549552</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1688665549552</updated>
+    </task>
+    <task id="LOCAL-00023" summary="feat: JDBC add pom and ReadMe">
+      <option name="closed" value="true" />
+      <created>1688666054860</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1688666054860</updated>
+    </task>
+    <task id="LOCAL-00024" summary="feat: JDBC add domain and repository. Adding all project files">
+      <option name="closed" value="true" />
+      <created>1688668073547</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1688668073547</updated>
+    </task>
+    <task id="LOCAL-00025" summary="feat: JDBC add domain and repository. Adding all project files">
+      <option name="closed" value="true" />
+      <created>1688668405061</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1688668405061</updated>
+    </task>
+    <task id="LOCAL-00026" summary="feat: JDBC add domain and repository. Adding all project files">
+      <option name="closed" value="true" />
+      <created>1688668841839</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1688668841839</updated>
+    </task>
+    <task id="LOCAL-00027" summary="feat: JDBC add readMe and gitignore">
+      <option name="closed" value="true" />
+      <created>1688719990624</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1688719990624</updated>
+    </task>
+    <task id="LOCAL-00028" summary="feat: Data-JDBC для выкладки">
+      <option name="closed" value="true" />
+      <created>1688720144888</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1688720144888</updated>
+    </task>
+    <task id="LOCAL-00029" summary="test: Проверка работы в новой ветки и потом слитие её в основную">
+      <option name="closed" value="true" />
+      <created>1688720588600</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1688720588600</updated>
+    </task>
+    <task id="LOCAL-00030" summary="test: Удалил всё что не относится к текущему проекту">
+      <option name="closed" value="true" />
+      <created>1688720690946</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1688720690946</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="true" />
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="rest по фильтру" />
+    <MESSAGE value="убрал лишнее из main" />
+    <MESSAGE value="удалил help.md из gitignore" />
+    <MESSAGE value="add Rest getCarPartByVendorCode()" />
+    <MESSAGE value="add Rest getExtendedInfoByVendorCode()" />
+    <MESSAGE value="1) OneToOne in Analog; 2) create PhotoDto; 3) add sort in getByFilter()" />
+    <MESSAGE value="change HELP.md" />
+    <MESSAGE value="add AllArgsConstructor" />
+    <MESSAGE value="создание модульной системы" />
+    <MESSAGE value="создание модуля Spring-Data-JPA и настройка pom.xml" />
+    <MESSAGE value="изменил ReadMe.md" />
+    <MESSAGE value="17 версия java" />
+    <MESSAGE value="ReadMe.md" />
+    <MESSAGE value="dos: JPA ReadMe" />
+    <MESSAGE value="style: JPA pom" />
+    <MESSAGE value="feat: JDBC add pom and ReadMe" />
+    <MESSAGE value="feat: JDBC add domain and repository. Adding all project files" />
+    <MESSAGE value="feat: JDBC add readMe and gitignore" />
+    <MESSAGE value="feat: Data-JDBC для выкладки" />
+    <MESSAGE value="test: Проверка работы в новой ветки и потом слитие её в основную" />
+    <MESSAGE value="test: Удалил всё что не относится к текущему проекту" />
+    <option name="LAST_COMMIT_MESSAGE" value="test: Удалил всё что не относится к текущему проекту" />
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="JUnit">
+        <watch expression="((java.util.ArrayList)((InPredicate)predicateList.get(1)).values).get(0)" custom="org.hibernate.query.criteria.internal.predicate.InPredicate,java.util.ArrayList" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/carpart$All_in_demo.ic" NAME="All in demo Coverage Results" MODIFIED="1672265619405" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/carpart$All_in_CatPart.ic" NAME="All in CatPart Coverage Results" MODIFIED="1673177708333" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/carpart$java_in_car_part_jpa.ic" NAME="java in car-part-jpa Coverage Results" MODIFIED="1688409004427" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/carpart$All_in_car_part_jpa.ic" NAME="All in car-part-jpa Coverage Results" MODIFIED="1688662955423" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+</project>
