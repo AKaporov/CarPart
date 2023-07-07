@@ -1,5 +1,5 @@
-# В проекте применяется Spring Data JDBC
-поддержка интерфйсов JDBC для реляционных баз данных
+# В проекте применяется Spring Data JDBC (Java Database Connectivity)
+Поддержка интерфейсов JDBC для реляционных баз данных. 
 
 
 		<dependency>
