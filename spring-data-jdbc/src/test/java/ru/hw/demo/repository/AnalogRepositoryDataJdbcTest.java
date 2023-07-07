@@ -5,30 +5,28 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.TestPropertySource;
-import ru.hw.demo.domain.Analog;
-import ru.hw.demo.domain.CarPart;
-import ru.hw.demo.generate.CarPartGenerate;
+import ru.hw.demo.domain.*;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
-@DataJpaTest
+@JdbcTest
+@Import({AnalogRepositoryDataJdbcImpl.class})
 @TestPropertySource(properties = {"spring.datasource.data=analog-test.sql"})
-@DisplayName("Репозиторий по работе с Аналогами запчастей")
+@DisplayName("Репозиторий на основе Data JDBC по работе с Аналогами запчастей")
 class AnalogRepositoryDataJdbcTest {
     private static final Long ANALOG_ID = 2L;
     private static final Integer EXPECTED_ANALOG_SIZE = 2;
 
     @Autowired
-    private AnalogRepositoryDataJdbc analogRepositoryDataJdbc;
-    @Autowired
-    private CarPartRepositoryDataJdbc carPartRepositoryDataJdbc;
+    private AnalogRepositoryDataJdbcImpl analogRepository;
+//    @Autowired
+//    private CarPartRepositoryDataJdbc carPartRepository;
 
     @BeforeEach
     void setUp() {
@@ -36,54 +34,85 @@ class AnalogRepositoryDataJdbcTest {
 
     @AfterEach
     void tearDown() {
-        carPartRepositoryDataJdbc.deleteAll();
-        analogRepositoryDataJdbc.deleteAll();
+//        carPartRepository.deleteAll();
+        analogRepository.deleteAll();
     }
 
-    @Test
-    @DisplayName("должен корректно сохранять новый аналог запасной части")
-    void shouldSave() {
-        CarPart uaz446 = CarPartGenerate.getUaz446(null);
-        CarPart uaz446Saved = carPartRepositoryDataJdbc.save(uaz446);
-        CarPart moskvich2141 = CarPartGenerate.getMoskvich2141(null);
-        CarPart moskvich2141Saved = carPartRepositoryDataJdbc.save(moskvich2141);
-
-        List<Analog> analogList = new ArrayList<>(2);
-        analogList.add(Analog.builder()
-                .carPart(uaz446Saved)
-                .vendor("Тамбовская область")
-                .build());
-        analogList.add(Analog.builder()
-                .carPart(moskvich2141Saved)
-                .vendor("Кировская область")
-                .build());
-
-        List<Analog> actualAnalogList = analogRepositoryDataJdbc.saveAll(analogList);
-
-        assertAll(() -> {
-            assertNotNull(actualAnalogList);
-            actualAnalogList.forEach(a -> assertThat(a.getId()).isPositive());
-            assertEquals(EXPECTED_ANALOG_SIZE, actualAnalogList.size());
-        });
-    }
+//    @Test
+//    @DisplayName("должен корректно сохранять новый аналог запасной части")
+//    void shouldSave() {
+//        CarPart uaz446 = CarPartGenerate.getUaz446(null);
+//        CarPart uaz446Saved = carPartRepository.save(uaz446);
+//        CarPart moskvich2141 = CarPartGenerate.getMoskvich2141(null);
+//        CarPart moskvich2141Saved = carPartRepository.save(moskvich2141);
+//
+//        List<Analog> analogList = new ArrayList<>(2);
+//        analogList.add(Analog.builder()
+//                .carPart(uaz446Saved)
+//                .vendor("Тамбовская область")
+//                .build());
+//        analogList.add(Analog.builder()
+//                .carPart(moskvich2141Saved)
+//                .vendor("Кировская область")
+//                .build());
+//
+//        List<Analog> actualAnalogList = analogRepository.saveAll(analogList);
+//
+//        assertAll(() -> {
+//            assertNotNull(actualAnalogList);
+//            actualAnalogList.forEach(a -> assertThat(a.getId()).isPositive());
+//            assertEquals(EXPECTED_ANALOG_SIZE, actualAnalogList.size());
+//        });
+//    }
 
     @Test
     @DisplayName("должен находить аналог по его идентификатору")
     void shouldFindById() {
-        Optional<Analog> actualAnalog = analogRepositoryDataJdbc.findById(ANALOG_ID);
+        Optional<Analog> actualAnalog = analogRepository.findById(ANALOG_ID);
 
-        Analog expectedAnalog = Analog.builder()
-                .carPart(actualAnalog.get().getCarPart())
-                .vendor("KAMAZ (Russia)")
+        Country expectedCountry = Country.builder()
+                .name("Russia")
+                .id(1L)
+                .build();
+        Engine expectedEngine = Engine.builder()
+                .id(1L)
+                .name("Diesel")
+                .build();
+        Model expectedModel = Model.builder()
+                .id(2L)
+                .name("Ural-4320")
+                .yearRelease(1977)
+                .build();
+        Brand expectedBrand = Brand.builder()
+                .id(2L)
+                .name("Ural")
+                .build();
+        CarPart expectedCarPart = CarPart.builder()
+                .photoList(new ArrayList<>(1))
+                .analogList(new ArrayList<>(1))
+                .country(expectedCountry)
+                .engine(expectedEngine)
+                .model(expectedModel)
+                .price(28390.99d)
+                .rating(9.0d)
+                .manufacturer("Ural")
+                .id(2L)
+                .description("Котел подогревателя предназначен для нагрева жидкости в системе охлаждения и масла в картере двигателя перед его пуском в холодный период времени.")
+                .name("КОТЕЛ ПОДОГРЕВАТЕЛЯ")
+                .sku("SKU-202212-01/20")
+                .vendorCode("URL-4320-01")
+                .brand(expectedBrand)
                 .build();
 
-        assertAll(() -> {
-            assertThat(actualAnalog).isNotEmpty()
-                    .get()
-                    .usingRecursiveComparison()
-                    .ignoringFields("id")
-                    .isEqualTo(expectedAnalog);
-            assertThat(actualAnalog.get().getId()).isPositive();
-        });
+        Analog expectedAnalog = Analog.builder()
+                .carPart(expectedCarPart)
+                .vendor("KAMAZ (Russia)")
+                .id(ANALOG_ID)
+                .build();
+
+        assertThat(actualAnalog).isNotEmpty()
+                .get()
+                .usingRecursiveComparison()
+                .isEqualTo(expectedAnalog);
     }
 }

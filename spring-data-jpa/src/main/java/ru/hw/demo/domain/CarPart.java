@@ -24,7 +24,7 @@ public class CarPart {
     private long id;
 
     /**
-     * каталожный номер
+     * Каталожный номер
      */
     @Column(name = "vendor_code", nullable = false, unique = true)
     private String vendorCode;

@@ -1,0 +1,100 @@
+package ru.hw.demo.repository;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
+import ru.hw.demo.domain.*;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.*;
+
+@Repository
+@RequiredArgsConstructor
+public class AnalogRepositoryDataJdbcImpl implements AnalogRepositoryDataJdbc {
+
+    private final JdbcTemplate jdbcTemplate;
+
+    @Override
+    public Optional<Analog> findById(Long id) {
+        Analog analog = jdbcTemplate.queryForObject("select a.id as analog_id, a.vendor as analog_vendor, " +
+// car_parts
+                "cp.id as car_part_id, cp.vendor_code as car_part_vendor_code, cp.sku as car_part_sku, " +
+                "cp.name as car_part_name, cp.description as car_part_description, cp.price as car_part_price, " +
+                "cp.manufacturer as car_part_manufacturer, cp.rating as car_part_rating, " +
+// brands
+                "b.id as brand_id, b.name as brand_name, " +
+// models
+                "m.id as model_id, m.name as model_name, m.year_release as model_year_release, " +
+// engines
+                "e.id as engine_id, e.name as engine_name, " +
+// countries
+                "c.id as country_id, c.name as country_name, " +
+                " from analogs a " +
+                "inner join car_parts cp " +
+                "        on cp.id = a.car_part_id " +
+                "inner join brands b " +
+                "        on b.id = cp.brand_id " +
+                "inner join models m " +
+                "        on m.id = cp.model_id " +
+                "inner join engines e " +
+                "        on e.id = cp.engine_id " +
+                "inner join countries c " +
+                "        on c.id = cp.country_id" +
+                " where a.id = ?", this::mapRowToAnalog, id);
+
+        return Optional.ofNullable(analog);
+    }
+
+    private Analog mapRowToAnalog(ResultSet resultSet, int i) throws SQLException {
+        Brand brand = Brand.builder()
+                .id(resultSet.getLong("brand_id"))
+                .name(resultSet.getString("brand_name"))
+                .build();
+        Model model = Model.builder()
+                .id(resultSet.getLong("model_id"))
+                .name(resultSet.getString("model_name"))
+                .yearRelease(resultSet.getInt("model_year_release"))
+                .build();
+        Engine engine = Engine.builder()
+                .id(resultSet.getLong("engine_id"))
+                .name(resultSet.getString("engine_name"))
+                .build();
+        Country country = Country.builder()
+                .id(resultSet.getLong("country_id"))
+                .name(resultSet.getString("country_name"))
+                .build();
+        CarPart carPart = CarPart.builder()
+                .id(resultSet.getLong("car_part_id"))
+                .vendorCode(resultSet.getString("car_part_vendor_code"))
+                .sku(resultSet.getString("car_part_sku"))
+                .name(resultSet.getString("car_part_name"))
+                .description(resultSet.getString("car_part_description"))
+                .price(resultSet.getDouble("car_part_price"))
+                .manufacturer(resultSet.getString("car_part_manufacturer"))
+                .rating(resultSet.getDouble("car_part_rating"))
+                .brand(brand)
+                .model(model)
+                .engine(engine)
+                .country(country)
+                .analogList(new ArrayList<>(1))
+                .photoList(new ArrayList<>(1))
+                .build();
+
+        return Analog.builder()
+                .id(resultSet.getLong("analog_id"))
+                .vendor(resultSet.getString("analog_vendor"))
+                .carPart(carPart)
+                .build();
+    }
+
+    @Override
+    public List<Analog> saveAll(List<Analog> analogList) {
+        return null;
+    }
+
+    @Override
+    public void deleteAll() {
+
+    }
+}

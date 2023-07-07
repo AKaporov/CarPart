@@ -106,9 +106,9 @@ insert into CAR_PARTS
 
 -- аналоги
 -- ID = 1
-insert into ANALOGS (CAR_PART_ID, VENDOR) values (3, 'No name (China)'); --'GZ-511.1601130-280')
+insert into ANALOGS (CAR_PART_ID, VENDOR) values (3, 'No name (China)');
 insert into CAR_PART_ANALOGS (CAR_PART_ID, ANALOG_ID) values (1, 1);
 
 -- ID = 2
-insert into ANALOGS (CAR_PART_ID, VENDOR) values (2, 'KAMAZ (Russia)'); --'KMZ-740.60-1008025-20')
+insert into ANALOGS (CAR_PART_ID, VENDOR) values (2, 'KAMAZ (Russia)');
 insert into CAR_PART_ANALOGS (CAR_PART_ID, ANALOG_ID) values (1, 2);
