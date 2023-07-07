@@ -18,33 +18,33 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @DataJpaTest
 @DisplayName("Репозиторий по работе с Запчасти автомобиля")
-class CarPartRepositoryJdbcTest {
+class CarPartRepositoryDataJdbcTest {
     @Autowired
-    private CarPartRepositoryJdbc carPartRepositoryJdbc;
+    private CarPartRepositoryDataJdbc carPartRepositoryDataJdbc;
     @Autowired
-    private BrandRepositoryJdbc brandRepositoryJdbc;
+    private BrandRepositoryDataJdbc brandRepositoryDataJdbc;
     @Autowired
-    private CountryRepositoryJdbc countryRepositoryJdbc;
+    private CountryRepositoryDataJdbc countryRepositoryDataJdbc;
     @Autowired
-    private EngineRepositoryJdbc engineRepositoryJdbc;
+    private EngineRepositoryDataJdbc engineRepositoryDataJdbc;
     @Autowired
-    private ModelRepositoryJdbc modelRepositoryJdbc;
+    private ModelRepositoryDataJdbc modelRepositoryDataJdbc;
     @Autowired
-    private AnalogRepositoryJdbc analogRepositoryJdbc;
+    private AnalogRepositoryDataJdbc analogRepositoryDataJdbc;
 
     @AfterEach
     void tearDown() {
-        carPartRepositoryJdbc.deleteAll();
-        analogRepositoryJdbc.deleteAll();
+        carPartRepositoryDataJdbc.deleteAll();
+        analogRepositoryDataJdbc.deleteAll();
     }
 
     @Test
     @DisplayName("должен сохранять новую запчасть")
     void shouldSaveCarPart() {
         CarPart uaz446 = CarPartGenerate.getUaz446(null);
-        CarPart uaz446Saved = carPartRepositoryJdbc.save(uaz446);
+        CarPart uaz446Saved = carPartRepositoryDataJdbc.save(uaz446);
         CarPart moskvich2141 = CarPartGenerate.getMoskvich2141(null);
-        CarPart moskvich2141Saved = carPartRepositoryJdbc.save(moskvich2141);
+        CarPart moskvich2141Saved = carPartRepositoryDataJdbc.save(moskvich2141);
 
         List<Analog> analogList = new ArrayList<>(2);
         analogList.add(Analog.builder()
@@ -61,8 +61,8 @@ class CarPartRepositoryJdbcTest {
                 .photoUrl("https://localhost:8080/carpart/zaz/1/#&gid=1&pid=1")
                 .build());
 
-        Optional<Country> countryRussia = countryRepositoryJdbc.findById(1L);
-        Optional<Engine> enginePetrol = engineRepositoryJdbc.findById(2L);
+        Optional<Country> countryRussia = countryRepositoryDataJdbc.findById(1L);
+        Optional<Engine> enginePetrol = engineRepositoryDataJdbc.findById(2L);
 
         CarPart cp = CarPart.builder()
                 .brand(Brand.builder()
@@ -85,7 +85,7 @@ class CarPartRepositoryJdbcTest {
                 .name("Бак топливный заз 965")
                 .build();
 
-        CarPart actualCarPart = carPartRepositoryJdbc.save(cp);
+        CarPart actualCarPart = carPartRepositoryDataJdbc.save(cp);
 
         assertAll(() -> {
             assertNotNull(actualCarPart);
@@ -98,7 +98,7 @@ class CarPartRepositoryJdbcTest {
     @Test
     @DisplayName("должен находить запчасть по её Идентификатору")
     void shouldFindCarPartById() {
-        Optional<CarPart> actualCarPart = carPartRepositoryJdbc.findById(2L);
+        Optional<CarPart> actualCarPart = carPartRepositoryDataJdbc.findById(2L);
         assertAll(() -> {
             assertNotNull(actualCarPart);
             assertThat(actualCarPart).isNotEmpty();
@@ -111,9 +111,9 @@ class CarPartRepositoryJdbcTest {
     @Test
     @DisplayName("должен находить запчасть по каталожному номеру")
     void shouldFindCarPartByVendorCode() {
-        Optional<CarPart> expected = carPartRepositoryJdbc.findById(3L);
+        Optional<CarPart> expected = carPartRepositoryDataJdbc.findById(3L);
 
-        Optional<CarPart> actual = carPartRepositoryJdbc.findByVendorCode("URL-4320-02");
+        Optional<CarPart> actual = carPartRepositoryDataJdbc.findByVendorCode("URL-4320-02");
 
         assertThat(actual).isNotEmpty()
                 .get()

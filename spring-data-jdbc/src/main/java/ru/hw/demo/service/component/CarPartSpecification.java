@@ -9,9 +9,9 @@ import ru.hw.demo.domain.CarPart;
 import ru.hw.demo.domain.Engine;
 import ru.hw.demo.domain.Model;
 import ru.hw.demo.pojo.FilterCarPart;
-import ru.hw.demo.repository.BrandRepositoryJdbc;
-import ru.hw.demo.repository.EngineRepositoryJdbc;
-import ru.hw.demo.repository.ModelRepositoryJdbc;
+import ru.hw.demo.repository.BrandRepositoryDataJdbc;
+import ru.hw.demo.repository.EngineRepositoryDataJdbc;
+import ru.hw.demo.repository.ModelRepositoryDataJdbc;
 
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
@@ -29,11 +29,11 @@ import java.util.Optional;
 public class CarPartSpecification {
 
     @Autowired
-    private BrandRepositoryJdbc brandRepositoryJdbc;
+    private BrandRepositoryDataJdbc brandRepositoryDataJdbc;
     @Autowired
-    private ModelRepositoryJdbc modelRepositoryJdbc;
+    private ModelRepositoryDataJdbc modelRepositoryDataJdbc;
     @Autowired
-    private EngineRepositoryJdbc engineRepositoryJdbc;
+    private EngineRepositoryDataJdbc engineRepositoryDataJdbc;
 
     public Specification<CarPart> getPredicateByFilter(FilterCarPart filterCarPart) {
         return (root, query, criteriaBuilder) -> {
@@ -58,7 +58,7 @@ public class CarPartSpecification {
                     .name(filterCarPart.getEngineName())
                     .build());
 
-            List<Engine> engineList = engineRepositoryJdbc.findAll(exampleEngine);
+            List<Engine> engineList = engineRepositoryDataJdbc.findAll(exampleEngine);
             if (engineList.isEmpty()) {
                 return Optional.of(engine.isNull());
             } else {
@@ -79,7 +79,7 @@ public class CarPartSpecification {
                     .yearRelease(isModuleYear ? filterCarPart.getYearRelease() : null)
                     .build());
 
-            List<Model> modelList = modelRepositoryJdbc.findAll(exampleModel);
+            List<Model> modelList = modelRepositoryDataJdbc.findAll(exampleModel);
             if (modelList.isEmpty()) {
                 return Optional.of(model.isNull());
             } else {
@@ -96,7 +96,7 @@ public class CarPartSpecification {
                     .name(filterCarPart.getBrandName())
                     .build());
 
-            List<Brand> brandLst = brandRepositoryJdbc.findAll(exampleBrand);
+            List<Brand> brandLst = brandRepositoryDataJdbc.findAll(exampleBrand);
             if (brandLst.isEmpty()) {
                 return Optional.of(brand.isNull());
             } else {

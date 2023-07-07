@@ -12,7 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import ru.hw.demo.domain.CarPart;
 import ru.hw.demo.dto.CarPartRecommendedDto;
-import ru.hw.demo.repository.CarPartRepositoryJdbc;
+import ru.hw.demo.repository.CarPartRepositoryDataJdbc;
 import ru.hw.demo.service.exception.CarPartNotFoundException;
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ class CarPartControllerTest {
     @Autowired
     private ObjectMapper mapper;
     @Autowired
-    private CarPartRepositoryJdbc carPartRepositoryJdbc;
+    private CarPartRepositoryDataJdbc carPartRepositoryDataJdbc;
 
     @BeforeEach
     void setUp() {
@@ -49,7 +49,7 @@ class CarPartControllerTest {
     @Test
     @DisplayName("должен вернуть найденную запчасть по её vendorCode")
     void shouldReturnCarPartFoundByVendorCodeInRequestParam() throws Exception {
-        Optional<CarPart> cpTwo = carPartRepositoryJdbc.findById(2L);  // 'URL-4320-01'
+        Optional<CarPart> cpTwo = carPartRepositoryDataJdbc.findById(2L);  // 'URL-4320-01'
 
         CarPartRecommendedDto expectedResult = CarPartRecommendedDto.builder()
                 .vendorCode(cpTwo.get().getVendorCode())
@@ -83,8 +83,8 @@ class CarPartControllerTest {
     @Test
     @DisplayName("должен возвращать запчасть по её марке и году выпуска модели. Марка и год выпуска переданы через RequestParam")
     void shouldReturnCarPartByFilterInRequestParam() throws Exception {
-        CarPart cpOne = carPartRepositoryJdbc.findById(1L).get();  // 'GZ-750Z370-S'
-        CarPart cpSeven = carPartRepositoryJdbc.findById(7L).get();  // 'GZ-511.1601130-280'
+        CarPart cpOne = carPartRepositoryDataJdbc.findById(1L).get();  // 'GZ-750Z370-S'
+        CarPart cpSeven = carPartRepositoryDataJdbc.findById(7L).get();  // 'GZ-511.1601130-280'
 
         List<CarPartRecommendedDto> expectedResult = new ArrayList<>(2);
         expectedResult.add(CarPartRecommendedDto.builder()
@@ -117,7 +117,7 @@ class CarPartControllerTest {
     @Test
     @DisplayName("должен вернуть найденную запчасть по её VendorCode переданную через PathVariable")
     void shouldReturnCarPartFoundByVendorCodeInPathVariable() throws Exception {
-        CarPart cpThree = carPartRepositoryJdbc.findById(3L).get();  // 'URL-4320-02'
+        CarPart cpThree = carPartRepositoryDataJdbc.findById(3L).get();  // 'URL-4320-02'
 
         CarPartRecommendedDto expectedResult = CarPartRecommendedDto.builder()
                 .vendorCode(cpThree.getVendorCode())

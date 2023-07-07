@@ -16,13 +16,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 @TestPropertySource(properties = {"spring.datasource.data=engine-test.sql"})
 @DisplayName("Репозиторий по работе с Двигателем")
-class EngineRepositoryJdbcTest {
+class EngineRepositoryDataJdbcTest {
     private static final Long PETROL_ID = 2L;
     private static final String PETROL_NAME = "Petrol";
     private static final String EXPECTED_NAME = "Turbocharged petrol";
 
     @Autowired
-    private EngineRepositoryJdbc repository;
+    private EngineRepositoryDataJdbc repository;
 
     @BeforeEach
     void setUp() {

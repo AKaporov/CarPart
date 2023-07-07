@@ -8,7 +8,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.transaction.annotation.Transactional;
 import ru.hw.demo.domain.CarPart;
 import ru.hw.demo.pojo.FilterCarPart;
-import ru.hw.demo.repository.CarPartRepositoryJdbc;
+import ru.hw.demo.repository.CarPartRepositoryDataJdbc;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,14 +22,14 @@ class CarPartSpecificationTest {
     @Autowired
     private CarPartSpecification carPartSpecification;
     @Autowired
-    private CarPartRepositoryJdbc carPartRepositoryJdbc;
+    private CarPartRepositoryDataJdbc carPartRepositoryDataJdbc;
 
 
     @Transactional  // только для того, что бы достать информацию из Lazy-полей
     @Test
     @DisplayName("должен корректно преобразовывать переданный фильтр в предикат поиска и находить запчасть")
     void getCarPartByFullPredicate() {
-        CarPart expected = carPartRepositoryJdbc.findById(1L).get();
+        CarPart expected = carPartRepositoryDataJdbc.findById(1L).get();
 
         FilterCarPart filter = FilterCarPart.builder()
                 .brandName(expected.getBrand().getName())
@@ -40,7 +40,7 @@ class CarPartSpecificationTest {
 
         Specification<CarPart> specification = carPartSpecification.getPredicateByFilter(filter);
 
-        List<CarPart> actualList = carPartRepositoryJdbc.findAll(specification);
+        List<CarPart> actualList = carPartRepositoryDataJdbc.findAll(specification);
 
         assertThat(actualList).isNotNull().isNotEmpty().hasSize(List.of(expected).size())
                 .usingElementComparatorIgnoringFields("brand", "model", "engine", "country", "photoList", "analogList")
@@ -51,8 +51,8 @@ class CarPartSpecificationTest {
     @Test
     @DisplayName("должен корректно находить запчасть по частичным параметрам поиска")
     void getCarPartByPredicate() {
-        CarPart carPartOne = carPartRepositoryJdbc.findById(1L).get();
-        CarPart carPartTwo = carPartRepositoryJdbc.findById(7L).get();
+        CarPart carPartOne = carPartRepositoryDataJdbc.findById(1L).get();
+        CarPart carPartTwo = carPartRepositoryDataJdbc.findById(7L).get();
 
         FilterCarPart filter = FilterCarPart.builder()
                 .brandName(carPartTwo.getBrand().getName())
@@ -62,7 +62,7 @@ class CarPartSpecificationTest {
 
         Specification<CarPart> specification = carPartSpecification.getPredicateByFilter(filter);
 
-        List<CarPart> actualList = carPartRepositoryJdbc.findAll(specification);
+        List<CarPart> actualList = carPartRepositoryDataJdbc.findAll(specification);
 
         List<CarPart> expectedList = new ArrayList<>(2);
         expectedList.add(carPartOne);
@@ -84,7 +84,7 @@ class CarPartSpecificationTest {
 
         Specification<CarPart> specification = carPartSpecification.getPredicateByFilter(filter);
 
-        List<CarPart> actualList = carPartRepositoryJdbc.findAll(specification);
+        List<CarPart> actualList = carPartRepositoryDataJdbc.findAll(specification);
 
         assertThat(actualList).isNotNull().isEmpty();
     }

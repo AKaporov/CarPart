@@ -6,7 +6,7 @@ import ru.hw.demo.domain.Analog;
 import java.util.List;
 import java.util.Optional;
 
-public interface AnalogRepositoryJdbc extends Repository<Analog, Long> {
+public interface AnalogRepositoryDataJdbc extends Repository<Analog, Long> {
 
     Optional<Analog> findById(Long id);
 

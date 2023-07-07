@@ -4,7 +4,7 @@ import ru.hw.demo.domain.CarPart;
 
 import java.util.Optional;
 
-public interface CarPartRepositoryJdbc /*extends  CrudRepository<CarPart, Long>, JpaSpecificationExecutor<CarPart> */ {
+public interface CarPartRepositoryDataJdbc /*extends  CrudRepository<CarPart, Long>, JpaSpecificationExecutor<CarPart> */ {
 
     /**
      * @param vendorCode каталожный номер

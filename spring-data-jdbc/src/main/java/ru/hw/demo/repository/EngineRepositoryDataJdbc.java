@@ -6,7 +6,7 @@ import ru.hw.demo.domain.Engine;
 
 import java.util.List;
 
-public interface EngineRepositoryJdbc extends CrudRepository<Engine, Long> {
+public interface EngineRepositoryDataJdbc extends CrudRepository<Engine, Long> {
 
     List<Engine> findAll(Example<Engine> example);
 }

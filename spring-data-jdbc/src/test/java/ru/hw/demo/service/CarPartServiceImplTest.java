@@ -13,7 +13,7 @@ import ru.hw.demo.domain.CarPart;
 import ru.hw.demo.dto.CarPartRecommendedDto;
 import ru.hw.demo.generate.CarPartGenerate;
 import ru.hw.demo.pojo.FilterCarPart;
-import ru.hw.demo.repository.CarPartRepositoryJdbc;
+import ru.hw.demo.repository.CarPartRepositoryDataJdbc;
 import ru.hw.demo.service.component.CarPartSpecification;
 import ru.hw.demo.service.convert.ConvertCarPartToFullInfoDtoService;
 import ru.hw.demo.service.convert.ConvertCarPartToRecommendedDtoService;
@@ -40,7 +40,7 @@ class CarPartServiceImplTest {
     private CarPartServiceImpl carPartService;
 
     @Mock
-    private CarPartRepositoryJdbc carPartRepositoryJdbc;
+    private CarPartRepositoryDataJdbc carPartRepositoryDataJdbc;
     @Mock
     private ConvertCarPartToRecommendedDtoService toRecommendedDto;
     @Mock
@@ -50,14 +50,14 @@ class CarPartServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        carPartService = new CarPartServiceImpl(carPartRepositoryJdbc, toRecommendedDto, carPartSpecification, toFullInfoDto);
+        carPartService = new CarPartServiceImpl(carPartRepositoryDataJdbc, toRecommendedDto, carPartSpecification, toFullInfoDto);
     }
 
     @Test
     @DisplayName("должен находить запчасть по каталожному номеру")
     void shouldFindCarPartByVendorCode() {
         CarPart carPart = CarPartGenerate.getUaz446(789L);
-        when(carPartRepositoryJdbc.findByVendorCode(carPart.getVendorCode())).thenReturn(Optional.of(carPart));
+        when(carPartRepositoryDataJdbc.findByVendorCode(carPart.getVendorCode())).thenReturn(Optional.of(carPart));
 
         CarPartRecommendedDto expectedCarPart = CarPartRecommendedDto.builder()
                 .vendorCode(carPart.getVendorCode())
@@ -79,7 +79,7 @@ class CarPartServiceImplTest {
     @Test
     @DisplayName("должен вернуть CarPartNotFoundException, если по переданному vendorCode не была найдена запчасть")
     void shouldReturnCarPartNotFoundExceptionIfVendorCodeNotValid() {
-        when(carPartRepositoryJdbc.findByVendorCode(VENDOR_CODE_NOT_VALIDATE)).thenReturn(Optional.empty());
+        when(carPartRepositoryDataJdbc.findByVendorCode(VENDOR_CODE_NOT_VALIDATE)).thenReturn(Optional.empty());
         assertThatThrownBy(() -> carPartService.getByVendorCode(VENDOR_CODE_NOT_VALIDATE)).isInstanceOf(CarPartNotFoundException.class);
     }
 
@@ -106,7 +106,7 @@ class CarPartServiceImplTest {
         when(carPartSpecification.getPredicateByFilter(filter)).thenReturn(where);
 
         Page<CarPart> cpFoundPages = new PageImpl<>(List.of(carPart));
-        when(carPartRepositoryJdbc.findAll(where, SORT_BY_VENDOR_CODE_AND_ID)).thenReturn(cpFoundPages);
+        when(carPartRepositoryDataJdbc.findAll(where, SORT_BY_VENDOR_CODE_AND_ID)).thenReturn(cpFoundPages);
 
         CarPartRecommendedDto expectedCarPart = CarPartRecommendedDto.builder()
                 .vendorCode(carPart.getVendorCode())

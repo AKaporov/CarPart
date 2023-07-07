@@ -18,12 +18,12 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 @TestPropertySource(properties = {"spring.datasource.data=photo-test.sql"})
 @DisplayName("Репозиторий по работе с Фотографиями")
-class PhotoRepositoryJdbcTest {
+class PhotoRepositoryDataJdbcTest {
 
     @Autowired
-    private PhotoRepositoryJdbc photoRepositoryJdbc;
+    private PhotoRepositoryDataJdbc photoRepositoryDataJdbc;
     @Autowired
-    private CarPartRepositoryJdbc carPartRepositoryJdbc;
+    private CarPartRepositoryDataJdbc carPartRepositoryDataJdbc;
 
     @BeforeEach
     void setUp() {
@@ -31,26 +31,26 @@ class PhotoRepositoryJdbcTest {
 
     @AfterEach
     void tearDown() {
-        carPartRepositoryJdbc.deleteAll();
-        photoRepositoryJdbc.deleteAll();
+        carPartRepositoryDataJdbc.deleteAll();
+        photoRepositoryDataJdbc.deleteAll();
     }
 
     @Test
     @DisplayName("должен корректно сохранять новую фотографию и привязывать её к запасной части")
     void shouldSavePhotoAndAddToCarPart() {
-        List<Photo> beforeAllPhotoList = photoRepositoryJdbc.findAll();
+        List<Photo> beforeAllPhotoList = photoRepositoryDataJdbc.findAll();
 
         Photo newPhoto = Photo.builder()
                 .photoUrl("https://localhost:8080/carpart/2/#&gid=2&pid=2")
                 .build();
 
-        Optional<CarPart> carPartFound = carPartRepositoryJdbc.findById(2L);
+        Optional<CarPart> carPartFound = carPartRepositoryDataJdbc.findById(2L);
         carPartFound.ifPresent(cp -> {
             cp.getPhotoList().add(newPhoto);
-            carPartRepositoryJdbc.save(cp);
+            carPartRepositoryDataJdbc.save(cp);
         });
 
-        List<Photo> actualAllPhotoList = photoRepositoryJdbc.findAll();
+        List<Photo> actualAllPhotoList = photoRepositoryDataJdbc.findAll();
 
         assertAll(() -> {
             assertNotNull(actualAllPhotoList);
@@ -61,15 +61,15 @@ class PhotoRepositoryJdbcTest {
     @Test
     @DisplayName("должен удалить фотографию и отвязать её от запасной части")
     void shouldDeletePhotoAndRemoveFromCarPart() {
-        List<Photo> beforeAllPhotoList = photoRepositoryJdbc.findAll();
+        List<Photo> beforeAllPhotoList = photoRepositoryDataJdbc.findAll();
 
-        Optional<CarPart> carPartFound = carPartRepositoryJdbc.findById(1L);
+        Optional<CarPart> carPartFound = carPartRepositoryDataJdbc.findById(1L);
         carPartFound.ifPresent(cp -> {
             cp.getPhotoList().remove(1);
-            carPartRepositoryJdbc.save(cp);
+            carPartRepositoryDataJdbc.save(cp);
         });
 
-        List<Photo> actualAllPhotoList = photoRepositoryJdbc.findAll();
+        List<Photo> actualAllPhotoList = photoRepositoryDataJdbc.findAll();
 
         assertAll(() -> {
             assertNotNull(actualAllPhotoList);

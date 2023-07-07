@@ -13,7 +13,7 @@ import ru.hw.demo.domain.CarPart;
 import ru.hw.demo.dto.CarPartFullInfoDto;
 import ru.hw.demo.dto.CarPartRecommendedDto;
 import ru.hw.demo.pojo.FilterCarPart;
-import ru.hw.demo.repository.CarPartRepositoryJdbc;
+import ru.hw.demo.repository.CarPartRepositoryDataJdbc;
 import ru.hw.demo.service.component.CarPartSpecification;
 import ru.hw.demo.service.convert.ConvertCarPartToFullInfoDtoService;
 import ru.hw.demo.service.convert.ConvertCarPartToRecommendedDtoService;
@@ -29,7 +29,7 @@ import java.util.Objects;
 public class CarPartServiceImpl implements CarPartService {
     private static final Pageable SORT_BY_VENDOR_CODE_AND_ID = PageRequest.of(0, MainConstant.PAGE_REQUEST_SIZE, Sort.by("vendorCode", "id"));
 
-    private final CarPartRepositoryJdbc carPartRepositoryJdbc;
+    private final CarPartRepositoryDataJdbc carPartRepositoryDataJdbc;
     private final ConvertCarPartToRecommendedDtoService toRecommendedDto;
     private final CarPartSpecification carPartSpecification;
     private final ConvertCarPartToFullInfoDtoService toFullInfoDto;
@@ -40,7 +40,7 @@ public class CarPartServiceImpl implements CarPartService {
      */
     @Override
     public CarPartRecommendedDto getByVendorCode(String vendorCode) {
-        return carPartRepositoryJdbc.findByVendorCode(vendorCode)
+        return carPartRepositoryDataJdbc.findByVendorCode(vendorCode)
                 .map(cp -> toRecommendedDto.convertToRecommendedDto(List.of(cp)).get(0))
                 .orElseThrow(() -> new CarPartNotFoundException(vendorCode));
     }
@@ -57,14 +57,14 @@ public class CarPartServiceImpl implements CarPartService {
 
         Specification<CarPart> where = carPartSpecification.getPredicateByFilter(filter);
 
-        Slice<CarPart> cpFoundPages = carPartRepositoryJdbc.findAll(where, SORT_BY_VENDOR_CODE_AND_ID);
+        Slice<CarPart> cpFoundPages = carPartRepositoryDataJdbc.findAll(where, SORT_BY_VENDOR_CODE_AND_ID);
 
         List<CarPartRecommendedDto> cpFoundList = new LinkedList<>();
         while (true) {
             cpFoundList.addAll(toRecommendedDto.convertToRecommendedDto(cpFoundPages.getContent()));
 
             if (cpFoundPages.hasNext()) {
-                cpFoundPages = carPartRepositoryJdbc.findAll(where, cpFoundPages.nextPageable());
+                cpFoundPages = carPartRepositoryDataJdbc.findAll(where, cpFoundPages.nextPageable());
             } else {
                 break;
             }
@@ -79,7 +79,7 @@ public class CarPartServiceImpl implements CarPartService {
     @Transactional(readOnly = true)
     @Override
     public CarPartFullInfoDto getExtendedInfoByVendorCode(String vendorCode) {
-        return carPartRepositoryJdbc.findByVendorCode(vendorCode)
+        return carPartRepositoryDataJdbc.findByVendorCode(vendorCode)
                 .map(toFullInfoDto::convertToFullInfoDto)
                 .orElseThrow(() -> new CarPartNotFoundException(vendorCode));
     }

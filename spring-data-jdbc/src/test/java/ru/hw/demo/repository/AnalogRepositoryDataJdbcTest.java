@@ -21,14 +21,14 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 @TestPropertySource(properties = {"spring.datasource.data=analog-test.sql"})
 @DisplayName("Репозиторий по работе с Аналогами запчастей")
-class AnalogRepositoryJdbcTest {
+class AnalogRepositoryDataJdbcTest {
     private static final Long ANALOG_ID = 2L;
     private static final Integer EXPECTED_ANALOG_SIZE = 2;
 
     @Autowired
-    private AnalogRepositoryJdbc analogRepositoryJdbc;
+    private AnalogRepositoryDataJdbc analogRepositoryDataJdbc;
     @Autowired
-    private CarPartRepositoryJdbc carPartRepositoryJdbc;
+    private CarPartRepositoryDataJdbc carPartRepositoryDataJdbc;
 
     @BeforeEach
     void setUp() {
@@ -36,17 +36,17 @@ class AnalogRepositoryJdbcTest {
 
     @AfterEach
     void tearDown() {
-        carPartRepositoryJdbc.deleteAll();
-        analogRepositoryJdbc.deleteAll();
+        carPartRepositoryDataJdbc.deleteAll();
+        analogRepositoryDataJdbc.deleteAll();
     }
 
     @Test
     @DisplayName("должен корректно сохранять новый аналог запасной части")
     void shouldSave() {
         CarPart uaz446 = CarPartGenerate.getUaz446(null);
-        CarPart uaz446Saved = carPartRepositoryJdbc.save(uaz446);
+        CarPart uaz446Saved = carPartRepositoryDataJdbc.save(uaz446);
         CarPart moskvich2141 = CarPartGenerate.getMoskvich2141(null);
-        CarPart moskvich2141Saved = carPartRepositoryJdbc.save(moskvich2141);
+        CarPart moskvich2141Saved = carPartRepositoryDataJdbc.save(moskvich2141);
 
         List<Analog> analogList = new ArrayList<>(2);
         analogList.add(Analog.builder()
@@ -58,7 +58,7 @@ class AnalogRepositoryJdbcTest {
                 .vendor("Кировская область")
                 .build());
 
-        List<Analog> actualAnalogList = analogRepositoryJdbc.saveAll(analogList);
+        List<Analog> actualAnalogList = analogRepositoryDataJdbc.saveAll(analogList);
 
         assertAll(() -> {
             assertNotNull(actualAnalogList);
@@ -70,7 +70,7 @@ class AnalogRepositoryJdbcTest {
     @Test
     @DisplayName("должен находить аналог по его идентификатору")
     void shouldFindById() {
-        Optional<Analog> actualAnalog = analogRepositoryJdbc.findById(ANALOG_ID);
+        Optional<Analog> actualAnalog = analogRepositoryDataJdbc.findById(ANALOG_ID);
 
         Analog expectedAnalog = Analog.builder()
                 .carPart(actualAnalog.get().getCarPart())

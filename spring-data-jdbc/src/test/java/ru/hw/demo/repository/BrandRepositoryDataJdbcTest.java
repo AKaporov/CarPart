@@ -15,13 +15,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 @TestPropertySource(properties = {"spring.datasource.data=brand-test.sql"})
 @DisplayName("Репозиторий по работе с Маркой автомобиля")
-class BrandRepositoryJdbcTest {
+class BrandRepositoryDataJdbcTest {
     private static final long URAL_ID = 2L;
     private static final String URAL_NAME = "Ural";
     private static final String EXPECTED_NAME = "GAZ";
 
     @Autowired
-    private BrandRepositoryJdbc repository;
+    private BrandRepositoryDataJdbc repository;
 
     @AfterEach
     void tearDown() {
