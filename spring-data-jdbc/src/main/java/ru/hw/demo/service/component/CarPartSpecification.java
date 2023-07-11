@@ -97,6 +97,7 @@
 //                    .build());
 //
 //            List<Brand> brandLst = brandRepositoryDataJdbc.findAll(exampleBrand);
+//            List<Brand> brandLst = brandRepositoryDataJdbc.findAllByNames(brandsNames);
 //            if (brandLst.isEmpty()) {
 //                return Optional.of(brand.isNull());
 //            } else {

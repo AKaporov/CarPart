@@ -9,7 +9,7 @@ drop table IF EXISTS COUNTRIES;
 
 -- марки
 create TABLE BRANDS(
-                    ID   BIGSERIAL    NOT NULL PRIMARY KEY,
+                    ID   BIGSERIAL    NOT NULL PRIMARY KEY,  --BIGSERIAL это автоикрементное поле
                     NAME VARCHAR(255) NOT NULL UNIQUE -- наименование
                    );
 
