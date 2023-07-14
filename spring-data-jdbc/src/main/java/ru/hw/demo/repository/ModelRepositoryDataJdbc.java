@@ -1,13 +1,10 @@
-//package ru.hw.demo.repository;
-//
-//import org.springframework.data.domain.Example;
-//import org.springframework.data.repository.CrudRepository;
-//import org.springframework.stereotype.Repository;
-//import ru.hw.demo.domain.Model;
-//
-//import java.util.List;
-//
-//@Repository
-//public interface ModelRepositoryDataJdbc extends CrudRepository<Model, Long> {
+package ru.hw.demo.repository;
+
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+import ru.hw.demo.domain.Model;
+
+@Repository
+public interface ModelRepositoryDataJdbc extends CrudRepository<Model, Long> {
 //    List<Model> findAll(Example<Model> example);
-//}
+}
