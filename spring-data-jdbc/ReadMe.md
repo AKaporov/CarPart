@@ -34,6 +34,7 @@ In Short :
 * [Введение в Spring Data JDBC (https://for-each.dev/)](https://for-each.dev/lessons/b/-spring-data-jdbc-intro)
 * [Введение в Spring Data JDBC (Habr)](https://habr.com/ru/companies/otus/articles/531332/)
 * [Spring Data JDBC Reference Documentation](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#repositories)
+* [9.7. Query Methods](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#jdbc.query-methods)
 * [Class JdbcTemplate](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jdbc/core/JdbcTemplate.html)
 * [Spring Boot + Spring Data JDBC + Microsoft SQL Server](https://www.knowledgefactory.net/2023/02/spring-boot-spring-data-jdbc-microsoft-sql-server-build-rest-crud-apis.html)
 * [Описание JdbcTemplate](https://docs.spring.io/spring-framework/docs/5.3.23/javadoc-api/org/springframework/jdbc/core/JdbcTemplate.html)
