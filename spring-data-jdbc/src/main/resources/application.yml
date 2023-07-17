@@ -7,7 +7,6 @@ spring:
     schema: classpath:schema.sql
     data: classpath:data.sql
     initialization-mode: always
-
   jpa:
     show-sql: false
     generate-ddl: false
@@ -16,13 +15,11 @@ spring:
     properties:
       hibernate:
         format_sql: false
-
   h2:
     console:
       path: /h2-console
       settings:
         web-allow-others: true
-
 logging:
   level:
     ROOT: ERROR

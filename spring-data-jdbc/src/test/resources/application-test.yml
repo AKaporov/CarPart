@@ -16,3 +16,17 @@ spring:
     generate-ddl: false
     hibernate:
       ddl-auto: none
+logging:
+  level:
+    org:
+      springframework:
+        jdbc:
+          core:
+            StatementCreatorUtils: TRACE # is to log parameters of prepared statements.
+            JdbcTemplate: DEBUG #is for logging statements
+#      hibernate:
+#        type:
+#          descriptor:
+#            sql:
+#              BasicBinder: TRACE #logs the prepared statement parameters
+#        SQL: DEBUG #logs the SQL queries
