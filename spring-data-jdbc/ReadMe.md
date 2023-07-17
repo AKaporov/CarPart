@@ -5,6 +5,9 @@
 		<artifactId>spring-boot-starter-data-jdbc</artifactId>
     </dependency>
 
+## Spring Data JDBC does not support many-to-one or many-to-many relationships. In order to model these, use IDs:
+* [Spring Data JDBC does not support many-to-one or many-to-many relationships](https://spring.io/blog/2018/09/24/spring-data-jdbc-references-and-aggregates)
+
 Spring Data предлагает к интерфейсу Repository также интерфейс CrudRepository, поэтому в Репозиториях можно 
 использовать CrudRepository<>. 
 
@@ -29,6 +32,8 @@ In Short :
 3. queryForList() – is used to get selected columns data of multiple rows as List.
 4. queryForMap() – is used to get selected columns data of single row as Map.
 5. queryForRowSet() – is used when you wants to work with RowSets instead of ResultSet.
+
+JdbcOperations – интерфейс для JdbcTemplate – и лучше использовать его
 
 * [Spring Data JDBC](https://spring.io/projects/spring-data-jdbc)
 * [Введение в Spring Data JDBC (https://for-each.dev/)](https://for-each.dev/lessons/b/-spring-data-jdbc-intro)
