@@ -1,8 +1,6 @@
 package ru.hw.demo.repository;
 
 import lombok.RequiredArgsConstructor;
-import org.assertj.core.util.Maps;
-import org.springframework.data.domain.Example;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -12,7 +10,10 @@ import ru.hw.demo.domain.Brand;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 @Repository
 @RequiredArgsConstructor
