@@ -7,6 +7,7 @@
 
 ## Spring Data JDBC does not support many-to-one or many-to-many relationships. In order to model these, use IDs:
 * [Spring Data JDBC does not support many-to-one or many-to-many relationships](https://spring.io/blog/2018/09/24/spring-data-jdbc-references-and-aggregates)
+* [Spring Data JDBC – Modelling and working with aggregates](https://thorben-janssen.com/spring-data-jdbc-aggregates/)
 
 Spring Data предлагает к интерфейсу Repository также интерфейс CrudRepository, поэтому в Репозиториях можно 
 использовать CrudRepository<>. 
@@ -33,9 +34,12 @@ In Short :
 4. queryForMap() – is used to get selected columns data of single row as Map.
 5. queryForRowSet() – is used when you wants to work with RowSets instead of ResultSet.
 
-JdbcOperations – интерфейс для JdbcTemplate – и лучше использовать его
+JdbcOperations – интерфейс для JdbcTemplate – и лучше использовать его.
+
+## Reference Material
 
 * [Spring Data JDBC](https://spring.io/projects/spring-data-jdbc)
+* [9.1. Why Spring Data JDBC? (reference documentation)](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#jdbc.why)
 * [Введение в Spring Data JDBC (https://for-each.dev/)](https://for-each.dev/lessons/b/-spring-data-jdbc-intro)
 * [Введение в Spring Data JDBC (Habr)](https://habr.com/ru/companies/otus/articles/531332/)
 * [Spring Data JDBC Reference Documentation](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#repositories)
@@ -43,3 +47,30 @@ JdbcOperations – интерфейс для JdbcTemplate – и лучше ис
 * [Class JdbcTemplate](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jdbc/core/JdbcTemplate.html)
 * [Spring Boot + Spring Data JDBC + Microsoft SQL Server](https://www.knowledgefactory.net/2023/02/spring-boot-spring-data-jdbc-microsoft-sql-server-build-rest-crud-apis.html)
 * [Описание JdbcTemplate](https://docs.spring.io/spring-framework/docs/5.3.23/javadoc-api/org/springframework/jdbc/core/JdbcTemplate.html)
+
+### Spring Blog
+* [Introducing Spring Data JDBC](https://spring.io/blog/2018/09/17/introducing-spring-data-jdbc)
+* [Spring Data JDBC, References, and Aggregates](https://spring.io/blog/2018/09/24/spring-data-jdbc-references-and-aggregates)
+
+### Spring Docs
+* [Spring Data Auditing](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#auditing)
+* [Lifecycle Events](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#jdbc.events)
+* [Entity Callbacks](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#entity-callbacks)
+* [Transaction Management](https://docs.spring.io/spring-framework/docs/4.2.x/spring-framework-reference/html/transaction.html)
+* [MyBatis Integration](https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#jdbc.mybatis)
+
+### GitHub
+* [spring-data-jdbc](https://github.com/spring-projects/spring-data-relational)
+* [spring-data-examples/jdbc](https://github.com/spring-projects/spring-data-examples/tree/main/jdbc)
+
+### StackOverflow
+* [Spring Data JDBC / Spring Data JPA vs Hibernate](https://stackoverflow.com/questions/42470060/spring-data-jdbc-spring-data-jpa-vs-hibernate/42488593#42488593)
+* [Can I do pagination with spring-data-jdbc?](https://stackoverflow.com/questions/55570077/can-i-do-pagination-with-spring-data-jdbc)
+* [PagingAndSortingRepository methods throw error when used with spring data jdbc](https://stackoverflow.com/questions/53088927/pagingandsortingrepository-methods-throw-error-when-used-with-spring-data-jdbc/53089091#53089091)
+
+### Pluralsight
+* [Spring Framework: Overview of Spring Data](https://app.pluralsight.com/library/courses/spring-framework-overview-spring-data/table-of-contents)
+
+### Baeldung
+* [Spring Data JPA @Query](https://www.baeldung.com/spring-data-jpa-query)
+* [Introduction to AssertJ](https://www.baeldung.com/introduction-to-assertj)
