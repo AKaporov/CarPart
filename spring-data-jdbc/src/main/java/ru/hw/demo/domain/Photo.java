@@ -20,7 +20,9 @@ import org.springframework.data.relational.core.mapping.Table;
 @NoArgsConstructor
 @Table(value = "PHOTOS")
 public class Photo {
+
     @Id
+    @Column(value = "PHOTO_ID")
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

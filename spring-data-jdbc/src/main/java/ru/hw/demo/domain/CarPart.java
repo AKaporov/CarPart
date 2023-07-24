@@ -1,12 +1,17 @@
 package ru.hw.demo.domain;
 
-import lombok.*;
+import lombok.Data;
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.jdbc.core.mapping.AggregateReference;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
+import org.springframework.util.Assert;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Artem
@@ -14,16 +19,15 @@ import java.util.List;
  * Запчасти автомобиля
  */
 
-@Builder
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(value = "CAR_PARTS")
 @ToString(exclude = {"description", "brand", "model", "engine", "country", "photoList", "analogList"})
 public class CarPart {
+
     @Id
+    @Column(value = "CAR_PART_ID")
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     /**
      * Каталожный номер
@@ -70,18 +74,16 @@ public class CarPart {
     /**
      * марка
      */
-//    @ManyToOne(targetEntity = Brand.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    @JoinColumn(name = "brand_id", nullable = false)
-     @Column(value = "BRAND_ID")
-    private Brand brand;
+    @Column(value = "BRAND_ID")
+    private AggregateReference<Brand, Long> brandRef;
 
     /**
      * модель
      */
 //    @ManyToOne(targetEntity = Model.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    @JoinColumn(name = "model_id", nullable = false)
-    @Column(value = "MODEL_ID")
-    private Model model;
+    @Column(value = "MODEL_ID_FK")
+    private AggregateReference<Model, Long> modelRef;
 
     /**
      * двигатель
@@ -89,7 +91,7 @@ public class CarPart {
 //    @ManyToOne(targetEntity = Engine.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    @JoinColumn(name = "engine_id", nullable = false)
     @Column(value = "ENGINE_ID")
-    private Engine engine;
+    private AggregateReference<Engine, Long> engineRef;
 
     /**
      * Страна производства
@@ -97,7 +99,7 @@ public class CarPart {
 //    @ManyToOne(targetEntity = Country.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    @JoinColumn(name = "country_id", nullable = false)
     @Column(value = "COUNTRY_ID")
-    private Country country;
+    private AggregateReference<Country, Long> countryRef;
 
     /**
      * фотографии
@@ -105,8 +107,8 @@ public class CarPart {
 //    @OneToMany(targetEntity = Photo.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
 //    @JoinColumn(name = "car_part_id", nullable = true)
 //    @Column(value = "CAR_PART_ID")
-    @MappedCollection(idColumn = "CAR_PART_ID_PHOTO")
-    private List<Photo> photoList;
+    @MappedCollection(idColumn = "CAR_PART_ID")
+    private final Set<Photo> photos = new HashSet<>();
 
     /**
      * аналоги
@@ -116,6 +118,80 @@ public class CarPart {
 //            joinColumns = @JoinColumn(name = "car_part_id", referencedColumnName = "id"),
 //            inverseJoinColumns = @JoinColumn(name = "analog_id", referencedColumnName = "id"))
 //    @Column(value = "CAR_PART_ID")
-    @MappedCollection(idColumn = "CAR_PART_ID_ANALOG")
-    private List<Analog> analogList;
+//    private final List<Analog> analogList;
+    @MappedCollection(idColumn = "CAR_PART_ID")
+    private final Set<Analog> analogs = new HashSet<>();
+
+
+    public void addPhoto(Photo photo) {
+        Assert.notNull(photo, "Photo must not be null");
+        Assert.notNull(photo.getId(), "Photo id, must not be null");
+
+        this.photos.add(photo);
+    }
+
+    public void addAnalog(Analog analog) {
+        this.analogs.add(analog);
+    }
+
+    public CarPart(String vendorCode,
+                   String sku,
+                   String name,
+                   String description,
+                   double price,
+                   String manufacturer,
+                   double rating,
+                   AggregateReference<Brand, Long> brandRef,
+                   AggregateReference<Model, Long> modelRef,
+                   AggregateReference<Engine, Long> engineRef,
+                   AggregateReference<Country, Long> countryRef,
+                   Set<Photo> photos,
+                   Set<Analog> analogs) {
+        this.id = null;
+        this.vendorCode = vendorCode;
+        this.sku = sku;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.manufacturer = manufacturer;
+        this.rating = rating;
+        this.brandRef = brandRef;
+        this.modelRef = modelRef;
+        this.engineRef = engineRef;
+        this.countryRef = countryRef;
+        photos.forEach(this::addPhoto);
+        analogs.forEach(this::addAnalog);
+    }
+
+    @PersistenceConstructor
+    public CarPart(Long id,
+                   String vendorCode,
+                   String sku,
+                   String name,
+                   String description,
+                   double price,
+                   String manufacturer,
+                   double rating,
+                   AggregateReference<Brand, Long> brandRef,
+                   AggregateReference<Model, Long> modelRef,
+                   AggregateReference<Engine, Long> engineRef,
+                   AggregateReference<Country, Long> countryRef,
+                   Set<Photo> photos,
+                   Set<Analog> analogs) {
+        this.id = id;
+        this.vendorCode = vendorCode;
+        this.sku = sku;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.manufacturer = manufacturer;
+        this.rating = rating;
+        this.brandRef = brandRef;
+        this.modelRef = modelRef;
+        this.engineRef = engineRef;
+        this.countryRef = countryRef;
+        photos.forEach(this::addPhoto);
+        analogs.forEach(this::addAnalog);
+    }
+
 }

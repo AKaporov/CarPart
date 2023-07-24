@@ -1,26 +1,25 @@
-//package ru.hw.demo.repository;
-//
-//import org.junit.jupiter.api.AfterEach;
-//import org.junit.jupiter.api.DisplayName;
-//import org.junit.jupiter.api.Test;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-//import ru.hw.demo.domain.*;
-//import ru.hw.demo.generate.CarPartGenerate;
-//
-//import java.util.ArrayList;
-//import java.util.List;
-//import java.util.Optional;
-//
-//import static org.assertj.core.api.Assertions.assertThat;
-//import static org.junit.jupiter.api.Assertions.assertAll;
-//import static org.junit.jupiter.api.Assertions.assertNotNull;
-//
-//@DataJpaTest
-//@DisplayName("Репозиторий по работе с Запчасти автомобиля")
-//class CarPartRepositoryDataJdbcTest {
-//    @Autowired
-//    private CarPartRepositoryDataJdbc carPartRepositoryDataJdbc;
+package ru.hw.demo.repository;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
+import org.springframework.test.context.ActiveProfiles;
+import ru.hw.demo.domain.CarPart;
+
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+@ActiveProfiles("test")
+@DataJdbcTest
+@DisplayName("Репозиторий по работе с Запчасти автомобиля")
+class CarPartRepositoryDataJdbcTest {
+    @Autowired
+    private CarPartRepositoryDataJdbc carPartRepositoryDataJdbc;
 //    @Autowired
 //    private BrandRepositoryDataJdbc brandRepositoryDataJdbc;
 //    @Autowired
@@ -31,13 +30,13 @@
 //    private ModelRepositoryDataJdbc modelRepositoryDataJdbc;
 //    @Autowired
 //    private AnalogRepositoryDataJdbc analogRepositoryDataJdbc;
-//
-//    @AfterEach
-//    void tearDown() {
+
+    @AfterEach
+    void tearDown() {
 //        carPartRepositoryDataJdbc.deleteAll();
 //        analogRepositoryDataJdbc.deleteAll();
-//    }
-//
+    }
+
 //    @Test
 //    @DisplayName("должен сохранять новую запчасть")
 //    void shouldSaveCarPart() {
@@ -94,30 +93,31 @@
 //            assertThat(actualCarPart.getAnalogList().size()).isPositive();
 //        });
 //    }
-//
-//    @Test
-//    @DisplayName("должен находить запчасть по её Идентификатору")
-//    void shouldFindCarPartById() {
-//        Optional<CarPart> actualCarPart = carPartRepositoryDataJdbc.findById(2L);
-//        assertAll(() -> {
-//            assertNotNull(actualCarPart);
-//            assertThat(actualCarPart).isNotEmpty();
-//            assertThat(actualCarPart.get().getId()).isPositive();
-//            assertThat(actualCarPart.get().getPhotoList()).isNotEmpty().hasSizeGreaterThan(0);
-//            assertThat(actualCarPart.get().getAnalogList()).isNotEmpty().hasSizeGreaterThan(0);
-//        });
-//    }
-//
-//    @Test
-//    @DisplayName("должен находить запчасть по каталожному номеру")
-//    void shouldFindCarPartByVendorCode() {
-//        Optional<CarPart> expected = carPartRepositoryDataJdbc.findById(3L);
-//
-//        Optional<CarPart> actual = carPartRepositoryDataJdbc.findByVendorCode("URL-4320-02");
-//
-//        assertThat(actual).isNotEmpty()
-//                .get()
-//                .usingRecursiveComparison()
-//                .isEqualTo(expected.get());
-//    }
-//}
+
+    @Test
+    @DisplayName("должен находить запчасть по её Идентификатору")
+    void shouldFindCarPartById() {
+        Iterable<CarPart> all = carPartRepositoryDataJdbc.findAll();
+        Optional<CarPart> actualCarPart = carPartRepositoryDataJdbc.findById(2L);
+        assertAll(() -> {
+            assertNotNull(actualCarPart);
+            assertThat(actualCarPart).isNotEmpty();
+            assertThat(actualCarPart.get().getId()).isPositive();
+            assertThat(actualCarPart.get().getPhotos()).isNotEmpty().hasSizeGreaterThan(0);
+            assertThat(actualCarPart.get().getAnalogs()).isNotEmpty().hasSizeGreaterThan(0);
+        });
+    }
+
+    @Test
+    @DisplayName("должен находить запчасть по каталожному номеру")
+    void shouldFindCarPartByVendorCode() {
+        Optional<CarPart> expected = carPartRepositoryDataJdbc.findById(3L);
+
+        Optional<CarPart> actual = carPartRepositoryDataJdbc.findByVendorCode("URL-4320-02");
+
+        assertThat(actual).isNotEmpty()
+                .get()
+                .usingRecursiveComparison()
+                .isEqualTo(expected.get());
+    }
+}

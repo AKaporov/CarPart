@@ -9,8 +9,8 @@ drop table IF EXISTS COUNTRIES;
 
 -- марки
 create TABLE BRANDS(
-                    ID   BIGSERIAL    NOT NULL PRIMARY KEY,  --BIGSERIAL это автоикрементное поле
-                    NAME VARCHAR(255) NOT NULL UNIQUE -- наименование
+                     ID   BIGSERIAL    NOT NULL PRIMARY KEY,  --BIGSERIAL это автоикрементное поле
+                     NAME VARCHAR(255) NOT NULL UNIQUE -- наименование
                    );
 
 -- модели
@@ -36,9 +36,9 @@ create TABLE COUNTRIES(
 
 -- запасные части
 create TABLE CAR_PARTS(
-                       ID           BIGSERIAL NOT NULL PRIMARY KEY,
+                       CAR_PART_ID  BIGSERIAL NOT NULL PRIMARY KEY,
                        BRAND_ID     BIGINT,  -- марка
-                       MODEL_ID     BIGINT,  -- модель
+                       MODEL_ID_FK  BIGINT,  -- модель
                        ENGINE_ID    BIGINT,  -- двигатель
                        COUNTRY_ID   BIGINT REFERENCES COUNTRIES(ID)   ON delete CASCADE,  -- страна производства
                        VENDOR_CODE  VARCHAR(50)   NOT NULL UNIQUE,   -- каталожный номер
@@ -48,17 +48,17 @@ create TABLE CAR_PARTS(
                        PRICE        FLOAT         NOT NULL,          -- стоимость
                        MANUFACTURER VARCHAR(50)   NOT NULL,          -- производитель
                        RATING       FLOAT         NOT NULL,          -- рейтинг
-                       CONSTRAINT `FK01_BRAND`  FOREIGN KEY (BRAND_ID)  REFERENCES BRANDS(ID)  ON delete CASCADE,
-                       CONSTRAINT `FK02_MODEL`  FOREIGN KEY (MODEL_ID)  REFERENCES MODELS (ID) ON delete CASCADE,
-                       CONSTRAINT `FK03_ENGINE` FOREIGN KEY (ENGINE_ID) REFERENCES ENGINES(ID) ON delete CASCADE
+                       CONSTRAINT `FK01_BRAND`  FOREIGN KEY (BRAND_ID)     REFERENCES BRANDS(ID)  ON delete CASCADE,
+                       CONSTRAINT `FK02_MODEL`  FOREIGN KEY (MODEL_ID_FK)  REFERENCES MODELS (ID) ON delete CASCADE,
+                       CONSTRAINT `FK03_ENGINE` FOREIGN KEY (ENGINE_ID)    REFERENCES ENGINES(ID) ON delete CASCADE
                       );
 
 -- фотографии
 create TABLE PHOTOS(
-                    ID          BIGSERIAL NOT NULL PRIMARY KEY,
-                    CAR_PART_ID BIGINT,  -- запасная часть
-                    URL         VARCHAR(8000),
-                    FOREIGN KEY(CAR_PART_ID) REFERENCES CAR_PARTS(ID) ON delete CASCADE
+                     PHOTO_ID          BIGSERIAL NOT NULL PRIMARY KEY,
+                     CAR_PART_ID BIGINT,  -- запасная часть
+                     URL         VARCHAR(8000),
+                     CONSTRAINT `FK01_PHOTO`  FOREIGN KEY (CAR_PART_ID) REFERENCES CAR_PARTS(CAR_PART_ID) ON delete CASCADE
                    );
 
 -- аналоги
@@ -67,7 +67,7 @@ create TABLE ANALOGS
                ID          BIGSERIAL NOT NULL PRIMARY KEY,
                CAR_PART_ID BIGINT,                            -- вся информация по самой запасной части
                VENDOR      VARCHAR(255)  NOT NULL,            -- продавец
-               FOREIGN KEY (CAR_PART_ID) REFERENCES CAR_PARTS(ID) ON delete CASCADE
+               FOREIGN KEY (CAR_PART_ID) REFERENCES CAR_PARTS(CAR_PART_ID) ON delete CASCADE
              );
 
 create TABLE CAR_PART_ANALOGS
@@ -75,6 +75,6 @@ create TABLE CAR_PART_ANALOGS
                CAR_PART_ID BIGINT ,                  -- запасная часть
                ANALOG_ID   BIGINT,                   -- аналог запасной части
                PRIMARY KEY (CAR_PART_ID, ANALOG_ID),
-               FOREIGN KEY (CAR_PART_ID) REFERENCES CAR_PARTS(ID) ON delete CASCADE,
+               FOREIGN KEY (CAR_PART_ID) REFERENCES CAR_PARTS(CAR_PART_ID) ON delete CASCADE,
                FOREIGN KEY (ANALOG_ID)   REFERENCES ANALOGS(ID)
              );

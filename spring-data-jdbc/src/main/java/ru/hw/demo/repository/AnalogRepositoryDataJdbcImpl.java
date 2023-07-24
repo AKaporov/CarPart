@@ -7,7 +7,7 @@ import ru.hw.demo.domain.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +21,7 @@ public class AnalogRepositoryDataJdbcImpl implements AnalogRepositoryDataJdbc {
     public Optional<Analog> findById(Long id) {
         List<Analog> analogList = jdbcTemplate.query("select a.id as analog_id, a.vendor as analog_vendor, " +
 // car_parts
-                "cp.id as car_part_id, cp.vendor_code as car_part_vendor_code, cp.sku as car_part_sku, " +
+                "cp.car_part_id as car_part_id, cp.vendor_code as car_part_vendor_code, cp.sku as car_part_sku, " +
                 "cp.name as car_part_name, cp.description as car_part_description, cp.price as car_part_price, " +
                 "cp.manufacturer as car_part_manufacturer, cp.rating as car_part_rating, " +
 // brands
@@ -34,7 +34,7 @@ public class AnalogRepositoryDataJdbcImpl implements AnalogRepositoryDataJdbc {
                 "c.id as country_id, c.name as country_name, " +
                 " from analogs a " +
                 "inner join car_parts cp " +
-                "        on cp.id = a.car_part_id " +
+                "        on cp.car_part_id = a.car_part_id " +
                 "inner join brands b " +
                 "        on b.id = cp.brand_id " +
                 "inner join models m " +
@@ -66,23 +66,20 @@ public class AnalogRepositoryDataJdbcImpl implements AnalogRepositoryDataJdbc {
                 .id(resultSet.getLong("country_id"))
                 .name(resultSet.getString("country_name"))
                 .build();
-        CarPart carPart = CarPart.builder()
-                .id(resultSet.getLong("car_part_id"))
-                .vendorCode(resultSet.getString("car_part_vendor_code"))
-                .sku(resultSet.getString("car_part_sku"))
-                .name(resultSet.getString("car_part_name"))
-                .description(resultSet.getString("car_part_description"))
-                .price(resultSet.getDouble("car_part_price"))
-                .manufacturer(resultSet.getString("car_part_manufacturer"))
-                .rating(resultSet.getDouble("car_part_rating"))
-                .brand(brand)
-                .model(model)
-                .engine(engine)
-                .country(country)
-                .analogList(new ArrayList<>(1))
-                .photoList(new ArrayList<>(1))
-                .build();
-
+        CarPart carPart = new CarPart(resultSet.getLong("car_part_id"),
+                resultSet.getString("car_part_vendor_code"),
+                resultSet.getString("car_part_sku"),
+                resultSet.getString("car_part_name"),
+                resultSet.getString("car_part_description"),
+                resultSet.getDouble("car_part_price"),
+                resultSet.getString("car_part_manufacturer"),
+                resultSet.getDouble("car_part_rating"),
+                brand::getId,
+                model::getId,
+                engine::getId,
+                () -> country.getId(),
+                new HashSet<>(1),
+                new HashSet<>(1));
         return Analog.builder()
                 .id(resultSet.getLong("analog_id"))
                 .vendor(resultSet.getString("analog_vendor"))

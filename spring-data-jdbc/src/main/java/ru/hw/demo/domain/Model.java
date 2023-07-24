@@ -1,9 +1,6 @@
 package ru.hw.demo.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
@@ -16,25 +13,25 @@ import org.springframework.data.relational.core.mapping.Table;
 
 @Builder
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Table(value = "MODELS")
 public class Model {
+
     @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private final Long id;
 
     /**
      * Наименование
      */
 //    @Column(name = "name", nullable = false, unique = true)
     @Column(value = "NAME")
-    private String name;
+    private final String name;
 
     /**
      * Год выпуска
      */
 //    @Column(name = "year_release", nullable = false, unique = false)
     @Column(value = "YEAR_RELEASE")
-    private Integer yearRelease;
+    private final Integer yearRelease;
 }

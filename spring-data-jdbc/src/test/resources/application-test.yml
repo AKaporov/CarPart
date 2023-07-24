@@ -11,11 +11,11 @@ spring:
       path: /h2-console
       settings:
         web-allow-others: true
-  jpa:
-    show-sql: true
-    generate-ddl: false
-    hibernate:
-      ddl-auto: none
+#  jpa:
+#    show-sql: true
+#    generate-ddl: false
+#    hibernate:
+#      ddl-auto: none
 logging:
   level:
     org.springframework.jdbc.core:
