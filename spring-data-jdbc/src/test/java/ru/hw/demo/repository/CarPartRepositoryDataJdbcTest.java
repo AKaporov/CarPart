@@ -97,7 +97,7 @@ class CarPartRepositoryDataJdbcTest {
     @Test
     @DisplayName("должен находить запчасть по её Идентификатору")
     void shouldFindCarPartById() {
-        Iterable<CarPart> all = carPartRepositoryDataJdbc.findAll();
+//        Iterable<CarPart> all = carPartRepositoryDataJdbc.findAll();
         Optional<CarPart> actualCarPart = carPartRepositoryDataJdbc.findById(2L);
         assertAll(() -> {
             assertNotNull(actualCarPart);

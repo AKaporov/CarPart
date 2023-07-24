@@ -10,6 +10,7 @@ import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.util.Assert;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -120,7 +121,7 @@ public class CarPart {
 //    @Column(value = "CAR_PART_ID")
 //    private final List<Analog> analogList;
     @MappedCollection(idColumn = "CAR_PART_ID")
-    private final Set<Analog> analogs = new HashSet<>();
+    private final Set<AnalogRef> analogs = new HashSet<>();
 
 
     public void addPhoto(Photo photo) {
@@ -131,7 +132,17 @@ public class CarPart {
     }
 
     public void addAnalog(Analog analog) {
-        this.analogs.add(analog);
+//        this.analogs.add(analog);
+        this.analogs.add(craeteAnalogRef(analog));
+    }
+
+    private AnalogRef craeteAnalogRef(Analog analog) {
+        Assert.notNull(analog, "Analog must not be null");
+        Assert.notNull(analog.getId(), "Analog id, must not be null");
+
+        AnalogRef analogRef = new AnalogRef();
+        analogRef.setAnalogId(analog.getId());
+        return analogRef;
     }
 
     public CarPart(String vendorCode,
@@ -144,9 +155,10 @@ public class CarPart {
                    AggregateReference<Brand, Long> brandRef,
                    AggregateReference<Model, Long> modelRef,
                    AggregateReference<Engine, Long> engineRef,
-                   AggregateReference<Country, Long> countryRef,
-                   Set<Photo> photos,
-                   Set<Analog> analogs) {
+                   AggregateReference<Country, Long> countryRef
+//                   Collection<Photo> photos,
+//                   Collection<Analog> analogs
+    ) {
         this.id = null;
         this.vendorCode = vendorCode;
         this.sku = sku;
@@ -159,8 +171,8 @@ public class CarPart {
         this.modelRef = modelRef;
         this.engineRef = engineRef;
         this.countryRef = countryRef;
-        photos.forEach(this::addPhoto);
-        analogs.forEach(this::addAnalog);
+//        photos.forEach(this::addPhoto);
+//        analogs.forEach(this::addAnalog);
     }
 
     @PersistenceConstructor
@@ -176,8 +188,8 @@ public class CarPart {
                    AggregateReference<Model, Long> modelRef,
                    AggregateReference<Engine, Long> engineRef,
                    AggregateReference<Country, Long> countryRef,
-                   Set<Photo> photos,
-                   Set<Analog> analogs) {
+                   Collection<Photo> photos,
+                   Collection<Analog> analogs) {
         this.id = id;
         this.vendorCode = vendorCode;
         this.sku = sku;
