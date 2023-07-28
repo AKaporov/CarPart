@@ -66,20 +66,36 @@ public class AnalogRepositoryDataJdbcImpl implements AnalogRepositoryDataJdbc {
                 .id(resultSet.getLong("country_id"))
                 .name(resultSet.getString("country_name"))
                 .build();
-        CarPart carPart = new CarPart(resultSet.getLong("car_part_id"),
-                resultSet.getString("car_part_vendor_code"),
-                resultSet.getString("car_part_sku"),
-                resultSet.getString("car_part_name"),
-                resultSet.getString("car_part_description"),
-                resultSet.getDouble("car_part_price"),
-                resultSet.getString("car_part_manufacturer"),
-                resultSet.getDouble("car_part_rating"),
-                brand::getId,
-                model::getId,
-                engine::getId,
-                () -> country.getId(),
-                new HashSet<>(1),
-                new HashSet<>(1));
+//        CarPart carPart = new CarPart(resultSet.getLong("car_part_id"),
+//                resultSet.getString("car_part_vendor_code"),
+//                resultSet.getString("car_part_sku"),
+//                resultSet.getString("car_part_name"),
+//                resultSet.getString("car_part_description"),
+//                resultSet.getDouble("car_part_price"),
+//                resultSet.getString("car_part_manufacturer"),
+//                resultSet.getDouble("car_part_rating"),
+//                brand::getId,
+//                model::getId,
+//                engine::getId,
+//                () -> country.getId(),
+//                new HashSet<>(1),
+//                new HashSet<>(1));
+        CarPart carPart = CarPart.builder()
+                .id(resultSet.getLong("car_part_id"))
+                .vendorCode(resultSet.getString("car_part_vendor_code"))
+                .sku(resultSet.getString("car_part_sku"))
+                .name(resultSet.getString("car_part_name"))
+                .description(resultSet.getString("car_part_description"))
+                .price(resultSet.getDouble("car_part_price"))
+                .manufacturer(resultSet.getString("car_part_manufacturer"))
+                .rating(resultSet.getDouble("car_part_rating"))
+                .brandRef(brand::getId)
+                .modelRef(model::getId)
+                .engineRef(engine::getId)
+                .countryRef(() -> country.getId())
+                .photos(new HashSet<>(1))
+                .analogs(new HashSet<>(1))
+                .build();
         return Analog.builder()
                 .id(resultSet.getLong("analog_id"))
                 .vendor(resultSet.getString("analog_vendor"))
