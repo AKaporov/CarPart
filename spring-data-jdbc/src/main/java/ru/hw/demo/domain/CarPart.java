@@ -1,16 +1,13 @@
 package ru.hw.demo.domain;
 
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.jdbc.core.mapping.AggregateReference;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.util.Assert;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,6 +17,9 @@ import java.util.Set;
  * Запчасти автомобиля
  */
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Data
 @Table(value = "CAR_PARTS")
 @ToString(exclude = {"description", "brand", "model", "engine", "country", "photoList", "analogList"})
@@ -109,7 +109,7 @@ public class CarPart {
 //    @JoinColumn(name = "car_part_id", nullable = true)
 //    @Column(value = "CAR_PART_ID")
     @MappedCollection(idColumn = "CAR_PART_ID")
-    private final Set<Photo> photos = new HashSet<>();
+    private Set<Photo> photos = new HashSet<>();
 
     /**
      * аналоги
@@ -121,7 +121,7 @@ public class CarPart {
 //    @Column(value = "CAR_PART_ID")
 //    private final List<Analog> analogList;
     @MappedCollection(idColumn = "CAR_PART_ID")
-    private final Set<AnalogRef> analogs = new HashSet<>();
+    private Set<AnalogRef> analogs = new HashSet<>();
 
 
     public void addPhoto(Photo photo) {
@@ -131,79 +131,83 @@ public class CarPart {
         this.photos.add(photo);
     }
 
-    public void addAnalog(Analog analog) {
-//        this.analogs.add(analog);
-        this.analogs.add(craeteAnalogRef(analog));
+    public void addAnalog(AnalogRef analogRef) {
+        Assert.notNull(analogRef, "AnalogRef must not be null");
+        Assert.notNull(analogRef.getAnalogId(), "AnalogRef analog_id, must not be null");
+
+        this.analogs.add(analogRef);
+//        this.analogs.add(craeteAnalogRef(analog));
     }
 
-    private AnalogRef craeteAnalogRef(Analog analog) {
-        Assert.notNull(analog, "Analog must not be null");
-        Assert.notNull(analog.getId(), "Analog id, must not be null");
+//    private AnalogRef craeteAnalogRef(Analog analog) {
+//        Assert.notNull(analog, "Analog must not be null");
+//        Assert.notNull(analog.getId(), "Analog id, must not be null");
+//
+//        AnalogRef analogRef = new AnalogRef();
+//        analogRef.setAnalogId(analog.getId());
+//        return analogRef;
+//    }
 
-        AnalogRef analogRef = new AnalogRef();
-        analogRef.setAnalogId(analog.getId());
-        return analogRef;
-    }
-
-    public CarPart(String vendorCode,
-                   String sku,
-                   String name,
-                   String description,
-                   double price,
-                   String manufacturer,
-                   double rating,
-                   AggregateReference<Brand, Long> brandRef,
-                   AggregateReference<Model, Long> modelRef,
-                   AggregateReference<Engine, Long> engineRef,
-                   AggregateReference<Country, Long> countryRef
+//    public CarPart(Long id,
+//            String vendorCode,
+//                   String sku,
+//                   String name,
+//                   String description,
+//                   double price,
+//                   String manufacturer,
+//                   double rating,
+//                   AggregateReference<Brand, Long> brandRef,
+//                   AggregateReference<Model, Long> modelRef,
+//                   AggregateReference<Engine, Long> engineRef,
+//                   AggregateReference<Country, Long> countryRef,
 //                   Collection<Photo> photos,
-//                   Collection<Analog> analogs
-    ) {
-        this.id = null;
-        this.vendorCode = vendorCode;
-        this.sku = sku;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.manufacturer = manufacturer;
-        this.rating = rating;
-        this.brandRef = brandRef;
-        this.modelRef = modelRef;
-        this.engineRef = engineRef;
-        this.countryRef = countryRef;
+//                   Collection<AnalogRef> analogs
+//    ) {
+//        this.id = id;
+//        this.vendorCode = vendorCode;
+//        this.sku = sku;
+//        this.name = name;
+//        this.description = description;
+//        this.price = price;
+//        this.manufacturer = manufacturer;
+//        this.rating = rating;
+//        this.brandRef = brandRef;
+//        this.modelRef = modelRef;
+//        this.engineRef = engineRef;
+//        this.countryRef = countryRef;
 //        photos.forEach(this::addPhoto);
 //        analogs.forEach(this::addAnalog);
-    }
+//    }
 
-    @PersistenceConstructor
-    public CarPart(Long id,
-                   String vendorCode,
-                   String sku,
-                   String name,
-                   String description,
-                   double price,
-                   String manufacturer,
-                   double rating,
-                   AggregateReference<Brand, Long> brandRef,
-                   AggregateReference<Model, Long> modelRef,
-                   AggregateReference<Engine, Long> engineRef,
-                   AggregateReference<Country, Long> countryRef,
-                   Collection<Photo> photos,
-                   Collection<Analog> analogs) {
-        this.id = id;
-        this.vendorCode = vendorCode;
-        this.sku = sku;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.manufacturer = manufacturer;
-        this.rating = rating;
-        this.brandRef = brandRef;
-        this.modelRef = modelRef;
-        this.engineRef = engineRef;
-        this.countryRef = countryRef;
-        photos.forEach(this::addPhoto);
-        analogs.forEach(this::addAnalog);
-    }
+//    @PersistenceConstructor
+//    public CarPart(Long id,
+//                   String vendorCode,
+//                   String sku,
+//                   String name,
+//                   String description,
+//                   double price,
+//                   String manufacturer,
+//                   double rating,
+//                   AggregateReference<Brand, Long> brandRef,
+//                   AggregateReference<Model, Long> modelRef,
+//                   AggregateReference<Engine, Long> engineRef,
+//                   AggregateReference<Country, Long> countryRef,
+//                   Collection<Photo> photos,
+//                   Collection<AnalogRef> analogs) {
+//        this.id = id;
+//        this.vendorCode = vendorCode;
+//        this.sku = sku;
+//        this.name = name;
+//        this.description = description;
+//        this.price = price;
+//        this.manufacturer = manufacturer;
+//        this.rating = rating;
+//        this.brandRef = brandRef;
+//        this.modelRef = modelRef;
+//        this.engineRef = engineRef;
+//        this.countryRef = countryRef;
+//        photos.forEach(this::addPhoto);
+//        analogs.forEach(this::addAnalog);
+//    }
 
 }
