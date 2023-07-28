@@ -3,13 +3,16 @@ package ru.hw.demo.repository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import ru.hw.demo.constant.MainConstant;
 import ru.hw.demo.domain.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -19,31 +22,7 @@ public class AnalogRepositoryDataJdbcImpl implements AnalogRepositoryDataJdbc {
 
     @Override
     public Optional<Analog> findById(Long id) {
-        List<Analog> analogList = jdbcTemplate.query("select a.id as analog_id, a.vendor as analog_vendor, " +
-// car_parts
-                "cp.car_part_id as car_part_id, cp.vendor_code as car_part_vendor_code, cp.sku as car_part_sku, " +
-                "cp.name as car_part_name, cp.description as car_part_description, cp.price as car_part_price, " +
-                "cp.manufacturer as car_part_manufacturer, cp.rating as car_part_rating, " +
-// brands
-                "b.id as brand_id, b.name as brand_name, " +
-// models
-                "m.id as model_id, m.name as model_name, m.year_release as model_year_release, " +
-// engines
-                "e.id as engine_id, e.name as engine_name, " +
-// countries
-                "c.id as country_id, c.name as country_name, " +
-                " from analogs a " +
-                "inner join car_parts cp " +
-                "        on cp.car_part_id = a.car_part_id " +
-                "inner join brands b " +
-                "        on b.id = cp.brand_id " +
-                "inner join models m " +
-                "        on m.id = cp.model_id " +
-                "inner join engines e " +
-                "        on e.id = cp.engine_id " +
-                "inner join countries c " +
-                "        on c.id = cp.country_id" +
-                " where a.id = ?", this::mapRowToAnalog, id);
+        List<Analog> analogList = jdbcTemplate.query(MainConstant.SQL_SELECT_ANALOG_WITH_ALL_RELATED_INFO, this::mapRowToAnalog, id);
 
         return analogList.isEmpty() ? Optional.empty() : Optional.ofNullable(analogList.get(0));
     }
@@ -105,7 +84,10 @@ public class AnalogRepositoryDataJdbcImpl implements AnalogRepositoryDataJdbc {
 
     @Override
     public List<Analog> saveAll(List<Analog> analogList) {
-        return null;
+        return analogList.stream()
+                .map(this::save)
+                .peek(System.out::println)
+                .collect(Collectors.toCollection(() -> new ArrayList<>(analogList.size())));
     }
 
     @Override
@@ -132,5 +114,33 @@ public class AnalogRepositoryDataJdbcImpl implements AnalogRepositoryDataJdbc {
     private void deleteAnalogAll() {
         jdbcTemplate.update("delete from car_part_analogs where analog_id > 0");
         jdbcTemplate.update("delete from analogs where id > 0");
+    }
+
+    private Analog save(Analog analog) {
+        jdbcTemplate.update(MainConstant.SQL_INSERT_ANALOG,
+                analog.getCarPart().getId(),
+                analog.getVendor()
+        );
+
+        Long analogId = findIdByCarPartIdAndVendor(analog.getCarPart().getId(), analog.getVendor()).orElse(null);
+        analog.setId(analogId);
+
+        return analog;
+    }
+
+    private Optional<Long> findIdByCarPartIdAndVendor(Long carPartId, String vendor) {
+        List<Long> resultList = jdbcTemplate.query("select a.id as analog_id" +
+                        "  from analogs a" +
+                        " where a.CAR_PART_ID = ?" +
+                        "   and a.vendor      = ?",
+                this::mapRowToLong,
+                carPartId,
+                vendor
+        );
+        return resultList.isEmpty() ? Optional.empty() : Optional.ofNullable(resultList.get(0));
+    }
+
+    private Long mapRowToLong(ResultSet resultSet, int i) throws SQLException {
+        return resultSet.getLong("analog_id");
     }
 }

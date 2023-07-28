@@ -18,7 +18,7 @@ insert into COUNTRIES(NAME) values('Russia');
 insert into CAR_PARTS
             (
               BRAND_ID,
-              MODEL_ID,
+              MODEL_ID_FK,
               ENGINE_ID,
               COUNTRY_ID,
               VENDOR_CODE,
@@ -48,7 +48,7 @@ insert into CAR_PARTS
 insert into CAR_PARTS
             (
               BRAND_ID,
-              MODEL_ID,
+              MODEL_ID_FK,
               ENGINE_ID,
               COUNTRY_ID,
               VENDOR_CODE,
@@ -78,7 +78,7 @@ insert into CAR_PARTS
 insert into CAR_PARTS
             (
               BRAND_ID,
-              MODEL_ID,
+              MODEL_ID_FK,
               ENGINE_ID,
               COUNTRY_ID,
               VENDOR_CODE,

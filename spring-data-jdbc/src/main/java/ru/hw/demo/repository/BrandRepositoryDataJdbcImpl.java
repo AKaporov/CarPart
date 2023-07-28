@@ -36,7 +36,7 @@ public class BrandRepositoryDataJdbcImpl implements BrandRepositoryDataJdbc {
 
     @Override
     public void deleteAll() {
-        jdbcTemplate.update("delete from brands");
+        jdbcTemplate.update("delete from brands where id > 0");
     }
 
     @Override
