@@ -1,7 +1,7 @@
 package ru.hw.demo.generate;
 
 import lombok.RequiredArgsConstructor;
-import ru.hw.demo.domain.*;
+import ru.hw.demo.domain.CarPart;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -37,10 +37,11 @@ public class CarPartGenerate {
 
     public static CarPart getMoskvich2141(Long id) {
         CarPart carPart = CarPart.builder()
-                .brandRef(() -> Brand.builder().id(91L).name("Moskvich").build().getId())
-                .modelRef(() -> Model.builder().id(92L).name("Moskvich 2141").yearRelease(2000).build().getId())
-                .engineRef(() -> Engine.builder().id(93L).name("Petrol Turbocharged").build().getId())
-                .countryRef(() -> Country.builder().id(94L).name("Lithuania").build().getId())
+                .id(null)
+                .brandRef(null)
+                .modelRef(null)
+                .engineRef(null)
+                .countryRef(null)
                 .photos(null)
                 .analogs(null)
                 .name("Trunk lid for Moskvich 2141")
