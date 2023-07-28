@@ -8,7 +8,6 @@ import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.util.Assert;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -22,7 +21,7 @@ import java.util.Set;
 @Builder
 @Data
 @Table(value = "CAR_PARTS")
-@ToString(exclude = {"description", "brand", "model", "engine", "country", "photoList", "analogList"})
+@ToString(exclude = {"description", "brandRef", "modelRef", "engineRef", "countryRef", "photos", "analogs"})
 public class CarPart {
 
     @Id
@@ -109,7 +108,7 @@ public class CarPart {
 //    @JoinColumn(name = "car_part_id", nullable = true)
 //    @Column(value = "CAR_PART_ID")
     @MappedCollection(idColumn = "CAR_PART_ID")
-    private Set<Photo> photos = new HashSet<>();
+    private Set<Photo> photos;  // Я не понял почему, если сделать List<Photo>, то НЕ работает(Column "PHOTOS.CAR_PARTS_KEY" not found;)! Система ожидает поле "CAR_PARTS_KEY" в таблице "PHOTOS"."CAR_PARTS_KEY"
 
     /**
      * аналоги
@@ -121,7 +120,7 @@ public class CarPart {
 //    @Column(value = "CAR_PART_ID")
 //    private final List<Analog> analogList;
     @MappedCollection(idColumn = "CAR_PART_ID")
-    private Set<AnalogRef> analogs = new HashSet<>();
+    private Set<AnalogRef> analogs;  // Я не понял почему, если сделать List<AnalogRef> или Collection<AnalogRef>, то НЕ работает (Column "CAR_PART_ANALOGS.CAR_PARTS_KEY" not found;)!  Система ожидает поле "CAR_PARTS_KEY" в таблице "CAR_PART_ANALOGS"."CAR_PARTS_KEY"
 
 
     public void addPhoto(Photo photo) {
@@ -148,8 +147,7 @@ public class CarPart {
 //        return analogRef;
 //    }
 
-//    public CarPart(Long id,
-//            String vendorCode,
+//    public CarPart(String vendorCode,
 //                   String sku,
 //                   String name,
 //                   String description,
@@ -163,7 +161,7 @@ public class CarPart {
 //                   Collection<Photo> photos,
 //                   Collection<AnalogRef> analogs
 //    ) {
-//        this.id = id;
+//        this.id = null;
 //        this.vendorCode = vendorCode;
 //        this.sku = sku;
 //        this.name = name;
