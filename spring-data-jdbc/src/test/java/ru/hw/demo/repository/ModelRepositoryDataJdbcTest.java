@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
+import ru.hw.demo.domain.Country;
 import ru.hw.demo.domain.Model;
 
 import java.util.Optional;
@@ -57,5 +58,12 @@ class ModelRepositoryDataJdbcTest {
                 .yearRelease(1977)
                 .build();
         assertEquals(Optional.of(expectedModel), actualModel);
+    }
+
+    @Test
+    @DisplayName("не должен находить модель по переданному идентификатору")
+    void shouldNotFoundModelByNotValidId() {
+        Optional<Model> actualModel = repository.findById(101L);
+        assertTrue(actualModel.isEmpty());
     }
 }

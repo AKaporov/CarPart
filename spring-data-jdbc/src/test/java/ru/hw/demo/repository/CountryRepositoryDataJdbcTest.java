@@ -43,7 +43,6 @@ class CountryRepositoryDataJdbcTest {
 
         assertThat(actualCountry).isPresent()
                 .get()
-                .usingRecursiveComparison()
                 .isEqualTo(expectedCountry);
     }
 
@@ -51,7 +50,6 @@ class CountryRepositoryDataJdbcTest {
     @DisplayName("не должен находить страну по переданному идентификатору")
     void shouldNotFoundCountryByNotValidId() {
         Optional<Country> actualCountry = repository.findById(101L);
-
         assertTrue(actualCountry.isEmpty());
     }
 
@@ -69,17 +67,5 @@ class CountryRepositoryDataJdbcTest {
             assertNotNull(actualCountry.getId());
             assertEquals(EXPECTED_NAME, actualCountry.getName());
         });
-    }
-
-    @Test
-    @DisplayName("должен находить страну по её идентификатору")
-    void shouldFindById() {
-        Optional<Country> actualCountry = repository.findById(BELARUS_ID);
-
-        Country expectedCountry = Country.builder()
-                .id(BELARUS_ID)
-                .name(BELARUS_NAME)
-                .build();
-        assertEquals(Optional.of(expectedCountry), actualCountry);
     }
 }

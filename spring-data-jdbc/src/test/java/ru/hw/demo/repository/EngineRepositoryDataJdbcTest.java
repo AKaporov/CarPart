@@ -62,4 +62,11 @@ class EngineRepositoryDataJdbcTest {
                 .build();
         assertEquals(Optional.of(expectedEngine), actualEngine);
     }
+
+    @Test
+    @DisplayName("не должен находить двигатель, если передан не корректный идентификатор")
+    void shouldNotFoundEngineByNotValidId() {
+        Optional<Engine> actualEngine = repository.findById(101L);
+        assertTrue(actualEngine.isEmpty());
+    }
 }
