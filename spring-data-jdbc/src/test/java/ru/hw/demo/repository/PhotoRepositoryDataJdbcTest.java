@@ -17,7 +17,7 @@ import java.util.Optional;
 @ActiveProfiles("test")
 @DataJdbcTest
 @TestPropertySource(properties = {"spring.datasource.data=photo-test.sql"})
-@DisplayName("Репозиторий по работе с Фотографиями")
+@DisplayName("Репозиторий на основе Data JDBC по работе с объектом Фотография")
 class PhotoRepositoryDataJdbcTest {
 
     @Autowired

@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ActiveProfiles("test")
 @DataJdbcTest
-@DisplayName("Репозиторий по работе с Запчасти автомобиля")
+@DisplayName("Репозиторий на основе Data JDBC по работе с объектом Запчасти автомобиля")
 class CarPartRepositoryDataJdbcTest {
     @Autowired
     private CarPartRepositoryDataJdbc carPartRepositoryDataJdbc;
