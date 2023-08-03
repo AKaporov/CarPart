@@ -169,4 +169,42 @@ class CarPartRepositoryDataJdbcTest {
 
         assertThat(actualCartPart).isNotPresent();
     }
+
+    @Test
+    @DisplayName("должен находить все автозапчасти по переданному списку моделей")
+    void shouldFindAllCarPartByBrands() {
+        Brand ural = brandRepositoryDataJdbc.findByName("Ural").get();
+        Brand kamaz = brandRepositoryDataJdbc.findByName("Kamaz").get();
+        List<Brand> brands = new ArrayList<>(2);
+        brands.add(ural);
+        brands.add(kamaz);
+
+        Set<CarPart> actualCarParts = carPartRepositoryDataJdbc.findAllByBrandRef(brands);
+
+        // Kamaz
+        CarPart cp4 = carPartRepositoryDataJdbc.findById(4L).get();
+        CarPart cp5 = carPartRepositoryDataJdbc.findById(5L).get();
+        CarPart cp6 = carPartRepositoryDataJdbc.findById(6L).get();
+        CarPart cp8 = carPartRepositoryDataJdbc.findById(8L).get();
+        CarPart cp9 = carPartRepositoryDataJdbc.findById(9L).get();
+
+        // Ural
+        CarPart cp2 = carPartRepositoryDataJdbc.findById(2L).get();
+        CarPart cp3 = carPartRepositoryDataJdbc.findById(3L).get();
+        CarPart cp10 = carPartRepositoryDataJdbc.findById(10L).get();
+
+        Set<CarPart> expectedCarParts = new HashSet<>(2);
+        expectedCarParts.add(cp4);
+        expectedCarParts.add(cp5);
+        expectedCarParts.add(cp6);
+        expectedCarParts.add(cp8);
+        expectedCarParts.add(cp9);
+        expectedCarParts.add(cp2);
+        expectedCarParts.add(cp3);
+        expectedCarParts.add(cp10);
+
+        assertThat(actualCarParts).isNotEmpty()
+                .containsExactlyInAnyOrderElementsOf(expectedCarParts);
+
+    }
 }

@@ -22,5 +22,5 @@ public interface CarPartRepositoryDataJdbc extends CrudRepository<CarPart, Long>
      * @param brands список моделей
      * @return возвращает найденный список автозапчастей по {@code brands}.
      */
-    Set<CarPart> findAllByBrand(List<Brand> brands);
+    Set<CarPart> findAllByBrandRef(List<Brand> brands);
 }
