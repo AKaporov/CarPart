@@ -55,31 +55,31 @@ class CountryRepositoryDataJdbcTest {
         assertTrue(actualCountry.isEmpty());
     }
 
-//    @Test
-//    @DisplayName("должен корректно сохранять новую страну производителя")
-//    void shouldSave() {
-//        Country country = Country.builder()
-//                .name(EXPECTED_NAME)
-//                .build();
-//
-//        Country actualCountry = repository.save(country);
-//
-//        assertAll(() -> {
-//            assertNotNull(actualCountry);
-//            assertNotNull(actualCountry.getId());
-//            assertEquals(EXPECTED_NAME, actualCountry.getName());
-//        });
-//    }
-//
-//    @Test
-//    @DisplayName("должен находить страну по её идентификатору")
-//    void shouldFindById() {
-//        Optional<Country> actualCountry = repository.findById(BELARUS_ID);
-//
-//        Country expectedCountry = Country.builder()
-//                .id(BELARUS_ID)
-//                .name(BELARUS_NAME)
-//                .build();
-//        assertEquals(Optional.of(expectedCountry), actualCountry);
-//    }
+    @Test
+    @DisplayName("должен корректно сохранять новую страну производителя")
+    void shouldSave() {
+        Country country = Country.builder()
+                .name(EXPECTED_NAME)
+                .build();
+
+        Country actualCountry = repository.save(country);
+
+        assertAll(() -> {
+            assertNotNull(actualCountry);
+            assertNotNull(actualCountry.getId());
+            assertEquals(EXPECTED_NAME, actualCountry.getName());
+        });
+    }
+
+    @Test
+    @DisplayName("должен находить страну по её идентификатору")
+    void shouldFindById() {
+        Optional<Country> actualCountry = repository.findById(BELARUS_ID);
+
+        Country expectedCountry = Country.builder()
+                .id(BELARUS_ID)
+                .name(BELARUS_NAME)
+                .build();
+        assertEquals(Optional.of(expectedCountry), actualCountry);
+    }
 }
