@@ -10,6 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import ru.hw.demo.domain.Brand;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -115,8 +116,7 @@ class BrandRepositoryDataJdbcImplTest {
         Brand volgaBrand = Brand.builder().id(VOLGA_ID).name(VOLGA_NAME).build();
         List<Brand> expectedBrands = List.of(volgaBrand, kamazBrand, uralBrand);
 
-        assertThat(actualBrands).isNotEmpty().hasSize(expectedBrands.size())
-                .usingRecursiveFieldByFieldElementComparator()
+        assertThat(actualBrands).isNotEmpty()
                 .containsExactlyInAnyOrderElementsOf(expectedBrands);
     }
 
@@ -136,8 +136,24 @@ class BrandRepositoryDataJdbcImplTest {
         List<Brand> actualBrandList = repository.findAllByNames(names);
 
         List<Brand> expectedBrandList = List.of(volgaBrand, uralBrand);
-        assertThat(actualBrandList).isNotEmpty().hasSize(expectedBrandList.size())
-                .usingRecursiveFieldByFieldElementComparator()
+        assertThat(actualBrandList).isNotEmpty()
                 .containsExactlyInAnyOrderElementsOf(expectedBrandList);
+    }
+
+    @Test
+    @DisplayName("должен находить все марки по списку идентификаторов")
+    void shouldFindAllByIds() {
+        Brand ural = repository.findByName("Ural").get();
+        Brand volga = repository.findByName("Volga").get();
+
+        Set<Long> ids = new HashSet<>(2);
+        ids.add(ural.getId());
+        ids.add(volga.getId());
+
+        List<Brand> actualBrands = repository.findAllById(ids);
+
+        List<Brand> expectedBrands = List.of(volga, ural);
+        assertThat(actualBrands).isNotEmpty()
+                .containsExactlyInAnyOrderElementsOf(expectedBrands);
     }
 }

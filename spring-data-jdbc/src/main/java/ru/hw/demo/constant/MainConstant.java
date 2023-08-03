@@ -74,4 +74,13 @@ public class MainConstant {
                     " inner join countries c " +
                     "         on c.id = cp.country_id" +
                     " where a.id = ?";
+
+
+    /**
+     * Поиск всех существующих Аналогов
+     */
+    public static final String SQL_SELECT_ANALOG_ALL = "select a.id as analog_id, a.car_part_id as analog_car_part_id, " +
+            "a.vendor as analog_vendor" +
+            "  from ANALOGS a" +
+            " where a.id > 0";
 }

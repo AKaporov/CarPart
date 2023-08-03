@@ -12,9 +12,13 @@ public interface BrandRepositoryDataJdbc extends Repository<Brand, Long> {
 
     void deleteAll();
 
+    void deleteAll(Set<Brand> brands);
+
     Brand insert(Brand brand);
 
     Optional<Brand> findById(long id);
+
+    List<Brand> findAllById(Set<Long> ids);
 
     Optional<Brand> findByName(String bandName);
 

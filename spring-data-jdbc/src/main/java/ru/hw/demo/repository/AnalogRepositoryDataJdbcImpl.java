@@ -8,17 +8,17 @@ import ru.hw.demo.domain.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
 public class AnalogRepositoryDataJdbcImpl implements AnalogRepositoryDataJdbc {
-
     private final JdbcTemplate jdbcTemplate;
+
+    private final BrandRepositoryDataJdbc brandRepositoryDataJdbc;
+    private final CarPartRepositoryDataJdbc carPartRepositoryDataJdbc;
 
     @Override
     public Optional<Analog> findById(Long id) {
@@ -92,23 +92,63 @@ public class AnalogRepositoryDataJdbcImpl implements AnalogRepositoryDataJdbc {
 
     @Override
     public void deleteAll() {
-//        List<CarPart> carPartList = getCarPartListForDeleteAll();
-//
-//        deleteAllBrand(carPartList);
-//        List<Brand> brandList = new ArrayList<>(carPartList.size());
-//        carPartList.stream().forEach(cp -> brandList.add(cp.getBrand()));
-//
-//        deleteAllModel(carPartList);
-//        List<Model> modelList = new ArrayList<>(carPartList.size());
-//        carPartList.stream().forEach(cp -> modelList.add(cp.getModel()));
+        Set<CarPart> carPartSet = getCarPartsForDeleteAll();
+
+        deleteAnalogAll();
+        deleteAllBrand(carPartSet);
+
+//        deleteAllModel(carPartSet);
+//        List<Model> modelList = new ArrayList<>(carPartSet.size());
+//        carPartSet.stream().forEach(cp -> modelList.add(cp.getModel()));
 //
 //        deleteAllEngine();
-//        List<Engine> engineList = new ArrayList<>(carPartList.size());
-//        carPartList.stream().forEach(cp -> engineList.add(cp.getEngine()));
+//        List<Engine> engineList = new ArrayList<>(carPartSet.size());
+//        carPartSet.stream().forEach(cp -> engineList.add(cp.getEngine()));
 //
 //        deleteCarPartAll();
-//        deleteCarPartAnalogAll();
-        deleteAnalogAll();
+    }
+
+    private void deleteAllBrand(Set<CarPart> carPartSet) {
+        Set<Brand> brandList = getBrandToDelete(carPartSet);
+        brandRepositoryDataJdbc.deleteAll(brandList);
+    }
+
+    private Set<Brand> getBrandToDelete(Set<CarPart> carPartSet) {
+        Set<Long> brandsId = new LinkedHashSet<>();
+        carPartSet.stream().forEach(cp -> brandsId.add(cp.getBrandRef().getId()));
+        List<Brand> foundBrands = brandRepositoryDataJdbc.findAllById(brandsId);
+        Set<CarPart> foundCarPartsWithUsedBrands = carPartRepositoryDataJdbc.findAllByBrand(foundBrands);
+
+        Map<Long, Brand> foundBrandsMap = foundBrands.stream()
+                .collect(Collectors.toMap(Brand::getId, Function.identity()));
+
+        Set<Brand> resultSet = new HashSet<>(carPartSet.size());
+        carPartSet.stream()
+                .filter(foundCarPartsWithUsedBrands::contains)
+                .map(CarPart::getBrandRef)
+                .forEach(b -> {
+                    Brand brand = foundBrandsMap.get(b.getId());
+                    resultSet.add(Brand.builder()
+                            .id(brand.getId())
+                            .name(brand.getName())
+                            .build());
+                });
+
+
+        return resultSet;
+    }
+
+    private Set<CarPart> getCarPartsForDeleteAll() {
+        List<Analog> allAnalogs = findAll();
+
+        return allAnalogs.stream()
+                .map(Analog::getCarPart)
+                .collect(Collectors.toSet());
+    }
+
+    private List<Analog> findAll() {
+        return jdbcTemplate.query(MainConstant.SQL_SELECT_ANALOG_ALL,
+                this::mapRowToAnalog);
     }
 
     private void deleteAnalogAll() {

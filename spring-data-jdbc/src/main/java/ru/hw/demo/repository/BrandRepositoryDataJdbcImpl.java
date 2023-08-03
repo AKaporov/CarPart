@@ -10,10 +10,7 @@ import ru.hw.demo.domain.Brand;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Repository
 @RequiredArgsConstructor
@@ -40,6 +37,11 @@ public class BrandRepositoryDataJdbcImpl implements BrandRepositoryDataJdbc {
     }
 
     @Override
+    public void deleteAll(Set<Brand> brands) {
+
+    }
+
+    @Override
     public Brand insert(Brand brand) {
         namedParameterJdbcTemplate.update("insert into brands (name) " +
                 "values (:name)", Map.of("name", brand.getName()));
@@ -56,6 +58,13 @@ public class BrandRepositoryDataJdbcImpl implements BrandRepositoryDataJdbc {
                 id);
 
         return brandList.isEmpty() ? Optional.empty() : Optional.ofNullable(brandList.get(0));
+    }
+
+    @Override
+    public List<Brand> findAllById(Set<Long> ids) {
+        String inSql = String.join(",", Collections.nCopies(ids.size(), "?"));
+        String sql = String.format("select b.id as brand_id, b.name as brand_name from brands b where b.id in (%s)", inSql);
+        return jdbcTemplate.query(sql, ids.toArray(), this::mapRowToBrand);
     }
 
     @Override
