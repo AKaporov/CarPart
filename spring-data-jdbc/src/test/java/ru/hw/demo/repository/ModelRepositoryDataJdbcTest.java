@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
-import ru.hw.demo.domain.Country;
 import ru.hw.demo.domain.Model;
 
 import java.util.Optional;
@@ -17,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ActiveProfiles("test")
 @DataJdbcTest
 @TestPropertySource(properties = {"spring.datasource.data=model-test.sql"})
-@DisplayName("Репозиторий на основе Data JDBC по работе с объектом Модель автомобилей")
+@DisplayName("Репозиторий на основе Spring Data JDBC по работе с объектом Модель автомобилей")
 class ModelRepositoryDataJdbcTest {
     private static final Long URAL_4320_ID = 2L;
     private static final String EXPECTED_NAME = "UAZ-469";

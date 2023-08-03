@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ActiveProfiles("test")
 @DataJdbcTest
-@DisplayName("Репозиторий на основе Data JDBC по работе с объектом Запчасти автомобиля")
+@DisplayName("Репозиторий на основе Spring Data JDBC по работе с объектом Запчасти автомобиля")
 class CarPartRepositoryDataJdbcTest {
     @Autowired
     private CarPartRepositoryDataJdbc carPartRepositoryDataJdbc;
@@ -58,9 +58,6 @@ class CarPartRepositoryDataJdbcTest {
         List<Analog> analogListSaved = analogRepositoryDataJdbc.saveAll(analogList);
 
         Set<Photo> photoSet = new HashSet<>(1);
-//        photoSet.add(photoRepositoryDataJdbc.save(Photo.builder()
-//                .photoUrl("https://localhost:8080/carpart/zaz/1/#&gid=1&pid=1")
-//                .build()));
         photoSet.add(Photo.builder()
                 .photoUrl("https://localhost:8080/carpart/zaz/1/#&gid=1&pid=1")
                 .build());
@@ -78,7 +75,7 @@ class CarPartRepositoryDataJdbcTest {
                 .build());
 
         Set<AnalogRef> analogRefList = new HashSet<>(analogListSaved.size());
-        analogListSaved.stream().forEach(analog -> analogRefList.add(AnalogRef.builder()
+        analogListSaved.forEach(analog -> analogRefList.add(AnalogRef.builder()
                 .analogId(analog.getId())
                 .build()));
 
@@ -161,8 +158,15 @@ class CarPartRepositoryDataJdbcTest {
         Optional<CarPart> actual = carPartRepositoryDataJdbc.findByVendorCode("URL-4320-02");
 
         assertThat(actual).isNotEmpty()
-                .get()
                 .usingRecursiveComparison()
-                .isEqualTo(expected.get());
+                .isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("не должен находить запчасть по не корректному наименованию")
+    void shouldNotFoundBrandByNotValidName() {
+        Optional<CarPart> actualCartPart = carPartRepositoryDataJdbc.findById(101L);
+
+        assertThat(actualCartPart).isNotPresent();
     }
 }
