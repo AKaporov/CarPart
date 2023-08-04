@@ -179,16 +179,16 @@ class CarPartRepositoryDataJdbcTest {
         brands.add(ural);
         brands.add(kamaz);
 
-        Set<CarPart> actualCarParts = carPartRepositoryDataJdbc.findAllByBrandRef(brands);
+        Collection<CarPart> actualCarParts = carPartRepositoryDataJdbc.findAllByBrandRefIn(List.of(kamaz.getId(), ural.getId()));
 
-        // Kamaz
+        // brand Kamaz
         CarPart cp4 = carPartRepositoryDataJdbc.findById(4L).get();
         CarPart cp5 = carPartRepositoryDataJdbc.findById(5L).get();
         CarPart cp6 = carPartRepositoryDataJdbc.findById(6L).get();
         CarPart cp8 = carPartRepositoryDataJdbc.findById(8L).get();
         CarPart cp9 = carPartRepositoryDataJdbc.findById(9L).get();
 
-        // Ural
+        // brand Ural
         CarPart cp2 = carPartRepositoryDataJdbc.findById(2L).get();
         CarPart cp3 = carPartRepositoryDataJdbc.findById(3L).get();
         CarPart cp10 = carPartRepositoryDataJdbc.findById(10L).get();

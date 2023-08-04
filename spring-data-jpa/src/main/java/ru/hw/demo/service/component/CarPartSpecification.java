@@ -1,5 +1,7 @@
 package ru.hw.demo.service.component;
 
+import jakarta.persistence.criteria.Path;
+import jakarta.persistence.criteria.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.domain.Specification;
@@ -13,8 +15,6 @@ import ru.hw.demo.repository.BrandRepository;
 import ru.hw.demo.repository.EngineRepository;
 import ru.hw.demo.repository.ModelRepository;
 
-import javax.persistence.criteria.Path;
-import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

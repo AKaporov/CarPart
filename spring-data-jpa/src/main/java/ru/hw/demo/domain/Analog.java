@@ -1,11 +1,10 @@
 package ru.hw.demo.domain;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 
 /**
  * @author Artem
@@ -25,7 +24,7 @@ public class Analog {
     private Long id;
 
     /**
-     * полное описание аналога
+     * Полное описание аналога
      */
     @OneToOne(targetEntity = CarPart.class, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "car_part_id", nullable = false)

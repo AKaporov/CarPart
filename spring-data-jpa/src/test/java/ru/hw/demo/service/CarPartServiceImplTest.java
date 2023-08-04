@@ -1,5 +1,9 @@
 package ru.hw.demo.service;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,10 +23,6 @@ import ru.hw.demo.service.convert.ConvertCarPartToFullInfoDtoService;
 import ru.hw.demo.service.convert.ConvertCarPartToRecommendedDtoService;
 import ru.hw.demo.service.exception.CarPartNotFoundException;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
 
