@@ -3,6 +3,8 @@
 
 # Используемые версии
 Spring Boot - 3.1.2 (Иначе в Spring Data JDBC не работают методы репозитория по полям "AggregateReference<>")
+* [Common Application Properties](https://docs.spring.io/spring-boot/docs/3.1.2/reference/html/application-properties.html#appendix.application-properties.data)
+* [Spring Boot 3.1.0 Configuration Changelog](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.1.0-Configuration-Changelog)
 
 # Задание для всех модулей
 На картинках показан frontend сайта по-продаже запчастей. Необходимо
