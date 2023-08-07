@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
 @DataJdbcTest
-@TestPropertySource(properties = {"spring.datasource.data=model-test.sql"})
+@TestPropertySource(properties = {"spring.sql.init.data-locations=model-test.sql"})
 @DisplayName("Репозиторий на основе Spring Data JDBC по работе с объектом Модель автомобилей")
 class ModelRepositoryDataJdbcTest {
     private static final Long URAL_4320_ID = 2L;

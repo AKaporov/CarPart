@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
 @DataJdbcTest
-@TestPropertySource(properties = {"spring.datasource.data=analog-test.sql"})
+@TestPropertySource(properties = {"spring.sql.init.data-locations=analog-test.sql"})
 @DisplayName("Репозиторий на основе Spring Data JDBC по работе с Аналогами запчастей")
 class AnalogRepositoryDataJdbcTest {
     private static final Long ANALOG_ID_VALID = 2L;
