@@ -138,8 +138,6 @@ class AnalogRepositoryDataJdbcTest {
     @Test
     @DisplayName("должен удалить все аналоги и не используемую связанную информацию")
     void shouldDeleteAllAnalogs() {
-        Optional<Analog> byId = analogRepository.findById(1L);
-
         // TODO: 07.07.2023 Проверить работу теста shouldDeleteAll(). Не должно остаться данных в связанных таблицах от Удаленного аналога?
         Optional<Analog> beforeAnalog = analogRepository.findById(ANALOG_ID_VALID);
         assertThat(beforeAnalog).isNotEmpty();
@@ -160,7 +158,7 @@ class AnalogRepositoryDataJdbcTest {
         Optional<Analog> afterAnalog = analogRepository.findById(ANALOG_ID_VALID);
         assertThat(afterAnalog).isEmpty();
 
-        // Марка используется в другой запчасти, поэтому должна остаться
+        // Модель не используется в других запчастях, поэтому должен удалиться
         Optional<Brand> afterBrand = brandRepositoryDataJdbc.findById(beforeAnalog.get().getCarPart().getBrandRef().getId());
         assertEquals(beforeBrand, afterBrand);
         // Марка используется в другой запчасти, поэтому должна остаться
@@ -169,7 +167,7 @@ class AnalogRepositoryDataJdbcTest {
         // Двигатель не используется в других запчастях, поэтому должен удалиться
         Optional<Engine> afterEngine = engineRepositoryDataJdbc.findById(beforeAnalog.get().getCarPart().getEngineRef().getId());
         assertThat(afterEngine).isEmpty();
-        // Марка используется в другой запчасти, поэтому должна остаться
+        // Страна используется в другой запчасти, поэтому должна остаться
         Optional<Country> afterCountry = countryRepositoryDataJdbc.findById(beforeAnalog.get().getCarPart().getCountryRef().getId());
         assertEquals(beforeCountry, afterCountry);
 

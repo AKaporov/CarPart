@@ -22,6 +22,7 @@ import java.util.Set;
 @Data
 @Table(value = "CAR_PARTS")
 @ToString(exclude = {"description", "brandRef", "modelRef", "engineRef", "countryRef", "photos", "analogs"})
+@EqualsAndHashCode(of = "id")
 public class CarPart {
 
     @Id

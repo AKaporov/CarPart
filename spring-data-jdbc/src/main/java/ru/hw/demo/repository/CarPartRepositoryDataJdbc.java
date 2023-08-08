@@ -17,8 +17,8 @@ public interface CarPartRepositoryDataJdbc extends CrudRepository<CarPart, Long>
     Optional<CarPart> findByVendorCode(String vendorCode);
 
     /**
-     * @param brandRef список моделей
-     * @return возвращает найденный список автозапчастей по {@code brandRef}.
+     * @param brandsId список идентификаторов моделей
+     * @return возвращает найденный список автозапчастей по {@code brandsId}.
      */
-    Collection<CarPart> findAllByBrandRefIn(Collection<Long> brandRef);
+    Collection<CarPart> findAllByBrandRefIn(Collection<Long> brandsId);
 }

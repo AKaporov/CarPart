@@ -109,34 +109,48 @@ public class AnalogRepositoryDataJdbcImpl implements AnalogRepositoryDataJdbc {
     }
 
     private void deleteAllBrand(Set<CarPart> carPartSet) {
-        Set<Brand> brandList = getBrandToDelete(carPartSet);
-        brandRepositoryDataJdbc.deleteAll(brandList);
+        Set<Brand> brands = getBrandToDelete(carPartSet);
+        brandRepositoryDataJdbc.deleteAll(brands);
     }
 
+    /**
+     * @param carPartSet коллекция автозапчастей
+     * @return возвращает коллекцию моделей, которые не используются в других автозапчастях
+     */
     private Set<Brand> getBrandToDelete(Set<CarPart> carPartSet) {
+        // 1. По переданным моделям найти все автозапчасти
         Set<Long> brandsId = new LinkedHashSet<>();
         carPartSet.stream().forEach(cp -> brandsId.add(cp.getBrandRef().getId()));
-        List<Brand> foundBrands = brandRepositoryDataJdbc.findAllById(brandsId);
-        Set<CarPart> foundCarPartsWithUsedBrands = null;
-//        Set<CarPart> foundCarPartsWithUsedBrands = carPartRepositoryDataJdbc.findAllByBrandRef(foundBrands);
+        Collection<CarPart> foundAllCarPartsWithUsedBrands = carPartRepositoryDataJdbc.findAllByBrandRefIn(brandsId);
 
-        Map<Long, Brand> foundBrandsMap = foundBrands.stream()
-                .collect(Collectors.toMap(Brand::getId, Function.identity()));
+        Map<Long, List<CarPart>> foundCarPartMap = foundAllCarPartsWithUsedBrands.stream()
+                .collect(Collectors.groupingBy(cp -> cp.getBrandRef().getId()));
+//        Map<Long, CarPart> inputCarPartMap = carPartSet.stream()
+//                .collect(Collectors.toMap(CarPart::getId, Function.identity()));
 
-        Set<Brand> resultSet = new HashSet<>(carPartSet.size());
-        carPartSet.stream()
-                .filter(foundCarPartsWithUsedBrands::contains)
-                .map(CarPart::getBrandRef)
-                .forEach(b -> {
-                    Brand brand = foundBrandsMap.get(b.getId());
-                    resultSet.add(Brand.builder()
-                            .id(brand.getId())
-                            .name(brand.getName())
-                            .build());
+
+        // 2. Отобрать идентификаторы моделей, которые есть только в переданном списке и нет в остальных автозапчастях
+        Set<Long> resultBrandsId = new HashSet<>(brandsId.size());
+        brandsId.stream()
+                .forEach(brandId -> {
+                    List<CarPart> carParts = foundCarPartMap.get(brandId);
+
+//                    carParts.removeIf(cp -> Objects.nonNull(inputCarPartMap.get(cp.getId())));
+                    carParts.removeAll(carPartSet);
+                    if (carParts.isEmpty()) {
+                        resultBrandsId.addAll(brandsId);
+                    }
+
+//                        Set<Long> collect1 = foundCarPartMap.get(brandId).stream()
+//                                .filter(cp -> Objects.isNull(inputCarPartMap.get(cp.getId())))
+//                                .map(cp -> cp.getBrandRef().getId())
+//                                .collect(Collectors.toSet());
+//
+//                    resultBrandsId.addAll(collect1);
                 });
 
-
-        return resultSet;
+        // 3. Вернуть отобранные модели
+        return (Set<Brand>) brandRepositoryDataJdbc.findAllById(resultBrandsId);
     }
 
     private Set<CarPart> getCarPartsForDeleteAll() {
