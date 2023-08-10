@@ -16,9 +16,17 @@ public interface CarPartRepositoryDataJdbc extends CrudRepository<CarPart, Long>
      */
     Optional<CarPart> findByVendorCode(String vendorCode);
 
+    // FIXME: 10.08.2023 Решить N+1
     /**
-     * @param brandsId список идентификаторов моделей
+     * @param brandsId список идентификаторов марок
      * @return возвращает найденный список автозапчастей по {@code brandsId}.
      */
     Collection<CarPart> findAllByBrandRefIn(Collection<Long> brandsId);
+
+    // FIXME: 10.08.2023 Решить N+1
+    /**
+     * @param modelsId список идентификаторов моделей
+     * @return возвращает найденный список автозапчастей по {@code modelsId}.
+     */
+    Collection<CarPart> findAllByModelRefIn(Collection<Long> modelsId);
 }

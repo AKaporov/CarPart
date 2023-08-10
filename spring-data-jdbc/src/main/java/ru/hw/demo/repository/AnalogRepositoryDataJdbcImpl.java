@@ -1,6 +1,7 @@
 package ru.hw.demo.repository;
 
 import lombok.RequiredArgsConstructor;
+import org.assertj.core.util.Sets;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ru.hw.demo.constant.MainConstant;
@@ -9,7 +10,6 @@ import ru.hw.demo.domain.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Repository
@@ -17,8 +17,9 @@ import java.util.stream.Collectors;
 public class AnalogRepositoryDataJdbcImpl implements AnalogRepositoryDataJdbc {
     private final JdbcTemplate jdbcTemplate;
 
-    private final BrandRepositoryDataJdbc brandRepositoryDataJdbc;
     private final CarPartRepositoryDataJdbc carPartRepositoryDataJdbc;
+    private final BrandRepositoryDataJdbc brandRepositoryDataJdbc;
+    private final ModelRepositoryDataJdbc modelRepositoryDataJdbc;
 
     @Override
     public Optional<Analog> findById(Long id) {
@@ -97,7 +98,7 @@ public class AnalogRepositoryDataJdbcImpl implements AnalogRepositoryDataJdbc {
         deleteAnalogAll();
         deleteAllBrand(carPartSet);
 
-//        deleteAllModel(carPartSet);
+        deleteAllModel(carPartSet);
 //        List<Model> modelList = new ArrayList<>(carPartSet.size());
 //        carPartSet.stream().forEach(cp -> modelList.add(cp.getModel()));
 //
@@ -108,49 +109,81 @@ public class AnalogRepositoryDataJdbcImpl implements AnalogRepositoryDataJdbc {
 //        deleteCarPartAll();
     }
 
+    private void deleteAllModel(Set<CarPart> carPartSet) {
+        Set<Model> models = getModelToDelete(carPartSet);
+        modelRepositoryDataJdbc.deleteAll(models);
+    }
+
+    /**
+     * По переданной {@code carPartSet} метод находит автозапчасти у которых модель автомобиля не используется в других
+     * автозапчастях. Если указанная в {@code carPartSet} модель автомобиля используется в Не переданной автозапчасти,
+     * то автозапчасть с такой моделью автомобиля не возвращается.
+     *
+     * @param carPartSet коллекция автозапчастей
+     * @return возвращает коллекцию моделей автомобилей, которые не используются в других автозапчастях
+     */
+    private Set<Model> getModelToDelete(Set<CarPart> carPartSet) {
+        // 1. По переданным моделям найти все автозапчасти
+        Set<Long> modelsId = new LinkedHashSet<>();
+        carPartSet.stream().forEach(cp -> modelsId.add(cp.getModelRef().getId()));
+        Collection<CarPart> foundAllCarPartsWithUsedModels = carPartRepositoryDataJdbc.findAllByModelRefIn(modelsId);
+
+        Map<Long, List<CarPart>> foundCarPartMap = foundAllCarPartsWithUsedModels.stream()
+                .collect(Collectors.groupingBy(cp -> cp.getModelRef().getId()));
+
+        // 2. Отобрать идентификаторы моделей, которые есть только в переданном списке и нет в остальных автозапчастях
+        Set<Long> resultModelsId = new HashSet<>(modelsId.size());
+        modelsId.stream()
+                .forEach(brandId -> {
+                    List<CarPart> carParts = foundCarPartMap.get(brandId);
+
+                    carParts.removeAll(carPartSet);
+                    if (carParts.isEmpty()) {
+                        resultModelsId.add(brandId);
+                    }
+                });
+
+        // 3. Вернуть отобранные марки
+        Iterable<Model> allById = modelRepositoryDataJdbc.findAllById(resultModelsId);
+        return Sets.newHashSet(allById);
+    }
+
     private void deleteAllBrand(Set<CarPart> carPartSet) {
         Set<Brand> brands = getBrandToDelete(carPartSet);
         brandRepositoryDataJdbc.deleteAll(brands);
     }
 
     /**
+     * По переданной {@code carPartSet} метод находит автозапчасти у которых марка автомобиля не используется в других
+     * автозапчастях. Если указанная в {@code carPartSet} марка автомобиля используется в Не переданной автозапчасти,
+     * то автозапчасть с такой маркой автомобиля не возвращается.
+     *
      * @param carPartSet коллекция автозапчастей
-     * @return возвращает коллекцию моделей, которые не используются в других автозапчастях
+     * @return возвращает коллекцию марок автомобилей, которые не используются в других автозапчастях
      */
     private Set<Brand> getBrandToDelete(Set<CarPart> carPartSet) {
-        // 1. По переданным моделям найти все автозапчасти
+        // 1. По переданным маркам найти все автозапчасти
         Set<Long> brandsId = new LinkedHashSet<>();
         carPartSet.stream().forEach(cp -> brandsId.add(cp.getBrandRef().getId()));
         Collection<CarPart> foundAllCarPartsWithUsedBrands = carPartRepositoryDataJdbc.findAllByBrandRefIn(brandsId);
 
         Map<Long, List<CarPart>> foundCarPartMap = foundAllCarPartsWithUsedBrands.stream()
                 .collect(Collectors.groupingBy(cp -> cp.getBrandRef().getId()));
-//        Map<Long, CarPart> inputCarPartMap = carPartSet.stream()
-//                .collect(Collectors.toMap(CarPart::getId, Function.identity()));
 
-
-        // 2. Отобрать идентификаторы моделей, которые есть только в переданном списке и нет в остальных автозапчастях
+        // 2. Отобрать идентификаторы марок, которые есть только в переданном списке и нет в остальных автозапчастях
         Set<Long> resultBrandsId = new HashSet<>(brandsId.size());
         brandsId.stream()
                 .forEach(brandId -> {
                     List<CarPart> carParts = foundCarPartMap.get(brandId);
 
-//                    carParts.removeIf(cp -> Objects.nonNull(inputCarPartMap.get(cp.getId())));
                     carParts.removeAll(carPartSet);
                     if (carParts.isEmpty()) {
-                        resultBrandsId.addAll(brandsId);
+                        resultBrandsId.add(brandId);
                     }
-
-//                        Set<Long> collect1 = foundCarPartMap.get(brandId).stream()
-//                                .filter(cp -> Objects.isNull(inputCarPartMap.get(cp.getId())))
-//                                .map(cp -> cp.getBrandRef().getId())
-//                                .collect(Collectors.toSet());
-//
-//                    resultBrandsId.addAll(collect1);
                 });
 
-        // 3. Вернуть отобранные модели
-        return (Set<Brand>) brandRepositoryDataJdbc.findAllById(resultBrandsId);
+        // 3. Вернуть отобранные марки
+        return new HashSet<>(brandRepositoryDataJdbc.findAllById(resultBrandsId));
     }
 
     private Set<CarPart> getCarPartsForDeleteAll() {
