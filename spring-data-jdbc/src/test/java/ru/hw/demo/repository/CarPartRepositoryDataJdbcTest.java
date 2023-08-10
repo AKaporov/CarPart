@@ -171,13 +171,10 @@ class CarPartRepositoryDataJdbcTest {
     }
 
     @Test
-    @DisplayName("должен находить все автозапчасти по переданному списку моделей")
-    void shouldFindAllCarPartByBrands() {
+    @DisplayName("должен находить все автозапчасти по переданному списку марок")
+    void shouldFindAllCarPartByBrandsId() {
         Brand ural = brandRepositoryDataJdbc.findByName("Ural").get();
         Brand kamaz = brandRepositoryDataJdbc.findByName("Kamaz").get();
-        List<Brand> brands = new ArrayList<>(2);
-        brands.add(ural);
-        brands.add(kamaz);
 
         Collection<CarPart> actualCarParts = carPartRepositoryDataJdbc.findAllByBrandRefIn(List.of(kamaz.getId(), ural.getId()));
 
@@ -193,7 +190,7 @@ class CarPartRepositoryDataJdbcTest {
         CarPart cp3 = carPartRepositoryDataJdbc.findById(3L).get();
         CarPart cp10 = carPartRepositoryDataJdbc.findById(10L).get();
 
-        Set<CarPart> expectedCarParts = new HashSet<>(2);
+        Set<CarPart> expectedCarParts = new HashSet<>(8);
         expectedCarParts.add(cp4);
         expectedCarParts.add(cp5);
         expectedCarParts.add(cp6);
@@ -206,5 +203,36 @@ class CarPartRepositoryDataJdbcTest {
         assertThat(actualCarParts).isNotEmpty()
                 .containsExactlyInAnyOrderElementsOf(expectedCarParts);
 
+    }
+
+    @Test
+    @DisplayName("должен находить все автозапчасти по переданному списку идентификаторов моделей")
+    void shouldFindAllCarPartByModelId() {
+        Long gaz66Id = 1L;
+        Long kamazId = 3L;
+        Collection<CarPart> actualCarParts = carPartRepositoryDataJdbc.findAllByModelRefIn(List.of(gaz66Id, kamazId));
+
+        // Gaz-66
+        CarPart cp1 = carPartRepositoryDataJdbc.findById(1L).get();
+        CarPart cp7 = carPartRepositoryDataJdbc.findById(7L).get();
+
+        // Kamaz 65201
+        CarPart cp4 = carPartRepositoryDataJdbc.findById(4L).get();
+        CarPart cp5 = carPartRepositoryDataJdbc.findById(5L).get();
+        CarPart cp6 = carPartRepositoryDataJdbc.findById(6L).get();
+        CarPart cp8 = carPartRepositoryDataJdbc.findById(8L).get();
+        CarPart cp9 = carPartRepositoryDataJdbc.findById(9L).get();
+
+        Set<CarPart> expectedCarParts = new HashSet<>(7);
+        expectedCarParts.add(cp9);
+        expectedCarParts.add(cp4);
+        expectedCarParts.add(cp1);
+        expectedCarParts.add(cp6);
+        expectedCarParts.add(cp8);
+        expectedCarParts.add(cp7);
+        expectedCarParts.add(cp5);
+
+        assertThat(actualCarParts).isNotEmpty()
+                .containsExactlyInAnyOrderElementsOf(expectedCarParts);
     }
 }

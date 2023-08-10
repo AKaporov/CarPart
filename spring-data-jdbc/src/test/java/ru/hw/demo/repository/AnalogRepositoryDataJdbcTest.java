@@ -160,7 +160,7 @@ class AnalogRepositoryDataJdbcTest {
 
         // Модель не используется в других запчастях, поэтому должен удалиться
         Optional<Brand> afterBrand = brandRepositoryDataJdbc.findById(beforeAnalog.get().getCarPart().getBrandRef().getId());
-        assertEquals(beforeBrand, afterBrand);
+        assertThat(afterBrand).isEmpty();
         // Марка используется в другой запчасти, поэтому должна остаться
         Optional<Model> afterModel = modelRepositoryDataJdbc.findById(beforeAnalog.get().getCarPart().getModelRef().getId());
         assertEquals(beforeModel, afterModel);

@@ -38,7 +38,7 @@ public class BrandRepositoryDataJdbcImpl implements BrandRepositoryDataJdbc {
 
     @Override
     public void deleteAll(Set<Brand> brands) {
-
+// FIXME: 10.08.2023 Сделать реализацию + тест
     }
 
     @Override
@@ -62,6 +62,9 @@ public class BrandRepositoryDataJdbcImpl implements BrandRepositoryDataJdbc {
 
     @Override
     public List<Brand> findAllById(Set<Long> ids) {
+        if (ids.isEmpty()) {
+            return new ArrayList<>(1);
+        }
         String inSql = String.join(",", Collections.nCopies(ids.size(), "?"));
         String sql = String.format("select b.id as brand_id, b.name as brand_name from brands b where b.id in (%s)", inSql);
         return jdbcTemplate.query(sql, ids.toArray(), this::mapRowToBrand);
