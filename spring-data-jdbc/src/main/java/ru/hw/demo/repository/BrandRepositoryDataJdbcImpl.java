@@ -11,6 +11,7 @@ import ru.hw.demo.domain.Brand;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -38,7 +39,15 @@ public class BrandRepositoryDataJdbcImpl implements BrandRepositoryDataJdbc {
 
     @Override
     public void deleteAll(Set<Brand> brands) {
-// FIXME: 10.08.2023 Сделать реализацию + тест
+        if (brands.isEmpty()) {
+            return;
+        }
+        List<Long> ids = brands.stream()
+                .map(Brand::getId)
+                .toList();
+        String inSql = String.join(",", Collections.nCopies(ids.size(), "?"));
+        String sql = String.format("delete  from brands where id in (%s)", inSql);
+        jdbcTemplate.update(sql, ids.toArray());
     }
 
     @Override

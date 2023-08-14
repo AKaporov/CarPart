@@ -156,4 +156,37 @@ class BrandRepositoryDataJdbcImplTest {
         assertThat(actualBrands).isNotEmpty()
                 .containsExactlyInAnyOrderElementsOf(expectedBrands);
     }
+
+    @Test
+    @DisplayName("должен удалить все переданные марки")
+    void shouldDeleteAll() {
+        Brand ural = repository.findByName("Ural").get();
+        Brand volga = repository.findByName("Volga").get();
+
+        Set<Brand> brands = new HashSet<>(2);
+        brands.add(ural);
+        brands.add(volga);
+
+        List<Brand> beforeBrands = repository.findAll();
+        assertThat(beforeBrands).isNotEmpty().hasSizeGreaterThan(0);
+
+        repository.deleteAll(brands);
+
+        List<Brand> afterBrands = repository.findAll();
+        assertThat(afterBrands).isNotEmpty().hasSize(beforeBrands.size() - 2);
+    }
+
+    @Test
+    @DisplayName("ничего не должен удалить, если передали пустую коллекцию маров автомобилей")
+    void shouldDeleteAllWhenEmptyBrands() {
+        List<Brand> beforeBrands = repository.findAll();
+        assertThat(beforeBrands).isNotEmpty().hasSizeGreaterThan(0);
+
+        Set<Brand> brands = new HashSet<>();
+        repository.deleteAll(brands);
+
+        List<Brand> afterBrands = repository.findAll();
+        assertThat(afterBrands).isNotEmpty().hasSize(beforeBrands.size())
+                .containsExactlyInAnyOrderElementsOf(afterBrands);
+    }
 }
