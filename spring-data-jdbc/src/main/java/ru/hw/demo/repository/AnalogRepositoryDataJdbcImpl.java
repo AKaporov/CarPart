@@ -128,6 +128,10 @@ public class AnalogRepositoryDataJdbcImpl implements AnalogRepositoryDataJdbc {
         carPartSet.stream().forEach(cp -> modelsId.add(cp.getModelRef().getId()));
         Collection<CarPart> foundAllCarPartsWithUsedModels = carPartRepositoryDataJdbc.findAllByModelRefIn(modelsId);
 
+        if (foundAllCarPartsWithUsedModels.isEmpty()) {
+            return new HashSet<>(1);
+        }
+
         Map<Long, List<CarPart>> foundCarPartMap = foundAllCarPartsWithUsedModels.stream()
                 .collect(Collectors.groupingBy(cp -> cp.getModelRef().getId()));
 
@@ -166,6 +170,10 @@ public class AnalogRepositoryDataJdbcImpl implements AnalogRepositoryDataJdbc {
         Set<Long> brandsId = new LinkedHashSet<>();
         carPartSet.stream().forEach(cp -> brandsId.add(cp.getBrandRef().getId()));
         Collection<CarPart> foundAllCarPartsWithUsedBrands = carPartRepositoryDataJdbc.findAllByBrandRefIn(brandsId);
+
+        if (foundAllCarPartsWithUsedBrands.isEmpty()) {
+            return new HashSet<>(1);
+        }
 
         Map<Long, List<CarPart>> foundCarPartMap = foundAllCarPartsWithUsedBrands.stream()
                 .collect(Collectors.groupingBy(cp -> cp.getBrandRef().getId()));
