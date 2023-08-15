@@ -13,4 +13,6 @@ public interface AnalogRepositoryDataJdbc extends Repository<Analog, Long> {
     List<Analog> saveAll(List<Analog> analogList);
 
     void deleteAll();
+
+    List<Analog> findAll();
 }

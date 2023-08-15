@@ -20,6 +20,7 @@ public class AnalogRepositoryDataJdbcImpl implements AnalogRepositoryDataJdbc {
     private final CarPartRepositoryDataJdbc carPartRepositoryDataJdbc;
     private final BrandRepositoryDataJdbc brandRepositoryDataJdbc;
     private final ModelRepositoryDataJdbc modelRepositoryDataJdbc;
+    private final EngineRepositoryDataJdbc engineRepositoryDataJdbc;
 
     @Override
     public Optional<Analog> findById(Long id) {
@@ -93,118 +94,147 @@ public class AnalogRepositoryDataJdbcImpl implements AnalogRepositoryDataJdbc {
 
     @Override
     public void deleteAll() {
-        Set<CarPart> carPartSet = getCarPartsForDeleteAll();
-
         deleteAnalogAll();
-        deleteAllBrand(carPartSet);
+    }
 
-        deleteAllModel(carPartSet);
-//        List<Model> modelList = new ArrayList<>(carPartSet.size());
-//        carPartSet.stream().forEach(cp -> modelList.add(cp.getModel()));
+//    private void deleteAllEngine(Set<CarPart> carPartSet) {
+//        Set<Engine> engines = getEngineToDelete(carPartSet);
+//        engineRepositoryDataJdbc.deleteAll(engines);
+//    }
 //
-//        deleteAllEngine();
-//        List<Engine> engineList = new ArrayList<>(carPartSet.size());
-//        carPartSet.stream().forEach(cp -> engineList.add(cp.getEngine()));
+//    /**
+//     * По переданной {@code carPartSet} метод находит автозапчасти у которых двигатель не используется в других
+//     * автозапчастях. Если указанная в {@code carPartSet} двигатель используется в Не переданной автозапчасти,
+//     * то автозапчасть с таким двигателем не возвращается.
+//     *
+//     * @param carPartSet коллекция автозапчастей
+//     * @return возвращает коллекцию двигателей, которые не используются в других автозапчастях
+//     */
+//    private Set<Engine> getEngineToDelete(Set<CarPart> carPartSet) {
+//        // 1. По переданным моделям найти все автозапчасти
+//        Set<Long> enginesId = new LinkedHashSet<>();
+//        carPartSet.stream().forEach(cp -> enginesId.add(cp.getEngineRef().getId()));
+//        Collection<CarPart> foundAllCarPartsWithUsedEngine = carPartRepositoryDataJdbc.findAllByEngineRefIn(enginesId);
 //
-//        deleteCarPartAll();
-    }
+//        if (foundAllCarPartsWithUsedEngine.isEmpty()) {
+//            return new HashSet<>(1);
+//        }
+//
+//        Map<Long, List<CarPart>> foundCarPartMap = foundAllCarPartsWithUsedEngine.stream()
+//                .collect(Collectors.groupingBy(cp -> cp.getEngineRef().getId()));
+//
+//        // 2. Отобрать идентификаторы моделей, которые есть только в переданном списке и нет в остальных автозапчастях
+//        Set<Long> resultEnginesId = new HashSet<>(enginesId.size());
+//        enginesId.stream()
+//                .forEach(engineId -> {
+//                    List<CarPart> carParts = foundCarPartMap.get(engineId);
+//
+//                    carParts.removeAll(carPartSet);
+//                    if (carParts.isEmpty()) {
+//                        resultEnginesId.add(engineId);
+//                    }
+//                });
+//
+//        // 3. Вернуть отобранные марки
+//        Iterable<Engine> allById = engineRepositoryDataJdbc.findAllById(resultEnginesId);
+//        return Sets.newHashSet(allById);
+//    }
+//
+//    private void deleteAllModel(Set<CarPart> carPartSet) {
+//        Set<Model> models = getModelToDelete(carPartSet);
+//        modelRepositoryDataJdbc.deleteAll(models);
+//    }
+//
+//    /**
+//     * По переданной {@code carPartSet} метод находит автозапчасти у которых модель автомобиля не используется в других
+//     * автозапчастях. Если указанная в {@code carPartSet} модель автомобиля используется в Не переданной автозапчасти,
+//     * то автозапчасть с такой моделью автомобиля не возвращается.
+//     *
+//     * @param carPartSet коллекция автозапчастей
+//     * @return возвращает коллекцию моделей автомобилей, которые не используются в других автозапчастях
+//     */
+//    private Set<Model> getModelToDelete(Set<CarPart> carPartSet) {
+//        // 1. По переданным моделям найти все автозапчасти
+//        Set<Long> modelsId = new LinkedHashSet<>();
+//        carPartSet.stream().forEach(cp -> modelsId.add(cp.getModelRef().getId()));
+//        Collection<CarPart> foundAllCarPartsWithUsedModels = carPartRepositoryDataJdbc.findAllByModelRefIn(modelsId);
+//
+//        if (foundAllCarPartsWithUsedModels.isEmpty()) {
+//            return new HashSet<>(1);
+//        }
+//
+//        Map<Long, List<CarPart>> foundCarPartMap = foundAllCarPartsWithUsedModels.stream()
+//                .collect(Collectors.groupingBy(cp -> cp.getModelRef().getId()));
+//
+//        // 2. Отобрать идентификаторы моделей, которые есть только в переданном списке и нет в остальных автозапчастях
+//        Set<Long> resultModelsId = new HashSet<>(modelsId.size());
+//        modelsId.stream()
+//                .forEach(modelId -> {
+//                    List<CarPart> carParts = foundCarPartMap.get(modelId);
+//
+//                    carParts.removeAll(carPartSet);
+//                    if (carParts.isEmpty()) {
+//                        resultModelsId.add(modelId);
+//                    }
+//                });
+//
+//        // 3. Вернуть отобранные марки
+//        Iterable<Model> allById = modelRepositoryDataJdbc.findAllById(resultModelsId);
+//        return Sets.newHashSet(allById);
+//    }
+//
+//    private void deleteAllBrand(Set<CarPart> carPartSet) {
+//        Set<Brand> brands = getBrandToDelete(carPartSet);
+//        brandRepositoryDataJdbc.deleteAll(brands);
+//    }
+//
+//    /**
+//     * По переданной {@code carPartSet} метод находит автозапчасти у которых марка автомобиля не используется в других
+//     * автозапчастях. Если указанная в {@code carPartSet} марка автомобиля используется в Не переданной автозапчасти,
+//     * то автозапчасть с такой маркой автомобиля не возвращается.
+//     *
+//     * @param carPartSet коллекция автозапчастей
+//     * @return возвращает коллекцию марок автомобилей, которые не используются в других автозапчастях
+//     */
+//    private Set<Brand> getBrandToDelete(Set<CarPart> carPartSet) {
+//        // 1. По переданным маркам найти все автозапчасти
+//        Set<Long> brandsId = new LinkedHashSet<>();
+//        carPartSet.stream().forEach(cp -> brandsId.add(cp.getBrandRef().getId()));
+//        Collection<CarPart> foundAllCarPartsWithUsedBrands = carPartRepositoryDataJdbc.findAllByBrandRefIn(brandsId);
+//
+//        if (foundAllCarPartsWithUsedBrands.isEmpty()) {
+//            return new HashSet<>(1);
+//        }
+//
+//        Map<Long, List<CarPart>> foundCarPartMap = foundAllCarPartsWithUsedBrands.stream()
+//                .collect(Collectors.groupingBy(cp -> cp.getBrandRef().getId()));
+//
+//        // 2. Отобрать идентификаторы марок, которые есть только в переданном списке и нет в остальных автозапчастях
+//        Set<Long> resultBrandsId = new HashSet<>(brandsId.size());
+//        brandsId.stream()
+//                .forEach(brandId -> {
+//                    List<CarPart> carParts = foundCarPartMap.get(brandId);
+//
+//                    carParts.removeAll(carPartSet);
+//                    if (carParts.isEmpty()) {
+//                        resultBrandsId.add(brandId);
+//                    }
+//                });
+//
+//        // 3. Вернуть отобранные марки
+//        return new HashSet<>(brandRepositoryDataJdbc.findAllById(resultBrandsId));
+//    }
+//
+//    private Set<CarPart> getCarPartsForDeleteAll() {
+//        List<Analog> allAnalogs = findAll();
+//
+//        return allAnalogs.stream()
+//                .map(Analog::getCarPart)
+//                .collect(Collectors.toSet());
+//    }
 
-    private void deleteAllModel(Set<CarPart> carPartSet) {
-        Set<Model> models = getModelToDelete(carPartSet);
-        modelRepositoryDataJdbc.deleteAll(models);
-    }
-
-    /**
-     * По переданной {@code carPartSet} метод находит автозапчасти у которых модель автомобиля не используется в других
-     * автозапчастях. Если указанная в {@code carPartSet} модель автомобиля используется в Не переданной автозапчасти,
-     * то автозапчасть с такой моделью автомобиля не возвращается.
-     *
-     * @param carPartSet коллекция автозапчастей
-     * @return возвращает коллекцию моделей автомобилей, которые не используются в других автозапчастях
-     */
-    private Set<Model> getModelToDelete(Set<CarPart> carPartSet) {
-        // 1. По переданным моделям найти все автозапчасти
-        Set<Long> modelsId = new LinkedHashSet<>();
-        carPartSet.stream().forEach(cp -> modelsId.add(cp.getModelRef().getId()));
-        Collection<CarPart> foundAllCarPartsWithUsedModels = carPartRepositoryDataJdbc.findAllByModelRefIn(modelsId);
-
-        if (foundAllCarPartsWithUsedModels.isEmpty()) {
-            return new HashSet<>(1);
-        }
-
-        Map<Long, List<CarPart>> foundCarPartMap = foundAllCarPartsWithUsedModels.stream()
-                .collect(Collectors.groupingBy(cp -> cp.getModelRef().getId()));
-
-        // 2. Отобрать идентификаторы моделей, которые есть только в переданном списке и нет в остальных автозапчастях
-        Set<Long> resultModelsId = new HashSet<>(modelsId.size());
-        modelsId.stream()
-                .forEach(brandId -> {
-                    List<CarPart> carParts = foundCarPartMap.get(brandId);
-
-                    carParts.removeAll(carPartSet);
-                    if (carParts.isEmpty()) {
-                        resultModelsId.add(brandId);
-                    }
-                });
-
-        // 3. Вернуть отобранные марки
-        Iterable<Model> allById = modelRepositoryDataJdbc.findAllById(resultModelsId);
-        return Sets.newHashSet(allById);
-    }
-
-    private void deleteAllBrand(Set<CarPart> carPartSet) {
-        Set<Brand> brands = getBrandToDelete(carPartSet);
-        brandRepositoryDataJdbc.deleteAll(brands);
-    }
-
-    /**
-     * По переданной {@code carPartSet} метод находит автозапчасти у которых марка автомобиля не используется в других
-     * автозапчастях. Если указанная в {@code carPartSet} марка автомобиля используется в Не переданной автозапчасти,
-     * то автозапчасть с такой маркой автомобиля не возвращается.
-     *
-     * @param carPartSet коллекция автозапчастей
-     * @return возвращает коллекцию марок автомобилей, которые не используются в других автозапчастях
-     */
-    private Set<Brand> getBrandToDelete(Set<CarPart> carPartSet) {
-        // 1. По переданным маркам найти все автозапчасти
-        Set<Long> brandsId = new LinkedHashSet<>();
-        carPartSet.stream().forEach(cp -> brandsId.add(cp.getBrandRef().getId()));
-        Collection<CarPart> foundAllCarPartsWithUsedBrands = carPartRepositoryDataJdbc.findAllByBrandRefIn(brandsId);
-
-        if (foundAllCarPartsWithUsedBrands.isEmpty()) {
-            return new HashSet<>(1);
-        }
-
-        Map<Long, List<CarPart>> foundCarPartMap = foundAllCarPartsWithUsedBrands.stream()
-                .collect(Collectors.groupingBy(cp -> cp.getBrandRef().getId()));
-
-        // 2. Отобрать идентификаторы марок, которые есть только в переданном списке и нет в остальных автозапчастях
-        Set<Long> resultBrandsId = new HashSet<>(brandsId.size());
-        brandsId.stream()
-                .forEach(brandId -> {
-                    List<CarPart> carParts = foundCarPartMap.get(brandId);
-
-                    carParts.removeAll(carPartSet);
-                    if (carParts.isEmpty()) {
-                        resultBrandsId.add(brandId);
-                    }
-                });
-
-        // 3. Вернуть отобранные марки
-        return new HashSet<>(brandRepositoryDataJdbc.findAllById(resultBrandsId));
-    }
-
-    private Set<CarPart> getCarPartsForDeleteAll() {
-        List<Analog> allAnalogs = findAll();
-
-        return allAnalogs.stream()
-                .map(Analog::getCarPart)
-                .collect(Collectors.toSet());
-    }
-
-    private List<Analog> findAll() {
-        return jdbcTemplate.query(MainConstant.SQL_SELECT_ANALOG_ALL,
-                this::mapRowToAnalog);
+    public List<Analog> findAll() {
+        return jdbcTemplate.query(MainConstant.SQL_SELECT_ANALOG_ALL, this::mapRowToAnalog);
     }
 
     private void deleteAnalogAll() {

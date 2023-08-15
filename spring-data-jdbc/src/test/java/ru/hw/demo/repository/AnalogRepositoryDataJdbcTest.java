@@ -136,43 +136,15 @@ class AnalogRepositoryDataJdbcTest {
     }
 
     @Test
-    @DisplayName("должен удалить все аналоги и не используемую связанную информацию")
+    @DisplayName("должен удалить все аналоги")
     void shouldDeleteAllAnalogs() {
-        // TODO: 07.07.2023 Проверить работу теста shouldDeleteAll(). Не должно остаться данных в связанных таблицах от Удаленного аналога?
-        Optional<Analog> beforeAnalog = analogRepository.findById(ANALOG_ID_VALID);
-        assertThat(beforeAnalog).isNotEmpty();
-
-        Optional<Brand> beforeBrand = brandRepositoryDataJdbc.findById(beforeAnalog.get().getCarPart().getBrandRef().getId());
-        assertThat(beforeBrand).isNotEmpty();
-        Optional<Model> beforeModel = modelRepositoryDataJdbc.findById(beforeAnalog.get().getCarPart().getModelRef().getId());
-        assertThat(beforeModel).isNotEmpty();
-        Optional<Engine> beforeEngine = engineRepositoryDataJdbc.findById(beforeAnalog.get().getCarPart().getEngineRef().getId());
-        assertThat(beforeEngine).isNotEmpty();
-        Optional<Country> beforeCountry = countryRepositoryDataJdbc.findById(beforeAnalog.get().getCarPart().getCountryRef().getId());
-        assertThat(beforeCountry).isNotEmpty();
-        Optional<CarPart> beforeCarPart = carPartRepositoryDataJdbc.findById(beforeAnalog.get().getCarPart().getId());
-        assertThat(beforeCarPart).isNotEmpty();
+        List<Analog> beforeAll = analogRepository.findAll();
+        assertThat(beforeAll).isNotEmpty();
 
         analogRepository.deleteAll();
 
-        Optional<Analog> afterAnalog = analogRepository.findById(ANALOG_ID_VALID);
-        assertThat(afterAnalog).isEmpty();
-
-        // Модель не используется в других запчастях, поэтому должен удалиться
-        Optional<Brand> afterBrand = brandRepositoryDataJdbc.findById(beforeAnalog.get().getCarPart().getBrandRef().getId());
-        assertThat(afterBrand).isEmpty();
-        // Марка используется в другой запчасти, поэтому должна остаться
-        Optional<Model> afterModel = modelRepositoryDataJdbc.findById(beforeAnalog.get().getCarPart().getModelRef().getId());
-        assertEquals(beforeModel, afterModel);
-        // Двигатель не используется в других запчастях, поэтому должен удалиться
-        Optional<Engine> afterEngine = engineRepositoryDataJdbc.findById(beforeAnalog.get().getCarPart().getEngineRef().getId());
-        assertThat(afterEngine).isEmpty();
-        // Страна используется в другой запчасти, поэтому должна остаться
-        Optional<Country> afterCountry = countryRepositoryDataJdbc.findById(beforeAnalog.get().getCarPart().getCountryRef().getId());
-        assertEquals(beforeCountry, afterCountry);
-
-        Optional<CarPart> afterCarPart = carPartRepositoryDataJdbc.findById(beforeAnalog.get().getCarPart().getId());
-        assertThat(afterCarPart).isEmpty();
+        List<Analog> afterAll = analogRepository.findAll();
+        assertThat(afterAll).isEmpty();
     }
 
     private CarPart createMoskvich2141() {
