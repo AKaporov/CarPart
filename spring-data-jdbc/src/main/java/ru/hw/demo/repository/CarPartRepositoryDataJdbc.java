@@ -9,6 +9,7 @@ import java.util.Optional;
 @Repository
 public interface CarPartRepositoryDataJdbc extends CrudRepository<CarPart, Long>/*, JpaSpecificationExecutor<CarPart>*/ {
 
+    // FIXME: 10.08.2023 Решить N+1
     /**
      * @param vendorCode каталожный номер
      * @return возвращает найденные автозапчасти по {@code vendorCode}, иначе Optional.empty()
