@@ -87,7 +87,7 @@ public class CarPart {
     private Engine engine;
 
     /**
-     * страна производства
+     *  Страна производства
      */
     @ManyToOne(targetEntity = Country.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id", nullable = false)

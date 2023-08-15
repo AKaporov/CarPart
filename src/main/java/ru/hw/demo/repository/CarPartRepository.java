@@ -1,5 +1,6 @@
 package ru.hw.demo.repository;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
@@ -10,6 +11,8 @@ import java.util.Optional;
 @Repository
 public interface CarPartRepository extends JpaRepository<CarPart, Long>, JpaSpecificationExecutor<CarPart> {
 
+    // "Красивее" запрос, если использовать "photoList" вместо "analogList" в аннотации @EntityGraph
+    @EntityGraph(type = EntityGraph.EntityGraphType.FETCH, attributePaths = {"brand", "model", "engine", "country", "photoList"})
     /**
      * @param vendorCode каталожный номер
      * @return возвращает найденные автозапчасти по {@code vendorCode}, иначе Optional.empty()
