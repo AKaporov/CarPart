@@ -90,7 +90,7 @@ public class AnalogRepositoryDataJdbcImpl implements AnalogRepositoryDataJdbc {
     @Override
     @Transactional
     public List<Analog> saveAll(List<Analog> analogList) {
-        return save(analogList);
+        return saveList(analogList);
 
 //        return analogList.stream()
 //                .map(this::save)
@@ -260,10 +260,10 @@ public class AnalogRepositoryDataJdbcImpl implements AnalogRepositoryDataJdbc {
         return analog;
     }
 
-    private List<Analog> save(List<Analog> analogs) {
+    private List<Analog> saveList(List<Analog> analogs) {
         jdbcTemplate.batchUpdate(MainConstant.SQL_INSERT_ANALOG,
                 analogs,
-                MainConstant.BATCH_SIZE_INSERT,
+                analogs.size(),  //MainConstant.BATCH_SIZE_INSERT // Usually, the recommended batch size is 50-100, but it highly depends on our database server configurations and the size of each batch package.
                 (PreparedStatement ps, Analog analog) -> {
                     ps.setLong(1, analog.getCarPart().getId());
                     ps.setString(2, analog.getVendor());
