@@ -1,16 +1,18 @@
 package ru.hw.demo.repository;
 
 import lombok.RequiredArgsConstructor;
-import org.assertj.core.util.Sets;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ru.hw.demo.constant.MainConstant;
 import ru.hw.demo.domain.*;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -86,10 +88,12 @@ public class AnalogRepositoryDataJdbcImpl implements AnalogRepositoryDataJdbc {
 
     @Override
     public List<Analog> saveAll(List<Analog> analogList) {
-        return analogList.stream()
-                .map(this::save)
-                .peek(System.out::println)
-                .collect(Collectors.toCollection(() -> new ArrayList<>(analogList.size())));
+        return save(analogList);
+
+//        return analogList.stream()
+//                .map(this::save)
+//                .peek(System.out::println)
+//                .collect(Collectors.toCollection(() -> new ArrayList<>(analogList.size())));
     }
 
     @Override
@@ -252,6 +256,29 @@ public class AnalogRepositoryDataJdbcImpl implements AnalogRepositoryDataJdbc {
         analog.setId(analogId);
 
         return analog;
+    }
+
+    private List<Analog> save(List<Analog> analogs) {
+        jdbcTemplate.batchUpdate(MainConstant.SQL_INSERT_ANALOG,
+                analogs,
+                MainConstant.BATCH_SIZE_INSERT,
+                (PreparedStatement ps, Analog analog) -> {
+                    ps.setLong(1, analog.getCarPart().getId());
+                    ps.setString(2, analog.getVendor());
+                }
+        );
+
+        List<Analog> resultList = new ArrayList<>(analogs.size());
+        analogs.stream()
+                .forEach(analog -> {
+                    Long analogId = findIdByCarPartIdAndVendor(analog.getCarPart().getId(), analog.getVendor()).orElse(null);
+                    analog.setId(analogId);
+
+                    resultList.add(analog);
+
+                });
+
+        return resultList;
     }
 
     private Optional<Long> findIdByCarPartIdAndVendor(Long carPartId, String vendor) {
