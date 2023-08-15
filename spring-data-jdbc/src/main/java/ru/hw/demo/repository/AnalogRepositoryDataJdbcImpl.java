@@ -3,6 +3,7 @@ package ru.hw.demo.repository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.hw.demo.constant.MainConstant;
 import ru.hw.demo.domain.*;
 
@@ -87,6 +88,7 @@ public class AnalogRepositoryDataJdbcImpl implements AnalogRepositoryDataJdbc {
     }
 
     @Override
+    @Transactional
     public List<Analog> saveAll(List<Analog> analogList) {
         return save(analogList);
 
