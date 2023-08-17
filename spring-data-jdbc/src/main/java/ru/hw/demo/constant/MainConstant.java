@@ -38,7 +38,7 @@ public class MainConstant {
     /**
      * Поиск Аналогов со всей связанной информацией
      */
-    public static final String SQL_SELECT_ANALOG_WITH_ALL_RELATED_INFO =
+    public static final String SQL_SELECT_ANALOG_WITHOUT_PHOTO =
 // analogs
             "select a.id as analog_id," +
                     " a.vendor as analog_vendor, " +
@@ -81,42 +81,42 @@ public class MainConstant {
     /**
      * Поиск всех существующих Аналогов
      */
-    public static final String SQL_SELECT_ANALOG_ALL =
+    public static final String SQL_SELECT_ANALOG_ALL_WITHOUT_PHOTO =
 // analogs
             "select a.id as analog_id," +
-            " a.vendor as analog_vendor, " +
+                    " a.vendor as analog_vendor, " +
 // car_parts
-            "       cp.car_part_id as car_part_id, " +
-            "cp.vendor_code as car_part_vendor_code, " +
-            "cp.sku as car_part_sku, " +
-            "       cp.name as car_part_name, " +
-            "cp.description as car_part_description, " +
-            "cp.price as car_part_price, " +
-            "       cp.manufacturer as car_part_manufacturer, " +
-            "cp.rating as car_part_rating, " +
+                    "       cp.car_part_id as car_part_id, " +
+                    "cp.vendor_code as car_part_vendor_code, " +
+                    "cp.sku as car_part_sku, " +
+                    "       cp.name as car_part_name, " +
+                    "cp.description as car_part_description, " +
+                    "cp.price as car_part_price, " +
+                    "       cp.manufacturer as car_part_manufacturer, " +
+                    "cp.rating as car_part_rating, " +
 // brands
-            "      b.id as brand_id, " +
-            "b.name as brand_name, " +
+                    "      b.id as brand_id, " +
+                    "b.name as brand_name, " +
 // models
-            "      m.id as model_id, " +
-            "m.name as model_name, " +
-            "m.year_release as model_year_release, " +
+                    "      m.id as model_id, " +
+                    "m.name as model_name, " +
+                    "m.year_release as model_year_release, " +
 // engines
-            "      e.id as engine_id, " +
-            "e.name as engine_name, " +
+                    "      e.id as engine_id, " +
+                    "e.name as engine_name, " +
 // countries
-            "      c.id as country_id, " +
-            "c.name as country_name, " +
-            "  from analogs a " +
-            " inner join car_parts cp " +
-            "         on cp.car_part_id = a.car_part_id " +
-            " inner join brands b " +
-            "         on b.id = cp.brand_id " +
-            " inner join models m " +
-            "         on m.id = cp.model_id_fk " +
-            " inner join engines e " +
-            "         on e.id = cp.engine_id " +
-            " inner join countries c " +
-            "         on c.id = cp.country_id" +
-            " where a.id > 0";
+                    "      c.id as country_id, " +
+                    "c.name as country_name, " +
+                    "  from analogs a " +
+                    " inner join car_parts cp " +
+                    "         on cp.car_part_id = a.car_part_id " +
+                    " inner join brands b " +
+                    "         on b.id = cp.brand_id " +
+                    " inner join models m " +
+                    "         on m.id = cp.model_id_fk " +
+                    " inner join engines e " +
+                    "         on e.id = cp.engine_id " +
+                    " inner join countries c " +
+                    "         on c.id = cp.country_id" +
+                    " where a.id > 0";
 }

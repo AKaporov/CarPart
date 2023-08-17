@@ -1,20 +1,24 @@
 package ru.hw.demo.repository;
 
+import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import ru.hw.demo.domain.CarPart;
+import ru.hw.demo.row_mapper.CarPartFindByVendorCodeRowMapper;
 
 import java.util.Optional;
 
 @Repository
 public interface CarPartRepositoryDataJdbc extends CrudRepository<CarPart, Long>/*, JpaSpecificationExecutor<CarPart>*/ {
 
-    // FIXME: 10.08.2023 Решить N+1
     /**
      * @param vendorCode каталожный номер
      * @return возвращает найденные автозапчасти по {@code vendorCode}, иначе Optional.empty()
      */
+    @Query(name = "CarPart.getByVendorCode",
+            rowMapperClass = CarPartFindByVendorCodeRowMapper.class)
     Optional<CarPart> findByVendorCode(String vendorCode);
+
 
     // FIXME: 10.08.2023 Решить N+1
 //    /**

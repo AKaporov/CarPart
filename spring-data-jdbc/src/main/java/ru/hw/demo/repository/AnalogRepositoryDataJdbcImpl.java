@@ -27,7 +27,7 @@ public class AnalogRepositoryDataJdbcImpl implements AnalogRepositoryDataJdbc {
 
     @Override
     public Optional<Analog> findById(Long id) {
-        List<Analog> analogList = jdbcTemplate.query(MainConstant.SQL_SELECT_ANALOG_WITH_ALL_RELATED_INFO, this::mapRowToAnalog, id);
+        List<Analog> analogList = jdbcTemplate.query(MainConstant.SQL_SELECT_ANALOG_WITHOUT_PHOTO, this::mapRowToAnalog, id);
 
         return analogList.isEmpty() ? Optional.empty() : Optional.ofNullable(analogList.get(0));
     }
@@ -240,7 +240,7 @@ public class AnalogRepositoryDataJdbcImpl implements AnalogRepositoryDataJdbc {
 //    }
 
     public List<Analog> findAll() {
-        return jdbcTemplate.query(MainConstant.SQL_SELECT_ANALOG_ALL, this::mapRowToAnalog);
+        return jdbcTemplate.query(MainConstant.SQL_SELECT_ANALOG_ALL_WITHOUT_PHOTO, this::mapRowToAnalog);
     }
 
     private void deleteAnalogAll() {
