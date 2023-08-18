@@ -318,14 +318,16 @@ insert into CAR_PARTS
             );
 
 -- фотографии
-insert into PHOTOS(CAR_PART_ID, URL) values(1, 'https://localhost:8080/carpart/1/#&gid=1&pid=1');
-insert into PHOTOS(CAR_PART_ID, URL) values(1, 'https://localhost:8080/carpart/1/#&gid=1&pid=2');
-insert into PHOTOS(CAR_PART_ID, URL) values(1, 'https://localhost:8080/carpart/1/#&gid=1&pid=3');
-insert into PHOTOS(CAR_PART_ID, URL) values(2, 'https://localhost:8080/carpart/2/#&gid=1&pid=1');
-insert into PHOTOS(CAR_PART_ID, URL) values(2, 'https://localhost:8080/carpart/2/#&gid=1&pid=2');
-insert into PHOTOS(CAR_PART_ID, URL) values(3, 'https://localhost:8080/carpart/3/#&gid=1&pid=1');
-insert into PHOTOS(CAR_PART_ID, URL) values(4, 'https://localhost:8080/carpart/4/#&gid=1&pid=1');
-insert into PHOTOS(CAR_PART_ID, URL) values(6, 'https://localhost:8080/carpart/6/#&gid=1&pid=1');
+insert into PHOTOS(CAR_PART_ID, URL) values(1, 'https://localhost:8080/carpart/1/#&gid=1&pid=1');  -- 1
+insert into PHOTOS(CAR_PART_ID, URL) values(1, 'https://localhost:8080/carpart/1/#&gid=1&pid=2');  -- 2
+insert into PHOTOS(CAR_PART_ID, URL) values(1, 'https://localhost:8080/carpart/1/#&gid=1&pid=3');  -- 3
+insert into PHOTOS(CAR_PART_ID, URL) values(2, 'https://localhost:8080/carpart/2/#&gid=1&pid=1');  -- 4
+insert into PHOTOS(CAR_PART_ID, URL) values(2, 'https://localhost:8080/carpart/2/#&gid=1&pid=2');  -- 5
+insert into PHOTOS(CAR_PART_ID, URL) values(3, 'https://localhost:8080/carpart/3/#&gid=1&pid=1');  -- 6
+insert into PHOTOS(CAR_PART_ID, URL) values(3, 'https://localhost:8080/carpart/3/#&gid=1&pid=2');  -- 7
+insert into PHOTOS(CAR_PART_ID, URL) values(3, 'https://localhost:8080/carpart/3/#&gid=1&pid=3');  -- 8
+insert into PHOTOS(CAR_PART_ID, URL) values(4, 'https://localhost:8080/carpart/4/#&gid=1&pid=1');  -- 9
+insert into PHOTOS(CAR_PART_ID, URL) values(6, 'https://localhost:8080/carpart/6/#&gid=1&pid=1');  -- 10
 
 -- аналоги
 -- ID = 1
@@ -339,6 +341,7 @@ insert into CAR_PART_ANALOGS (CAR_PART_ID, ANALOG_ID) values (2, 2);
 -- ID = 3
 insert into ANALOGS (CAR_PART_ID, VENDOR) values (9, 'Cummins (China)'); --'KMZ-3937478-2')
 insert into CAR_PART_ANALOGS (CAR_PART_ID, ANALOG_ID) values (2, 3);
+insert into CAR_PART_ANALOGS (CAR_PART_ID, ANALOG_ID) values (3, 3);
 
 -- ID = 4
 insert into ANALOGS (CAR_PART_ID, VENDOR) values (10, 'URAL (Russia)'); --'URL-4320-020')

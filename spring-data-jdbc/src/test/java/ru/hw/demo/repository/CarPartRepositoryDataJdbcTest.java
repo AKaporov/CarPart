@@ -155,11 +155,22 @@ class CarPartRepositoryDataJdbcTest {
     void shouldFindCarPartByVendorCode() {
         Optional<CarPart> expected = carPartRepositoryDataJdbc.findById(3L);
 
+        System.out.println("\n\n\n\n----------------------------------------------------------------------------------------------------------");
         Optional<CarPart> actual = carPartRepositoryDataJdbc.findByVendorCode("URL-4320-02");
+        assertAll(() -> {
+            assertThat(actual).isNotEmpty()
+                    .get()
+                    .usingRecursiveComparison()
+                    .ignoringFields("photos", "analogs")
+                    .isEqualTo(expected.get());
 
-        assertThat(actual).isNotEmpty()
-                .usingRecursiveComparison()
-                .isEqualTo(expected);
+            assertThat(actual.get().getPhotos()).isNotEmpty()
+                    .containsExactlyInAnyOrderElementsOf(expected.get().getPhotos());
+            assertThat(actual.get().getAnalogs()).isNotEmpty()
+                    .containsExactlyInAnyOrderElementsOf(expected.get().getAnalogs());
+
+        });
+        System.out.println("----------------------------------------------------------------------------------------------------------\n\n\n\n");
     }
 
     @Test
