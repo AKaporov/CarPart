@@ -12,10 +12,11 @@ import java.util.Optional;
 public interface CarPartRepository extends JpaRepository<CarPart, Long>, JpaSpecificationExecutor<CarPart> {
 
     /**
+     * Если не использовать "analogList" в аннотации @EntityGraph, то будет два Правильных запроса.
+     * Первый в CarPart и сущности перечисленные в attributePaths. Второй запрос analogs по car_part_id
      * @param vendorCode каталожный номер
      * @return возвращает найденные автозапчасти по {@code vendorCode}, иначе Optional.empty()
      */
-    // "Красивее" запрос, если использовать "photoList" вместо "analogList" в аннотации @EntityGraph
     @EntityGraph(type = EntityGraph.EntityGraphType.FETCH, attributePaths = {"brand", "model", "engine", "country", "photoList"})
     Optional<CarPart> findByVendorCode(String vendorCode);
 }
