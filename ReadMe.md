@@ -60,8 +60,11 @@ Spring Boot - 3.1.2 (Иначе в Spring Data JDBC не работают мет
    kubernetes
 
 ## Команды для запуска в браузере (после запуска приложения):
-* [пример фильтра по марке] (http://localhost:8080/api/v1/carparts?brandName=Ural)
-* [пример фильтра по марке и году выпуска] (http://localhost:8080/api/v1/carparts?brandName=Ural&modelName=Ural-4320&yearRelease=1977)
-* [пример ошибочного фильтра] (http://localhost:8080/api/v1/carparts?brandName=Ural&modelName=Ural-4320&yearRelease=19)
-* [пример поиска по каталожному номеру] (http://localhost:8080/api/v1/carparts?VendorCode=URL-4320-02)
-* [пример получения полной информации о запасной части по её каталожному номеру] (http://localhost:8080/api/v1/carparts/URL-4320-01)
+* [пример фильтра по марке](http://localhost:8080/api/v1/carparts?brandName=Ural)
+* [пример фильтра по марке и году выпуска](http://localhost:8080/api/v1/carparts?brandName=Ural&modelName=Ural-4320&yearRelease=1977)
+* [пример ошибочного фильтра](http://localhost:8080/api/v1/carparts?brandName=Ural&modelName=Ural-4320&yearRelease=19)
+* [пример поиска по каталожному номеру](http://localhost:8080/api/v1/carparts?VendorCode=URL-4320-02)
+* [пример получения полной информации о запасной части по её каталожному номеру](http://localhost:8080/api/v1/carparts/URL-4320-01)
+
+## Общие полезные ссылки
+* [Spring Boot 2.7 [Русский]](https://runebook.dev/ru/docs/spring_boot/-index-)
