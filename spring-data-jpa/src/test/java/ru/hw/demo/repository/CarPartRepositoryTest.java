@@ -1,10 +1,12 @@
 package ru.hw.demo.repository;
 
+import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import ru.hw.demo.domain.*;
 import ru.hw.demo.generate.CarPartGenerate;
 
@@ -19,6 +21,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @DataJpaTest
 @DisplayName("Репозиторий по работе с Запчасти автомобиля")
 class CarPartRepositoryTest {
+
+    private static final int EXPECTED_QUERIES_COUNT = 2;
+    @Autowired
+    private TestEntityManager em;
     @Autowired
     private CarPartRepository carPartRepository;
     @Autowired
@@ -109,15 +115,32 @@ class CarPartRepositoryTest {
     }
 
     @Test
-    @DisplayName("должен находить запчасть по каталожному номеру")
+    @DisplayName("должен находить запчасть по каталожному номеру и делать только \'" + EXPECTED_QUERIES_COUNT + "\' запроса к базе")
     void shouldFindCarPartByVendorCode() {
         Optional<CarPart> expected = carPartRepository.findById(3L);
 
+        SessionFactory sessionFactory = em.getEntityManager().getEntityManagerFactory()
+                .unwrap(SessionFactory.class);
+        sessionFactory.getStatistics().setStatisticsEnabled(true);
+
+
+        System.out.println("\n\n\n\n----------------------------------------------------------------------------------------------------------");
         Optional<CarPart> actual = carPartRepository.findByVendorCode("URL-4320-02");
 
-        assertThat(actual).isNotEmpty()
-                .get()
-                .usingRecursiveComparison()
-                .isEqualTo(expected.get());
+        assertAll(() -> {
+            assertThat(actual).isNotEmpty()
+                    .get()
+                    .usingRecursiveComparison()
+                    .ignoringFields("photoList", "analogList")
+                    .isEqualTo(expected.get());
+
+            assertThat(actual.get().getPhotoList()).isNotEmpty()
+                    .containsExactlyInAnyOrderElementsOf(expected.get().getPhotoList());
+            assertThat(actual.get().getAnalogList()).isNotEmpty()
+                    .containsExactlyInAnyOrderElementsOf(expected.get().getAnalogList());
+        });
+        System.out.println("----------------------------------------------------------------------------------------------------------\n\n\n\n");
+
+        assertThat(sessionFactory.getStatistics().getPrepareStatementCount()).isEqualTo(EXPECTED_QUERIES_COUNT);
     }
 }
