@@ -1,5 +1,6 @@
 package ru.hw.demo.service;
 
+import org.springframework.data.domain.Page;
 import ru.hw.demo.dto.CarPartFullInfoDto;
 import ru.hw.demo.dto.CarPartRecommendedDto;
 import ru.hw.demo.pojo.FilterCarPart;
@@ -17,7 +18,7 @@ public interface CarPartService {
      * @param filter фильтр поиска по марке, модели, году выпуска или двигатель.
      * @return возвращает список найденных запчастей по {@code filter}
      */
-    List<CarPartRecommendedDto> getByFilter(FilterCarPart filter);
+    Page<CarPartRecommendedDto> getByFilter(FilterCarPart filter);
 
     /**
      * @param vendorCode каталожный номер запчасти
