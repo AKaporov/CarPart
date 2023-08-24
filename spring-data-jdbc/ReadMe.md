@@ -9,6 +9,9 @@
 * [Spring Data JDBC does not support many-to-one or many-to-many relationships](https://spring.io/blog/2018/09/24/spring-data-jdbc-references-and-aggregates)
 * [Spring Data JDBC – Modelling and working with aggregates](https://thorben-janssen.com/spring-data-jdbc-aggregates/)
 
+## JdbcRepositoryFactory does not support Querydsl!
+* [spring-data-jdbc-querydsl-error-jdbcrepositoryfactory-does-not-support-query](https://stackoverflow.com/questions/72599490/spring-data-jdbc-querydsl-error-jdbcrepositoryfactory-does-not-support-query)
+
 Spring Data предлагает к интерфейсу Repository также интерфейс CrudRepository, поэтому в Репозиториях можно 
 использовать CrudRepository<>. 
 
