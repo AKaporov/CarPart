@@ -60,7 +60,19 @@
             <scope>compile</scope>
         </dependency>
 
-
+        <!-- для доступа к javax.inject.Inject  -->
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
+        </dependency>
+        <!-- для доступа к com.jolbox.bonecp.BoneCPDataSource -->
+        <dependency>
+            <groupId>com.jolbox</groupId>
+            <artifactId>bonecp</artifactId>
+            <version>0.8.0-beta1</version>
+            <classifier>jdk7</classifier>
+        </dependency>
     </dependencies>
 
     <build>

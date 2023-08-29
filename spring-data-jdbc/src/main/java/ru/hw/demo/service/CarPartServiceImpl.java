@@ -1,15 +1,10 @@
 //package ru.hw.demo.service;
 //
 //import lombok.RequiredArgsConstructor;
-//import org.springframework.data.domain.PageRequest;
-//import org.springframework.data.domain.Pageable;
-//import org.springframework.data.domain.Slice;
-//import org.springframework.data.domain.Sort;
-//import org.springframework.data.jpa.domain.Specification;
+//import org.springframework.data.domain.*;
 //import org.springframework.stereotype.Service;
 //import org.springframework.transaction.annotation.Transactional;
 //import ru.hw.demo.constant.MainConstant;
-//import ru.hw.demo.domain.CarPart;
 //import ru.hw.demo.dto.CarPartFullInfoDto;
 //import ru.hw.demo.dto.CarPartRecommendedDto;
 //import ru.hw.demo.pojo.FilterCarPart;
@@ -19,10 +14,9 @@
 //import ru.hw.demo.service.convert.ConvertCarPartToRecommendedDtoService;
 //import ru.hw.demo.service.exception.CarPartNotFoundException;
 //
-//import java.util.ArrayList;
-//import java.util.LinkedList;
 //import java.util.List;
 //import java.util.Objects;
+//import java.util.function.Predicate;
 //
 //@Service
 //@RequiredArgsConstructor
@@ -41,7 +35,7 @@
 //    @Override
 //    public CarPartRecommendedDto getByVendorCode(String vendorCode) {
 //        return carPartRepositoryDataJdbc.findByVendorCode(vendorCode)
-//                .map(cp -> toRecommendedDto.convertToRecommendedDto(List.of(cp)).get(0))
+//                .map(cp -> toRecommendedDto.convertToRecommendedDtoList(List.of(cp)).get(0))
 //                .orElseThrow(() -> new CarPartNotFoundException(vendorCode));
 //    }
 //
@@ -50,26 +44,36 @@
 //     * @return возвращает список найденных запчастей по {@code filter}
 //     */
 //    @Override
-//    public List<CarPartRecommendedDto> getByFilter(FilterCarPart filter) {
+//    public Page<CarPartRecommendedDto> getByFilter(FilterCarPart filter) {
 //        if (Objects.isNull(filter)) {
-//            return new ArrayList<>(1);
+//            return new PageImpl<>(List.of());
 //        }
 //
-//        Specification<CarPart> where = carPartSpecification.getPredicateByFilter(filter);
 //
-//        Slice<CarPart> cpFoundPages = carPartRepositoryDataJdbc.findAll(where, SORT_BY_VENDOR_CODE_AND_ID);
+//        Predicate where = carPartSpecification.getPredicateByFilter(filter);
 //
-//        List<CarPartRecommendedDto> cpFoundList = new LinkedList<>();
-//        while (true) {
-//            cpFoundList.addAll(toRecommendedDto.convertToRecommendedDto(cpFoundPages.getContent()));
+////        Predicate where = null;
+////
+////        carPartRepositoryDataJdbc.findAll(where);
+////
+////        return carPartRepositoryDataJdbc.findAll(where, SORT_BY_VENDOR_CODE_AND_ID)
+////                .map(toRecommendedDto::convertToRecommendedDto);
 //
-//            if (cpFoundPages.hasNext()) {
-//                cpFoundPages = carPartRepositoryDataJdbc.findAll(where, cpFoundPages.nextPageable());
-//            } else {
-//                break;
-//            }
-//        }
-//        return cpFoundList;
+//        return null;
+//
+////        Page<CarPart> cpFoundPages = carPartRepositoryDataJdbc.findAll(where, SORT_BY_VENDOR_CODE_AND_ID);
+////
+////        List<CarPartRecommendedDto> cpFoundList = new LinkedList<>();
+////        while (true) {
+////            cpFoundList.addAll(toRecommendedDto.convertToRecommendedDto(cpFoundPages.getContent()));
+////
+////            if (cpFoundPages.hasNext()) {
+////                cpFoundPages = carPartRepositoryDataJdbc.findAll(where, cpFoundPages.nextPageable());
+////            } else {
+////                break;
+////            }
+////        }
+////        return cpFoundList;
 //    }
 //
 //    /**

@@ -1,30 +1,25 @@
 //package ru.hw.demo.service.component;
-//
+
 //import org.junit.jupiter.api.DisplayName;
 //import org.junit.jupiter.api.Test;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.test.context.SpringBootTest;
-//import org.springframework.data.jpa.domain.Specification;
-//import org.springframework.transaction.annotation.Transactional;
 //import ru.hw.demo.domain.CarPart;
 //import ru.hw.demo.pojo.FilterCarPart;
 //import ru.hw.demo.repository.CarPartRepositoryDataJdbc;
 //
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//import static org.assertj.core.api.Assertions.assertThat;
-//
+//import java.util.function.Predicate;
+
 //@SpringBootTest
 //@DisplayName("Компонент по созданию предиката для поиска запчасти по фильтру")
 //class CarPartSpecificationTest {
-//
+
 //    @Autowired
 //    private CarPartSpecification carPartSpecification;
 //    @Autowired
 //    private CarPartRepositoryDataJdbc carPartRepositoryDataJdbc;
-//
-//
+
+
 //    @Transactional  // только для того, что бы достать информацию из Lazy-полей
 //    @Test
 //    @DisplayName("должен корректно преобразовывать переданный фильтр в предикат поиска и находить запчасть")
@@ -32,13 +27,13 @@
 //        CarPart expected = carPartRepositoryDataJdbc.findById(1L).get();
 //
 //        FilterCarPart filter = FilterCarPart.builder()
-//                .brandName(expected.getBrand().getName())
-//                .modelName(expected.getModel().getName())
-//                .yearRelease(expected.getModel().getYearRelease())
-//                .engineName(expected.getEngine().getName())
+//                .brandName(expected.getBrandRef().getName())
+//                .modelName(expected.getModelRef().getName())
+//                .yearRelease(expected.getModelRef().getYearRelease())
+//                .engineName(expected.getEngineRef().getName())
 //                .build();
 //
-//        Specification<CarPart> specification = carPartSpecification.getPredicateByFilter(filter);
+//        Predicate<CarPart> specification = carPartSpecification.getPredicateByFilter(filter);
 //
 //        List<CarPart> actualList = carPartRepositoryDataJdbc.findAll(specification);
 //
@@ -55,12 +50,12 @@
 //        CarPart carPartTwo = carPartRepositoryDataJdbc.findById(7L).get();
 //
 //        FilterCarPart filter = FilterCarPart.builder()
-//                .brandName(carPartTwo.getBrand().getName())
+//                .brandName(carPartTwo.getBrandRef().getName())
 //                .modelName("")
-//                .yearRelease(carPartTwo.getModel().getYearRelease())
+//                .yearRelease(carPartTwo.getModelRef().getYearRelease())
 //                .build();
 //
-//        Specification<CarPart> specification = carPartSpecification.getPredicateByFilter(filter);
+//        Predicate<CarPart> specification = carPartSpecification.getPredicateByFilter(filter);
 //
 //        List<CarPart> actualList = carPartRepositoryDataJdbc.findAll(specification);
 //
@@ -82,7 +77,7 @@
 //                .yearRelease(2050)
 //                .build();
 //
-//        Specification<CarPart> specification = carPartSpecification.getPredicateByFilter(filter);
+//        Predicate<CarPart> specification = carPartSpecification.getPredicateByFilter(filter);
 //
 //        List<CarPart> actualList = carPartRepositoryDataJdbc.findAll(specification);
 //

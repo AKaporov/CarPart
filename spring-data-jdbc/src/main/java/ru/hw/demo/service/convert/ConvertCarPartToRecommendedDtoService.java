@@ -10,5 +10,7 @@ import java.util.List;
  * Интерфейс для конвертации CarPart в CarPartToRecommendedDto
  */
 public interface ConvertCarPartToRecommendedDtoService {
-    List<CarPartRecommendedDto> convertToRecommendedDto(List<CarPart> carPartList);
+    List<CarPartRecommendedDto> convertToRecommendedDtoList(List<CarPart> carPartList);
+
+    CarPartRecommendedDto convertToRecommendedDto(CarPart carPart);
 }

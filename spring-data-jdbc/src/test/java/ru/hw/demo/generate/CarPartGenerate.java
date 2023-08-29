@@ -22,10 +22,10 @@ public class CarPartGenerate {
                 .name("Bridge UAZ-469 Military Front")
                 .description("Bridge UAZ-469 Military Front. Guarantee from 6 months.")
                 .manufacturer("Ulyanovsk Motor Plant")
-                .price(45_000)
+                .price(45_000d)
                 .sku("202212-2103238563")
                 .vendorCode("UAZ-469-01")
-                .rating(4.8)
+                .rating(4.8d)
                 .build();
 
         if (Objects.nonNull(id)) {
@@ -47,10 +47,10 @@ public class CarPartGenerate {
                 .name("Trunk lid for Moskvich 2141")
                 .description("Auto parsing.")
                 .manufacturer("\"SIGMA\", LITHUANIAN SOFTWARE")
-                .price(3_000)
+                .price(3_000d)
                 .sku("202212-2610130591")
                 .vendorCode("MSK-2141-01")
-                .rating(0)
+                .rating(0d)
                 .build();
 
         if (Objects.nonNull(id)) {

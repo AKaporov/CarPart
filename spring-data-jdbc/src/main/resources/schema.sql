@@ -45,9 +45,9 @@ create TABLE CAR_PARTS(
                        SKU          VARCHAR(50)   NOT NULL UNIQUE,   -- артикул
                        NAME         VARCHAR(255)  NOT NULL,          -- наименование
                        DESCRIPTION  VARCHAR(1024) NOT NULL,          -- описание
-                       PRICE        FLOAT         NOT NULL,          -- стоимость
+                       PRICE        DOUBLE        NOT NULL,          -- стоимость
                        MANUFACTURER VARCHAR(50)   NOT NULL,          -- производитель
-                       RATING       FLOAT         NOT NULL,          -- рейтинг
+                       RATING       DOUBLE        NOT NULL,          -- рейтинг
                        CONSTRAINT `FK01_BRAND`  FOREIGN KEY (BRAND_ID)     REFERENCES BRANDS(ID)  ON delete CASCADE,
                        CONSTRAINT `FK02_MODEL`  FOREIGN KEY (MODEL_ID_FK)  REFERENCES MODELS (ID) ON delete CASCADE,
                        CONSTRAINT `FK03_ENGINE` FOREIGN KEY (ENGINE_ID)    REFERENCES ENGINES(ID) ON delete CASCADE
