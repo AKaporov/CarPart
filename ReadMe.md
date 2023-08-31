@@ -1,11 +1,6 @@
 # Глобальная цель проекта
 Создать модульный обучающий проект. Задание для всех модулей единое и приведено ниже. Каждый новый модуль реализует новую технологию, которая описывается в ReadMe.md
 
-# Используемые версии
-Spring Boot - 3.1.2 (Иначе в Spring Data JDBC не работают методы репозитория по полям "AggregateReference<>")
-* [Common Application Properties](https://docs.spring.io/spring-boot/docs/3.1.2/reference/html/application-properties.html#appendix.application-properties.data)
-* [Spring Boot 3.1.0 Configuration Changelog](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.1.0-Configuration-Changelog)
-
 # Задание для всех модулей
 На картинках показан frontend сайта по-продаже запчастей. Необходимо
 спроектировать и реализовать REST API между сайтом и backend частью.
@@ -68,3 +63,10 @@ Spring Boot - 3.1.2 (Иначе в Spring Data JDBC не работают мет
 
 ## Общие полезные ссылки
 * [Spring Boot 2.7 [Русский]](https://runebook.dev/ru/docs/spring_boot/-index-)
+* [Querydsl](https://querydsl.com/static/querydsl/4.4.0/reference/html_single/)
+* [Введение в Querydsl](https://javascopes.com/intro-to-querydsl-f08c8bfd/)
+
+# Используемые версии
+Spring Boot - 3.1.2 (Иначе в Spring Data JDBC не работают методы репозитория по полям "AggregateReference<>")
+* [Common Application Properties](https://docs.spring.io/spring-boot/docs/3.1.2/reference/html/application-properties.html#appendix.application-properties.data)
+* [Spring Boot 3.1.0 Configuration Changelog](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.1.0-Configuration-Changelog)
