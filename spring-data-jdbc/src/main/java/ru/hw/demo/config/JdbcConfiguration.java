@@ -25,10 +25,6 @@ public class JdbcConfiguration {
     @Bean
     public DataSource dataSource() {
         BoneCPDataSource dataSource = new BoneCPDataSource();
-//        dataSource.setDriverClass(env.getRequiredProperty("jdbc.driver"));
-//        dataSource.setJdbcUrl(env.getRequiredProperty("jdbc.url"));
-//        dataSource.setUsername(env.getRequiredProperty("jdbc.user"));
-//        dataSource.setPassword(env.getRequiredProperty("jdbc.password"));
 
         dataSource.setDriverClass(env.getRequiredProperty("spring.datasource.driver"));
         dataSource.setJdbcUrl(env.getRequiredProperty("spring.datasource.url"));

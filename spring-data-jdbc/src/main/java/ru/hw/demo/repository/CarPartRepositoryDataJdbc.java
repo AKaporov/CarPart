@@ -9,7 +9,7 @@ import ru.hw.demo.repository.row_mapper.CarPartFindByVendorCodeRowMapper;
 import java.util.Optional;
 
 @Repository
-public interface CarPartRepositoryDataJdbc extends CrudRepository<CarPart, Long>, CustomerCarPartRepositoryDataJdbc /*, JpaSpecificationExecutor<CarPart>*/ {
+public interface CarPartRepositoryDataJdbc extends CrudRepository<CarPart, Long>/*, CustomCarPartRepositoryDataJdbc , JpaSpecificationExecutor<CarPart>*/ {
 
     /**
      * @param vendorCode каталожный номер

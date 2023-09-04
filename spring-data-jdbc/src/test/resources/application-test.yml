@@ -1,8 +1,3 @@
-#jdbc:
-#  password:
-#  user: sa
-#  url: jdbc:h2:mem:testdb;INIT=runscript from 'src/main/resources/schema.sql'
-#  driver: org.h2.Driver
 spring:
   sql:
     init:
@@ -30,6 +25,9 @@ spring:
 #      ddl-auto: none
 logging:
   level:
+    com:
+      querydsl:
+        sql: DEBUG #is for logging statements in querydsl
     org.springframework.jdbc.core:
       StatementCreatorUtils: TRACE # is to log parameters of prepared statements.
       JdbcTemplate: DEBUG #is for logging statements
@@ -39,3 +37,8 @@ logging:
 #            sql:
 #              BasicBinder: TRACE #logs the prepared statement parameters
 #        SQL: DEBUG #logs the SQL queries
+#jdbc:
+#  password:
+#  user: sa
+#  url: jdbc:h2:mem:testdb;INIT=runscript from 'src/main/resources/schema.sql'
+#  driver: org.h2.Driver
