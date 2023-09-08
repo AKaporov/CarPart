@@ -21,6 +21,12 @@ public interface CarPartRepositoryDataJdbc extends CrudRepository<CarPart, Long>
     )
     Optional<CarPart> findByVendorCode(String vendorCode);
 
+    // FIXME: 08.09.2023 Может быть пригодится )
+//    @Override
+//    @Query(name = "CarPart.getCarPartById",  // тело запроса в resource "jdbc-named-queries.properties"
+//            rowMapperClass = CarPartFindByVendorCodeRowMapper.class
+//    )
+//    Optional<CarPart> findById(Long id);
 
     // FIXME: 10.08.2023 Решить N+1
 //    /**

@@ -2,6 +2,7 @@ package ru.hw.demo.domain;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.jdbc.core.mapping.AggregateReference;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.MappedCollection;
@@ -77,6 +78,9 @@ public class CarPart {
      */
     @Column(value = "BRAND_ID")
     private AggregateReference<Brand, Long> brandRef;
+    @Transient
+    @Column(value = "BRAND_ID")
+    private Brand brandQueryDsl;  // Я не придумал, как "подружить" QueryDsl с AggregateReference, кроме этого варианта.
 
     /**
      * модель
@@ -85,6 +89,9 @@ public class CarPart {
 //    @JoinColumn(name = "model_id", nullable = false)
     @Column(value = "MODEL_ID_FK")
     private AggregateReference<Model, Long> modelRef;
+    @Transient // Она будет означать, что поле не будет персистентным, т.е. не будет сохраняться в БД. И соответственно не будет заполняться значением при получении объекта из БД.
+    @Column(value = "TEST_KAPOROV")  // Оставлено для примера, что в сочетании с @Transient указанное в @Column поле игнорируется  
+    private Model modelQueryDsl;  // Я не придумал, как "подружить" QueryDsl с AggregateReference, кроме этого варианта.
 
     /**
      * двигатель
@@ -93,6 +100,8 @@ public class CarPart {
 //    @JoinColumn(name = "engine_id", nullable = false)
     @Column(value = "ENGINE_ID")
     private AggregateReference<Engine, Long> engineRef;
+    @Transient // Она будет означать, что поле не будет персистентным, т.е. не будет сохраняться в БД. И соответственно не будет заполняться значением при получении объекта из БД.
+    private Engine engineQueryDsl;  // Я не придумал, как "подружить" QueryDsl с AggregateReference, кроме этого варианта.
 
     /**
      * Страна производства
@@ -101,6 +110,8 @@ public class CarPart {
 //    @JoinColumn(name = "country_id", nullable = false)
     @Column(value = "COUNTRY_ID")
     private AggregateReference<Country, Long> countryRef;
+    @Transient // Она будет означать, что поле не будет персистентным, т.е. не будет сохраняться в БД. И соответственно не будет заполняться значением при получении объекта из БД.
+    private Country countryQueryDsl;  // Я не придумал, как "подружить" QueryDsl с AggregateReference, кроме этого варианта.
 
     /**
      * фотографии
