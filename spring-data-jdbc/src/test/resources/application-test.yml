@@ -24,6 +24,8 @@ spring:
 #    hibernate:
 #      ddl-auto: none
 logging:
+  pattern:
+    console: KAPOROV %d{dd-MM-yyyy HH:mm:ss} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n
   level:
     com:
       querydsl:
