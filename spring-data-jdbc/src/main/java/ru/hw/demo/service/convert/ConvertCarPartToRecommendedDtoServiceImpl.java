@@ -1,34 +1,33 @@
-//package ru.hw.demo.service.convert;
-//
-//import org.springframework.stereotype.Service;
-//import ru.hw.demo.domain.CarPart;
-//import ru.hw.demo.dto.CarPartRecommendedDto;
-//
-//import java.util.List;
-//import java.util.stream.Collectors;
-//
-///**
-// * @author Artem
-// * Сервис для конвертации CarPart в CarPartToRecommendedDto
-// */
-//
-//@Service
-//public class ConvertCarPartToRecommendedDtoServiceImpl implements ConvertCarPartToRecommendedDtoService {
-//    @Override
-//    public List<CarPartRecommendedDto> convertToRecommendedDto(List<CarPart> carPartList) {
+package ru.hw.demo.service.convert;
+
+import org.springframework.stereotype.Service;
+import ru.hw.demo.domain.CarPart;
+import ru.hw.demo.dto.CarPartRecommendedDto;
+
+/**
+ * @author Artem
+ * Сервис для конвертации CarPart в CarPartToRecommendedDto
+ */
+
+@Service
+public class ConvertCarPartToRecommendedDtoServiceImpl implements ConvertCarPartToRecommendedDtoService {
+
+//    public List<CarPartRecommendedDto> convertToRecommendedDtoList(List<CarPart> carPartList) {
 //        return carPartList.stream()
-//                .map(this::getRecommendedDto)
-//                .collect(Collectors.toList());
+//                .map(this::convertToRecommendedDto)
+//                .toList();
 //    }
-//
-//    private CarPartRecommendedDto getRecommendedDto(CarPart carPart) {
-//        return CarPartRecommendedDto.builder()
-//                .id(carPart.getId())
-//                .name(carPart.getName())
-//                .price(carPart.getPrice())
-//                .rating(carPart.getRating())
-//                .sku(carPart.getSku())
-//                .vendorCode(carPart.getVendorCode())
-//                .build();
-//    }
-//}
+
+    @Override
+    public CarPartRecommendedDto convertToRecommendedDto(CarPart carPart) {
+        return CarPartRecommendedDto.builder()
+                .id(carPart.getId())
+                .name(carPart.getName())
+                .price(carPart.getPrice())
+                .rating(carPart.getRating())
+                .sku(carPart.getSku())
+                .vendorCode(carPart.getVendorCode())
+                .build();
+    }
+
+}

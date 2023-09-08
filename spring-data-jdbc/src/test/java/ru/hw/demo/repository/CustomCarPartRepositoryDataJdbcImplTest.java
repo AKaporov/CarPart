@@ -1,5 +1,6 @@
 package ru.hw.demo.repository;
 
+import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ActiveProfiles("test")
 @DisplayName("Расширенный репозиторий на основе Spring Data JDBC по работе с объектом Запчасти автомобиля")
 class CustomCarPartRepositoryDataJdbcImplTest {
-
     @Autowired
     private CarPartRepositoryDataJdbc carPartRepositoryDataJdbc;
 
@@ -37,18 +37,16 @@ class CustomCarPartRepositoryDataJdbcImplTest {
     @Test
     @DisplayName("должен находить все запчасти автомобиля по переданному Predicate")
     void shouldFinAllCarPartsByPredicate() {
-        BooleanExpression eq = carParts.rating.goe(9.0d);
+        BooleanExpression where = carParts.rating.goe(9.0d);
+        where = where.and(carParts.price.goe(20_000d));
 
-        List<CarPart> actualCarParts = customCarPartRepositoryDataJdbc.findAll(eq);
+        List<CarPart> actualCarParts = customCarPartRepositoryDataJdbc.findAll(where);
 
         CarPart cpOne = carPartRepositoryDataJdbc.findById(1L).get();
         CarPart cpTwo = carPartRepositoryDataJdbc.findById(2L).get();
-        CarPart cpThree = carPartRepositoryDataJdbc.findById(3L).get();
-        CarPart cpFour = carPartRepositoryDataJdbc.findById(4L).get();
         CarPart cpNine = carPartRepositoryDataJdbc.findById(9L).get();
-        CarPart cpTen = carPartRepositoryDataJdbc.findById(10L).get();
 
-        List<CarPart> expectedCarPars = List.of(cpOne, cpTwo, cpThree, cpFour, cpNine, cpTen);
+        List<CarPart> expectedCarPars = List.of(cpOne, cpTwo, cpNine);
         assertThat(actualCarParts).isNotEmpty().hasSize(expectedCarPars.size())
                 .containsExactlyInAnyOrderElementsOf(expectedCarPars);
     }

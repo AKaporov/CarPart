@@ -25,9 +25,8 @@ import static com.querydsl.example.sql.QPhotos.photos;
 @Repository
 public class CustomCarPartRepositoryDataJdbcImpl implements CustomCarPartRepositoryDataJdbc {
 
-    // Bean создается в JdbcConfiguration
+    // Bean создается в JdbcConfiguration.java
     @Inject
-//    @Autowired
     private SQLQueryFactory queryFactory;
 
     private final QBean<Brand> brandQBean = bean(Brand.class, brands.id.as("id"), brands.name.as("name"));
@@ -57,7 +56,7 @@ public class CustomCarPartRepositoryDataJdbcImpl implements CustomCarPartReposit
 
 
     @Override
-    public List<CarPart> findAll(Predicate... where) {
+    public List<CarPart> findAll(Predicate where) {
         return queryFactory
 //                .select(carPartQBean)
                 .from(carParts)
@@ -71,4 +70,5 @@ public class CustomCarPartRepositoryDataJdbcImpl implements CustomCarPartReposit
 //                .fetch();
                 .transform(GroupBy.groupBy(carParts.carPartId).list(carPartQBean));
     }
+
 }

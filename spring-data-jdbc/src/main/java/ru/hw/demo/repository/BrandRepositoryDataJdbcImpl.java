@@ -11,7 +11,6 @@ import ru.hw.demo.domain.Brand;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor

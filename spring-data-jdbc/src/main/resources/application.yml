@@ -18,7 +18,7 @@ spring:
     password:
     username: sa
   #    data: classpath:carpart-test.sql #Spring boot verion 2.7 and onwards is not any more depracated.
-#    initialization-mode: always #Spring boot verion 2.7 and onwards is not any more depracated.
+  #    initialization-mode: always #Spring boot verion 2.7 and onwards is not any more depracated.
   jpa:
     show-sql: false
     generate-ddl: false

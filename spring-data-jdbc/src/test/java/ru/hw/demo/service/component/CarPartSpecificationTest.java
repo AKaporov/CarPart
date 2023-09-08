@@ -1,86 +1,96 @@
-//package ru.hw.demo.service.component;
+package ru.hw.demo.service.component;
 
-//import org.junit.jupiter.api.DisplayName;
-//import org.junit.jupiter.api.Test;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.context.SpringBootTest;
-//import ru.hw.demo.domain.CarPart;
-//import ru.hw.demo.pojo.FilterCarPart;
-//import ru.hw.demo.repository.CarPartRepositoryDataJdbc;
-//
-//import java.util.function.Predicate;
+import com.querydsl.core.types.Predicate;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import ru.hw.demo.domain.CarPart;
+import ru.hw.demo.pojo.FilterCarPart;
+import ru.hw.demo.repository.CarPartRepositoryDataJdbc;
+import ru.hw.demo.repository.CustomCarPartRepositoryDataJdbc;
 
-//@SpringBootTest
-//@DisplayName("Компонент по созданию предиката для поиска запчасти по фильтру")
-//class CarPartSpecificationTest {
+import java.util.ArrayList;
+import java.util.List;
 
-//    @Autowired
-//    private CarPartSpecification carPartSpecification;
-//    @Autowired
-//    private CarPartRepositoryDataJdbc carPartRepositoryDataJdbc;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
-//    @Transactional  // только для того, что бы достать информацию из Lazy-полей
-//    @Test
-//    @DisplayName("должен корректно преобразовывать переданный фильтр в предикат поиска и находить запчасть")
-//    void getCarPartByFullPredicate() {
-//        CarPart expected = carPartRepositoryDataJdbc.findById(1L).get();
-//
-//        FilterCarPart filter = FilterCarPart.builder()
-//                .brandName(expected.getBrandRef().getName())
-//                .modelName(expected.getModelRef().getName())
-//                .yearRelease(expected.getModelRef().getYearRelease())
-//                .engineName(expected.getEngineRef().getName())
-//                .build();
-//
-//        Predicate<CarPart> specification = carPartSpecification.getPredicateByFilter(filter);
-//
-//        List<CarPart> actualList = carPartRepositoryDataJdbc.findAll(specification);
-//
-//        assertThat(actualList).isNotNull().isNotEmpty().hasSize(List.of(expected).size())
-//                .usingElementComparatorIgnoringFields("brand", "model", "engine", "country", "photoList", "analogList")
-//                .hasSameElementsAs(List.of(expected));
-//    }
-//
-//    @Transactional
-//    @Test
-//    @DisplayName("должен корректно находить запчасть по частичным параметрам поиска")
-//    void getCarPartByPredicate() {
-//        CarPart carPartOne = carPartRepositoryDataJdbc.findById(1L).get();
-//        CarPart carPartTwo = carPartRepositoryDataJdbc.findById(7L).get();
-//
-//        FilterCarPart filter = FilterCarPart.builder()
-//                .brandName(carPartTwo.getBrandRef().getName())
-//                .modelName("")
-//                .yearRelease(carPartTwo.getModelRef().getYearRelease())
-//                .build();
-//
-//        Predicate<CarPart> specification = carPartSpecification.getPredicateByFilter(filter);
-//
-//        List<CarPart> actualList = carPartRepositoryDataJdbc.findAll(specification);
-//
-//        List<CarPart> expectedList = new ArrayList<>(2);
-//        expectedList.add(carPartOne);
-//        expectedList.add(carPartTwo);
-//
-//        assertThat(actualList).isNotNull().isNotEmpty().hasSize(expectedList.size())
-//                .usingElementComparatorIgnoringFields("brand", "model", "engine", "country", "photoList", "analogList")
-//                .hasSameElementsAs(expectedList);
-//    }
-//
-//    @Test
-//    @DisplayName("должен вернуть пустой список, если по параметрам фильтра ничего не найдено")
-//    void getEmptyResultIfFilterNotValid() {
-//        FilterCarPart filter = FilterCarPart.builder()
-//                .brandName("Ural")
-//                .modelName("Ural-4320")
-//                .yearRelease(2050)
-//                .build();
-//
-//        Predicate<CarPart> specification = carPartSpecification.getPredicateByFilter(filter);
-//
-//        List<CarPart> actualList = carPartRepositoryDataJdbc.findAll(specification);
-//
-//        assertThat(actualList).isNotNull().isEmpty();
-//    }
-//}
+@SpringBootTest
+@ActiveProfiles("test")
+@DisplayName("Компонент по созданию предиката для поиска запчасти по фильтру")
+class CarPartSpecificationTest {
+
+    @Autowired
+    private CustomCarPartRepositoryDataJdbc customCarPartRepositoryDataJdbc;
+    @Autowired
+    private CarPartSpecification carPartSpecification;
+    @Autowired
+    private CarPartRepositoryDataJdbc carPartRepositoryDataJdbc;
+
+    @Test
+    @DisplayName("должен корректно преобразовывать переданный фильтр в предикат поиска и находить запчасть")
+    void getCarPartByFullPredicate() {
+        CarPart expectedOne = carPartRepositoryDataJdbc.findByVendorCode("GZ-750Z370-S").get();
+
+        FilterCarPart filter = FilterCarPart.builder()
+                .brandName(expectedOne.getBrandQueryDsl().getName())
+                .modelName(expectedOne.getModelQueryDsl().getName())
+                .yearRelease(expectedOne.getModelQueryDsl().getYearRelease())
+                .engineName(expectedOne.getEngineQueryDsl().getName())
+                .build();
+
+        Predicate where = carPartSpecification.getPredicateByFilter(filter);
+
+        List<CarPart> actualList = customCarPartRepositoryDataJdbc.findAll(where);
+
+        List<CarPart> expectedList = new ArrayList<>(1);
+        expectedList.add(expectedOne);
+
+        assertThat(actualList).isNotNull().isNotEmpty().hasSize(expectedList.size())
+                .usingRecursiveFieldByFieldElementComparatorIgnoringFields("photos", "analogs", "brandRef", "modelRef", "engineRef", "countryRef")
+                .hasSameElementsAs(expectedList);
+    }
+
+    @Test
+    @DisplayName("должен корректно находить запчасть по частичным параметрам поиска")
+    void getCarPartByPredicate() {
+        CarPart expectedCarPartOne = carPartRepositoryDataJdbc.findByVendorCode("GZ-750Z370-S").get();
+        CarPart expectedCarPartTwo = carPartRepositoryDataJdbc.findByVendorCode("GZ-511.1601130-280").get();
+
+        FilterCarPart filter = FilterCarPart.builder()
+                .brandName(expectedCarPartTwo.getBrandQueryDsl().getName())
+                .modelName("")
+                .yearRelease(expectedCarPartTwo.getModelQueryDsl().getYearRelease())
+                .build();
+
+        Predicate where = carPartSpecification.getPredicateByFilter(filter);
+
+        List<CarPart> actualList = customCarPartRepositoryDataJdbc.findAll(where);
+
+        List<CarPart> expectedList = new ArrayList<>(2);
+        expectedList.add(expectedCarPartOne);
+        expectedList.add(expectedCarPartTwo);
+
+        assertThat(actualList).isNotNull().isNotEmpty().hasSize(expectedList.size())
+                .usingRecursiveFieldByFieldElementComparatorIgnoringFields("photos", "analogs", "brandRef", "modelRef", "engineRef", "countryRef")
+                .hasSameElementsAs(expectedList);
+    }
+
+    @Test
+    @DisplayName("должен вернуть пустой список, если по параметрам фильтра ничего не найдено")
+    void getEmptyResultIfFilterNotValid() {
+        FilterCarPart filter = FilterCarPart.builder()
+                .brandName("Ural")
+                .modelName("Ural-4320")
+                .yearRelease(2050)
+                .build();
+
+        Predicate where = carPartSpecification.getPredicateByFilter(filter);
+
+        List<CarPart> actualList = customCarPartRepositoryDataJdbc.findAll(where);
+
+        assertThat(actualList).isNotNull().isEmpty();
+    }
+}

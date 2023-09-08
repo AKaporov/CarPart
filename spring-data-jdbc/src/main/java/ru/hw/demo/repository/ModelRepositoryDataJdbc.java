@@ -10,5 +10,5 @@ import java.util.List;
 public interface ModelRepositoryDataJdbc extends CrudRepository<Model, Long> {
 //    List<Model> findAll(Example<Model> example);
 
-    List<Model>  findAllByNameAndYearRelease(String name, Integer yearRelease);
+    List<Model> findAllByNameAndYearRelease(String name, Integer yearRelease);
 }

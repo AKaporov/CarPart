@@ -45,16 +45,12 @@ public class CarPartFindByVendorCodeResultSetExtractor implements ResultSetExtra
                     .id(rs.getLong("photo_id"))
                     .photoUrl(rs.getString("photo_url"))
                     .build();
-            if (!photos.contains(photo)) {
-                photos.add(photo);
-            }
+            photos.add(photo);
 
             AnalogRef analogRef = AnalogRef.builder()
                     .analogId(rs.getLong("car_part_analogs_analog_id"))
                     .build();
-            if (!analogRefs.contains(analogRef)) {
-                analogRefs.add(analogRef);
-            }
+            analogRefs.add(analogRef);
 
             resultList.add(CarPart.builder()
                     .id(rs.getLong("car_part_id"))
