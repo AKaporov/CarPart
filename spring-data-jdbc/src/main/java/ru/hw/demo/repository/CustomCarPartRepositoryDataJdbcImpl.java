@@ -47,9 +47,9 @@ public class CustomCarPartRepositoryDataJdbcImpl implements CustomCarPartReposit
             carParts.price,
             carParts.manufacturer,
             carParts.rating,
-//            brandQBean.as("brandQueryDsl"),
-//            modelQBean.as("modelQueryDsl"),
-//            engineQBean.as("engineQueryDsl"),
+            brandQBean.as("brandQueryDsl"),
+            modelQBean.as("modelQueryDsl"),
+            engineQBean.as("engineQueryDsl"),
             countryQBean.as("countryQueryDsl"),
             GroupBy.set(photoQBean).as("photos"),
             GroupBy.set(analogRefQBean).as("analogs")
@@ -61,9 +61,9 @@ public class CustomCarPartRepositoryDataJdbcImpl implements CustomCarPartReposit
         return queryFactory
 //                .select(carPartQBean)
                 .from(carParts)
-//                .innerJoin(carParts.fk01Brand, brands)
-//                .innerJoin(carParts.fk02Model, models)
-//                .innerJoin(carParts.fk03Engine, engines)
+                .innerJoin(carParts.fk01Brand, brands)
+                .innerJoin(carParts.fk02Model, models)
+                .innerJoin(carParts.fk03Engine, engines)
                 .innerJoin(carParts.constraintC67, countries)
                 .leftJoin(carParts._fk01Photo, photos)
                 .leftJoin(carParts._constraint54, carPartAnalogs)

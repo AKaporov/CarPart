@@ -156,12 +156,12 @@ class CarPartRepositoryDataJdbcTest {
         Optional<CarPart> expected = carPartRepositoryDataJdbc.findById(3L);
 
         System.out.println("\n\n\n\n----------------------------------------------------------------------------------------------------------");
-        Optional<CarPart> actual = carPartRepositoryDataJdbc.findByVendorCode("URL-4320-02");
+        Optional<CarPart> actual = carPartRepositoryDataJdbc.findByVendorCode(expected.get().getVendorCode());
         assertAll(() -> {
             assertThat(actual).isNotEmpty()
                     .get()
                     .usingRecursiveComparison()
-                    .ignoringFields("photos", "analogs")
+                    .ignoringFields("photos", "analogs", "brandQueryDsl", "modelQueryDsl", "engineQueryDsl", "countryQueryDsl")
                     .isEqualTo(expected.get());
 
             assertThat(actual.get().getPhotos()).isNotEmpty()

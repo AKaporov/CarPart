@@ -36,7 +36,7 @@ public class MainConstant {
             " )";
 
     /**
-     * Поиск Аналогов со всей связанной информацией
+     * Поиск Аналога по идентификатору со всей связанной информацией
      */
     public static final String SQL_SELECT_ANALOG_WITHOUT_PHOTO =
 // analogs
