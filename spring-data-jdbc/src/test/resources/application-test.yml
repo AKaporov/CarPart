@@ -7,7 +7,7 @@ spring:
     basename: i18n.messages
     fallback-to-system-locale: false
   datasource:
-    url: jdbc:h2:mem:testdb
+    url: jdbc:h2:mem:CarPartTestDB
     driver: org.h2.Driver
     password:
     username: sa
