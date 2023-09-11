@@ -1,0 +1,46 @@
+spring:
+  sql:
+    init:
+      data-locations: classpath:carpart-test.sql #Locations of the data (DML) scripts to apply to the database.
+      mode: always # initialize an SQL databasespring:
+  messages:
+    basename: i18n.messages
+    fallback-to-system-locale: false
+  datasource:
+    url: jdbc:h2:mem:CarPartTestDB
+    driver: org.h2.Driver
+    password:
+    username: sa
+#    data: classpath:carpart-test.sql #Spring boot verion 2.7 and onwards is not any more depracated.
+#    initialization-mode: always #Spring boot verion 2.7 and onwards is not any more depracated.
+  h2:
+    console:
+      path: /h2-console
+      settings:
+        web-allow-others: true
+#  jpa:
+#    show-sql: true
+#    generate-ddl: false
+#    hibernate:
+#      ddl-auto: none
+logging:
+  pattern:
+    console: KAPOROV %d{dd-MM-yyyy HH:mm:ss} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n
+  level:
+    com:
+      querydsl:
+        sql: DEBUG #is for logging statements in querydsl
+    org.springframework.jdbc.core:
+      StatementCreatorUtils: TRACE # is to log parameters of prepared statements.
+      JdbcTemplate: DEBUG #is for logging statements
+#      hibernate:
+#        type:
+#          descriptor:
+#            sql:
+#              BasicBinder: TRACE #logs the prepared statement parameters
+#        SQL: DEBUG #logs the SQL queries
+#jdbc:
+#  password:
+#  user: sa
+#  url: jdbc:h2:mem:testdb;INIT=runscript from 'src/main/resources/schema.sql'
+#  driver: org.h2.Driver

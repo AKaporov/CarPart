@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>ru.hw</groupId>
+        <artifactId>car-part</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <groupId>ru.hw</groupId>
+    <artifactId>car-part-jdbc</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>Spring-Data-JDBC</name>
+    <description>Auto Parts Demo Project on Spring Boot with Spring Data JDBC</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- querydsl -->
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-jpa</artifactId>
+            <version>${querydsl.version}</version>
+        </dependency>
+        <!-- для получения com.querydsl.core.types.Predicate-->
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-sql-spring</artifactId>
+            <version>${querydsl.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/joda-time/joda-time -->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.10.14</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.inject</groupId>
+            <artifactId>jakarta.inject-api</artifactId>
+            <version>2.0.1</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- для доступа к javax.inject.Inject  -->
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
+        </dependency>
+        <!-- для доступа к com.jolbox.bonecp.BoneCPDataSource -->
+        <dependency>
+            <groupId>com.jolbox</groupId>
+            <artifactId>bonecp</artifactId>
+            <version>0.8.0-beta1</version>
+            <classifier>jdk7</classifier>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+
+            <!-- Поддержка плагина QueryDSL -->
+            <plugin>
+                <groupId>com.querydsl</groupId>
+                <artifactId>querydsl-maven-plugin</artifactId>
+                <version>5.0.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>export</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <jdbcDriver>org.h2.Driver</jdbcDriver>
+                    <jdbcUrl>jdbc:h2:mem:;INIT=runscript from 'file:${project.baseUri}/src/main/resources/schema.sql'</jdbcUrl>
+                    <jdbcUser>sa</jdbcUser>
+                    <customTypes>
+                        <customType>com.querydsl.sql.types.DateTimeType</customType>
+                        <customType>com.querydsl.sql.types.LocalDateType</customType>
+                    </customTypes>
+                    <packageName>com.querydsl.example.sql</packageName>
+                    <targetFolder>${project.basedir}/target/generated-sources/java</targetFolder>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.h2database</groupId>
+                        <artifactId>h2</artifactId>
+                        <version>${h2.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>joda-time</groupId>
+                        <artifactId>joda-time</artifactId>
+                        <version>2.10.14</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>
