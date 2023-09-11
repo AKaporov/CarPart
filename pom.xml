@@ -20,6 +20,7 @@
     <modules>
         <module>Spring-Data-JDBC</module>
         <module>Spring-Data-JPA</module>
+        <module>CommandLineRunner</module>
     </modules>
 
     <properties>
