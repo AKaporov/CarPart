@@ -13,7 +13,7 @@ public class CarPartFullInfoDto {
     private final long id;
 
     /**
-     * каталожный номер
+     * Каталожный номер
      */
     private final String vendorCode;
 

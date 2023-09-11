@@ -8,7 +8,5 @@ import java.util.List;
 
 @Repository
 public interface ModelRepositoryDataJdbc extends CrudRepository<Model, Long> {
-//    List<Model> findAll(Example<Model> example);
-
     List<Model> findAllByNameAndYearRelease(String name, Integer yearRelease);
 }

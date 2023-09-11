@@ -26,7 +26,6 @@ public class Engine {
     /**
      * Наименование
      */
-//    @Column(name = "name", nullable = false, unique = true)
     @Column(value = "NAME")
     private String name;
 }

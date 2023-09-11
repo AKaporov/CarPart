@@ -28,49 +28,48 @@ public class CarPart {
 
     @Id
     @Column(value = "CAR_PART_ID")
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**
      * Каталожный номер
      */
-    @Column(value = "VENDOR_CODE")//, nullable = false, unique = true)
+    @Column(value = "VENDOR_CODE")
     private String vendorCode;
 
     /**
      * артикул
      */
-    @Column(value = "SKU")//, nullable = false, unique = true)
+    @Column(value = "SKU")
     private String sku;
 
     /**
      * наименование
      */
-    @Column(value = "NAME")//, nullable = false)
+    @Column(value = "NAME")
     private String name;
 
     /**
      * описание
      */
-    @Column(value = "DESCRIPTION")//, nullable = false)
+    @Column(value = "DESCRIPTION")
     private String description;
 
     /**
      * стоимость
      */
-    @Column(value = "PRICE")//, nullable = false)
+    @Column(value = "PRICE")
     private double price;
 
     /**
      * производитель
      */
-    @Column(value = "MANUFACTURER")//, nullable = false)
+    @Column(value = "MANUFACTURER")
     private String manufacturer;
 
     /**
      * рейтинг
      */
-    @Column(value = "RATING") //, nullable = false)
+    @Column(value = "RATING")
     private double rating;
 
     /**
@@ -78,26 +77,22 @@ public class CarPart {
      */
     @Column(value = "BRAND_ID")
     private AggregateReference<Brand, Long> brandRef;
-    @Transient
+    @Transient // Она будет означать, что поле не будет персистентным, т.е. не будет сохраняться в БД. И соответственно не будет заполняться значением при получении объекта из БД.
     @Column(value = "BRAND_ID")
-    private Brand brandQueryDsl;  // Я не придумал, как "подружить" QueryDsl с AggregateReference, кроме этого варианта.
+    private Brand brandQueryDsl;
 
     /**
      * модель
      */
-//    @ManyToOne(targetEntity = Model.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    @JoinColumn(name = "model_id", nullable = false)
     @Column(value = "MODEL_ID_FK")
     private AggregateReference<Model, Long> modelRef;
     @Transient // Она будет означать, что поле не будет персистентным, т.е. не будет сохраняться в БД. И соответственно не будет заполняться значением при получении объекта из БД.
-    @Column(value = "TEST_KAPOROV")  // Оставлено для примера, что в сочетании с @Transient указанное в @Column поле игнорируется  
-    private Model modelQueryDsl;  // Я не придумал, как "подружить" QueryDsl с AggregateReference, кроме этого варианта.
+    @Column(value = "TEST_KAPOROV")  // Оставлено для примера, что в сочетании с @Transient указанное в @Column поле игнорируется
+    private Model modelQueryDsl;
 
     /**
      * двигатель
      */
-//    @ManyToOne(targetEntity = Engine.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    @JoinColumn(name = "engine_id", nullable = false)
     @Column(value = "ENGINE_ID")
     private AggregateReference<Engine, Long> engineRef;
     @Transient // Она будет означать, что поле не будет персистентным, т.е. не будет сохраняться в БД. И соответственно не будет заполняться значением при получении объекта из БД.
@@ -106,8 +101,6 @@ public class CarPart {
     /**
      * Страна производства
      */
-//    @ManyToOne(targetEntity = Country.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    @JoinColumn(name = "country_id", nullable = false)
     @Column(value = "COUNTRY_ID")
     private AggregateReference<Country, Long> countryRef;
     @Transient // Она будет означать, что поле не будет персистентным, т.е. не будет сохраняться в БД. И соответственно не будет заполняться значением при получении объекта из БД.
@@ -116,21 +109,12 @@ public class CarPart {
     /**
      * фотографии
      */
-//    @OneToMany(targetEntity = Photo.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-//    @JoinColumn(name = "car_part_id", nullable = true)
-//    @Column(value = "CAR_PART_ID")
     @MappedCollection(idColumn = "CAR_PART_ID")
     private Set<Photo> photos;  // Я не понял почему, если сделать List<Photo>, то НЕ работает(Column "PHOTOS.CAR_PARTS_KEY" not found;)! Система ожидает поле "CAR_PARTS_KEY" в таблице "PHOTOS"."CAR_PARTS_KEY"
 
     /**
      * аналоги
      */
-//    @OneToMany(targetEntity = Analog.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    @JoinTable(name = "car_part_analogs",
-//            joinColumns = @JoinColumn(name = "car_part_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "analog_id", referencedColumnName = "id"))
-//    @Column(value = "CAR_PART_ID")
-//    private final List<Analog> analogList;
     @MappedCollection(idColumn = "CAR_PART_ID")
     private Set<AnalogRef> analogs;  // Я не понял почему, если сделать List<AnalogRef> или Collection<AnalogRef>, то НЕ работает (Column "CAR_PART_ANALOGS.CAR_PARTS_KEY" not found;)!  Система ожидает поле "CAR_PARTS_KEY" в таблице "CAR_PART_ANALOGS"."CAR_PARTS_KEY"
 

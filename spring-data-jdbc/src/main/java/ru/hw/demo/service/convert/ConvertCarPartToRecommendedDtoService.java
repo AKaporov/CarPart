@@ -8,7 +8,5 @@ import ru.hw.demo.dto.CarPartRecommendedDto;
  * Интерфейс для конвертации CarPart в CarPartToRecommendedDto
  */
 public interface ConvertCarPartToRecommendedDtoService {
-//    List<CarPartRecommendedDto> convertToRecommendedDtoList(List<CarPart> carPartList);
-
     CarPartRecommendedDto convertToRecommendedDto(CarPart carPart);
 }

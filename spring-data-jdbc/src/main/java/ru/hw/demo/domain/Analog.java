@@ -21,7 +21,6 @@ import org.springframework.data.relational.core.mapping.Table;
 @Table(value = "ANALOGS")
 public class Analog {
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**

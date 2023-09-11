@@ -9,7 +9,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class AnalogDto {
     /**
-     * каталожный номер
+     * Каталожный номер
      */
     private final String vendorCode;
 

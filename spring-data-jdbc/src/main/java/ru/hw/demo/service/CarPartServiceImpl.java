@@ -59,20 +59,6 @@ public class CarPartServiceImpl implements CarPartService {
                 .stream()
                 .map(toRecommendedDto::convertToRecommendedDto)
                 .toList();
-
-//        Page<CarPart> cpFoundPages = carPartRepositoryDataJdbc.findAll(where, SORT_BY_VENDOR_CODE_AND_ID);
-//
-//        List<CarPartRecommendedDto> cpFoundList = new LinkedList<>();
-//        while (true) {
-//            cpFoundList.addAll(toRecommendedDto.convertToRecommendedDto(cpFoundPages.getContent()));
-//
-//            if (cpFoundPages.hasNext()) {
-//                cpFoundPages = carPartRepositoryDataJdbc.findAll(where, cpFoundPages.nextPageable());
-//            } else {
-//                break;
-//            }
-//        }
-//        return cpFoundList;
     }
 
     /**

@@ -9,7 +9,7 @@ import ru.hw.demo.repository.row_mapper.CarPartFindByVendorCodeRowMapper;
 import java.util.Optional;
 
 @Repository
-public interface CarPartRepositoryDataJdbc extends CrudRepository<CarPart, Long>/*, CustomCarPartRepositoryDataJdbc , JpaSpecificationExecutor<CarPart>*/ {
+public interface CarPartRepositoryDataJdbc extends CrudRepository<CarPart, Long> {
 
     /**
      * @param vendorCode каталожный номер
@@ -20,32 +20,4 @@ public interface CarPartRepositoryDataJdbc extends CrudRepository<CarPart, Long>
 //            resultSetExtractorClass = CarPartFindByVendorCodeResultSetExtractor.class
     )
     Optional<CarPart> findByVendorCode(String vendorCode);
-
-    // FIXME: 08.09.2023 Может быть пригодится )
-//    @Override
-//    @Query(name = "CarPart.getCarPartById",  // тело запроса в resource "jdbc-named-queries.properties"
-//            rowMapperClass = CarPartFindByVendorCodeRowMapper.class
-//    )
-//    Optional<CarPart> findById(Long id);
-
-    // FIXME: 10.08.2023 Решить N+1
-//    /**
-//     * @param brandsId список идентификаторов марок
-//     * @return возвращает найденный список автозапчастей по {@code brandsId}.
-//     */
-//    Collection<CarPart> findAllByBrandRefIn(Collection<Long> brandsId);
-//
-//    // FIXME: 10.08.2023 Решить N+1
-//    /**
-//     * @param modelsId список идентификаторов моделей
-//     * @return возвращает найденный список автозапчастей по {@code modelsId}.
-//     */
-//    Collection<CarPart> findAllByModelRefIn(Collection<Long> modelsId);
-//
-//    // FIXME: 10.08.2023 Решить N+1
-//    /**
-//     * @param enginesId список идентификаторов двигателей
-//     * @return возвращает найденный список автозапчастей по {@code enginesId}.
-//     */
-//    Collection<CarPart> findAllByEngineRefIn(Collection<Long> enginesId);
 }

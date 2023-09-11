@@ -22,20 +22,17 @@ import org.springframework.data.relational.core.mapping.Table;
 public class Model {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**
      * Наименование
      */
-//    @Column(name = "name", nullable = false, unique = true)
     @Column(value = "NAME")
     private String name;
 
     /**
      * Год выпуска
      */
-//    @Column(name = "year_release", nullable = false, unique = false)
     @Column(value = "YEAR_RELEASE")
     private Integer yearRelease;
 }

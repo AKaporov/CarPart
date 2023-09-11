@@ -16,11 +16,10 @@ import javax.inject.Inject;
 import javax.sql.DataSource;
 
 @Configuration
-//@PropertySource({"classpath:jdbc.properties"})
 public class JdbcConfiguration {
 
     @Inject
-    Environment env;
+    private Environment env;
 
     @Bean
     public DataSource dataSource() {

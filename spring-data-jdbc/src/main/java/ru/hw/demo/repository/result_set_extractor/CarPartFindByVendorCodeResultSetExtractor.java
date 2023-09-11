@@ -26,21 +26,13 @@ public class CarPartFindByVendorCodeResultSetExtractor implements ResultSetExtra
     @Override
     public List<CarPart> extractData(ResultSet rs) throws SQLException, DataAccessException {
         // TODO: 18.08.2023 !!!!! Реализация не доделана !!!!!, потому что для запроса
-        //  CarPartRepositoryDataJdbc.findByVendorCode используется CarPartFindByVendorCodeRowMapper
+        //  CarPartRepositoryDataJdbc.findByVendorCode() используется CarPartFindByVendorCodeRowMapper
         long rowCount = ((JdbcResultSet) rs).getResult().getRowCount();
         List<CarPart> resultList = new ArrayList<>((int) rowCount);
-
-//        Map<Long, List<String>> data = new LinkedHashMap<>();
 
         Set<Photo> photos = new LinkedHashSet<>();
         Set<AnalogRef> analogRefs = new LinkedHashSet<>();
         while (rs.next()) {
-//            long photoId = rs.getLong("photo_id");
-//            data.putIfAbsent(photoId, new ArrayList<>());
-//
-//            String photoUrl = rs.getString("photo_url");
-//            data.get(photoId).add(photoUrl);
-
             Photo photo = Photo.builder()
                     .id(rs.getLong("photo_id"))
                     .photoUrl(rs.getString("photo_url"))

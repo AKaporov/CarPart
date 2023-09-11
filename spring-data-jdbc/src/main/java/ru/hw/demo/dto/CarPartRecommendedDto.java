@@ -16,7 +16,7 @@ public class CarPartRecommendedDto {
     private final long id;
 
     /**
-     * каталожный номер
+     * Каталожный номер
      */
     private final String vendorCode;
 

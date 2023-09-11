@@ -11,13 +11,6 @@ import ru.hw.demo.dto.CarPartRecommendedDto;
 
 @Service
 public class ConvertCarPartToRecommendedDtoServiceImpl implements ConvertCarPartToRecommendedDtoService {
-
-//    public List<CarPartRecommendedDto> convertToRecommendedDtoList(List<CarPart> carPartList) {
-//        return carPartList.stream()
-//                .map(this::convertToRecommendedDto)
-//                .toList();
-//    }
-
     @Override
     public CarPartRecommendedDto convertToRecommendedDto(CarPart carPart) {
         return CarPartRecommendedDto.builder()

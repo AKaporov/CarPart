@@ -21,13 +21,11 @@ import org.springframework.data.relational.core.mapping.Table;
 @Table(value = "BRANDS")
 public class Brand {
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**
      * Наименование
      */
-//    @Column(name = "name", nullable = false, unique = true)
     @Column(value = "NAME")
     private String name;
 }

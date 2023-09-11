@@ -9,7 +9,5 @@ import java.util.List;
 @Repository
 public interface EngineRepositoryDataJdbc extends CrudRepository<Engine, Long> {
 
-    //List<Engine> findAll(Example<Engine> example);
-
     List<Engine> findAllByName(String name);
 }

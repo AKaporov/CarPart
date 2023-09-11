@@ -23,13 +23,11 @@ public class Photo {
 
     @Id
     @Column(value = "PHOTO_ID")
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**
      * URL фотографии
      */
-//    @Column(name = "url", nullable = false, unique = true)
     @Column(value = "URL")
     private String photoUrl;
 }

@@ -67,7 +67,6 @@ public class CustomCarPartRepositoryDataJdbcImpl implements CustomCarPartReposit
                 .leftJoin(carParts._fk01Photo, photos)
                 .leftJoin(carParts._constraint54, carPartAnalogs)
                 .where(where)
-//                .fetch();
                 .transform(GroupBy.groupBy(carParts.carPartId).list(carPartQBean));
     }
 
