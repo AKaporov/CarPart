@@ -8,7 +8,6 @@ import java.util.Objects;
 
 @RequiredArgsConstructor
 public class CarPartGenerate {
-
     public static CarPart getUaz446(Long id) {
 
         CarPart carPart = CarPart.builder()
