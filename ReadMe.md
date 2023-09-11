@@ -66,10 +66,13 @@
 * [Введение в Querydsl](https://javascopes.com/intro-to-querydsl-f08c8bfd/)
 * [Query Introduction(Описание Query DSL)](https://www.komapper.org/docs/reference/query/introduction/)
 
-# Используемые версии
+## Используемые версии
 Spring Boot - 3.1.2 (Иначе в Spring Data JDBC не работают методы репозитория по полям "AggregateReference<>")
 * [Common Application Properties](https://docs.spring.io/spring-boot/docs/3.1.2/reference/html/application-properties.html#appendix.application-properties.data)
 * [Spring Boot 3.1.0 Configuration Changelog](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.1.0-Configuration-Changelog)
 
-# Добавление и получение данных из своих properties
+# Подсказки
+## Добавление и получение данных из своих properties
 @PropertySource({"classpath:jdbc.properties"}) см. JdbcConfiguration.java в SPRING-DATA-JDBC
+
+* [Команда для выкатывания tag-ов в github ("git push --tags")](https://www.thisprogrammingthing.com/2013/git-tags-not-showing-in-github/)
