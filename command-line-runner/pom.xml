@@ -1,6 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>ru.hw</groupId>
         <artifactId>car-part</artifactId>
@@ -8,9 +10,9 @@
     </parent>
 
     <groupId>ru.hw</groupId>
-    <artifactId>command-line-runner</artifactId>
+    <artifactId>car-part-jpa-command-line-runner</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Command-Line-Runner</name>
+    <name>Spring-Data-JPA + Command-Line-Runner</name>
     <description>Предварительная загрузка данных с помощью CommandLineRunner (на основе Spring-Data-JPA)</description>
 
     <dependencies>

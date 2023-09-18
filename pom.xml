@@ -18,9 +18,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>Spring-Data-JDBC</module>
-        <module>Spring-Data-JPA</module>
-        <module>CommandLineRunner</module>
+        <module>spring-data-jdbc</module>
+        <module>spring-data-jpa</module>
+        <module>command-line-runner</module>
     </modules>
 
     <properties>
