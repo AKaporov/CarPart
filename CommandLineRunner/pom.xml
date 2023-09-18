@@ -10,7 +10,7 @@
     <groupId>ru.hw</groupId>
     <artifactId>command-line-runner</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>CommandLineRunner</name>
+    <name>Command-Line-Runner</name>
     <description>Предварительная загрузка данных с помощью CommandLineRunner (на основе Spring-Data-JPA)</description>
 
     <dependencies>
