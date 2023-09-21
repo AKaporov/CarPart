@@ -14,8 +14,4 @@ public class MainConstant {
      * Размер страницы. Данные возвращаемые запросом
      */
     public static final int PAGE_REQUEST_SIZE = 10;
-
-    public static final String BRAND_GAZ = "Gaz";
-    public static final String BRAND_URAL = "Ural";
-    public static final String BRAND_KAMAZ = "Kamaz";
 }
