@@ -8,7 +8,6 @@ import ru.hw.demo.dto.CarPartFullInfoDto;
 import ru.hw.demo.dto.PhotoDto;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Artem
@@ -25,11 +24,11 @@ public class ConvertCarPartToFullInfoDtoServiceImpl implements ConvertCarPartToF
     public CarPartFullInfoDto convertToFullInfoDto(CarPart carPart) {
         List<AnalogDto> analogDtoList = carPart.getAnalogList().stream()
                 .map(toAnalogDtoService::convertToAnalogDto)
-                .collect(Collectors.toList());
+                .toList();
 
         List<PhotoDto> photoDtoList = carPart.getPhotoList().stream()
                 .map(toPhotoDtoService::convertToPhotoDto)
-                .collect(Collectors.toList());
+                .toList();
 
         return CarPartFullInfoDto.builder()
                 .id(carPart.getId())

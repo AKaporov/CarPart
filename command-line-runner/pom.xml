@@ -9,7 +9,6 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>ru.hw</groupId>
     <artifactId>car-part-jpa-command-line-runner</artifactId>
     <version>0.0.1</version>
     <name>Spring-Data-JPA + Command-Line-Runner</name>

@@ -5,7 +5,6 @@ import ru.hw.demo.domain.CarPart;
 import ru.hw.demo.dto.CarPartRecommendedDto;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Artem
@@ -18,7 +17,7 @@ public class ConvertCarPartToRecommendedDtoServiceImpl implements ConvertCarPart
     public List<CarPartRecommendedDto> convertToRecommendedDto(List<CarPart> carPartList) {
         return carPartList.stream()
                 .map(this::getRecommendedDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private CarPartRecommendedDto getRecommendedDto(CarPart carPart) {

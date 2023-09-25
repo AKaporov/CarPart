@@ -1,5 +1,6 @@
 package ru.hw.demo.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Order;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -13,8 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Configuration
 public class CommandLineRunnerConfigurator {
+
+    private static final String KAMAZ_RUSSIA = "KAMAZ (Russia)";
 
     @Bean
     @Order(1)
@@ -55,21 +59,18 @@ public class CommandLineRunnerConfigurator {
     @Bean
     @Order(3)
     public CommandLineRunner enginesCommandLineRunner(EngineRepository repository) {
-        return args -> {
-            repository.saveAllAndFlush(List.of(
-                    Engine.builder().name(EngineType.DIESEL.getName()).build(),
-                    Engine.builder().name(EngineType.PETROL.getName()).build(),
-                    Engine.builder().name(EngineType.TURBOCHARGED_DIESEL.getName()).build()
-            ));
-        };
+        return args ->
+                repository.saveAllAndFlush(List.of(
+                        Engine.builder().name(EngineType.DIESEL.getName()).build(),
+                        Engine.builder().name(EngineType.PETROL.getName()).build(),
+                        Engine.builder().name(EngineType.TURBOCHARGED_DIESEL.getName()).build()
+                ));
     }
 
     @Bean
     @Order(4)
     public CommandLineRunner countriesCommandLineRunner(CountryRepository repository) {
-        return args -> {
-            repository.saveAndFlush(Country.builder().name(CountryType.RUSSIA.getName()).build());
-        };
+        return args -> repository.saveAndFlush(Country.builder().name(CountryType.RUSSIA.getName()).build());
     }
 
     @Bean
@@ -102,9 +103,9 @@ public class CommandLineRunnerConfigurator {
                                                        AnalogRepository analogRepository) {
         return args -> {
             carPartLoader(carPartRepository, brandRepository, modelRepository, engineRepository,
-                    countryRepository, photoRepository, analogRepository);
+                    countryRepository, photoRepository);
             analogLoaderAndLinkToCarPart(analogRepository, carPartRepository);
-            System.out.println("*** CarPart STARTED ***");
+            log.info("*** CarPart STARTED ***");
         };
     }
 
@@ -119,7 +120,7 @@ public class CommandLineRunnerConfigurator {
 
         Optional<CarPart> carPartKmz740 = carPartRepository.findByVendorCode(CarPartVendorCodeType.KMZ_740_60_1008025_20.getVendorCode());
         carPartKmz740.ifPresent(carPart -> analogs.add(Analog.builder()
-                .vendor("KAMAZ (Russia)")
+                .vendor(KAMAZ_RUSSIA)
                 .carPart(carPart)
                 .build()));
 
@@ -163,8 +164,7 @@ public class CommandLineRunnerConfigurator {
                                ModelRepository modelRepository,
                                EngineRepository engineRepository,
                                CountryRepository countryRepository,
-                               PhotoRepository photoRepository,
-                               AnalogRepository analogRepository) {
+                               PhotoRepository photoRepository) {
 
         List<Brand> brands = brandRepository.findAll();
         Brand brandKamaz = getBrandByType(brands, BrandType.KAMAZ);
@@ -317,7 +317,7 @@ public class CommandLineRunnerConfigurator {
                 .name("Коллектор камаз-евро-3,4,5 выпускной")
                 .description("Коллектор выпускной КАМАЗ левый. ДВС- КАМАЗ 740- Евро 3,4,5. В наличии. Возможно отправка ч/з ТК.")
                 .price(5_000d)
-                .manufacturer("KAMAZ (Russia)")
+                .manufacturer(KAMAZ_RUSSIA)
                 .rating(5.5d)
                 .photoList(List.of())
                 .build();
@@ -333,7 +333,7 @@ public class CommandLineRunnerConfigurator {
                 .name("Коллектор выпускной 1-2 цилиндров ISLe 3937478")
                 .description("Новый оригинальный! Коллектор выпускной малый (1-2 цилиндра) 3937478, 3943850, 39377477, 3968361 на двигатель Cummins ISLe, L345, ISCE, QSC8.3, QSL9.")
                 .price(23_000d)
-                .manufacturer("KAMAZ (Russia)")
+                .manufacturer(KAMAZ_RUSSIA)
                 .rating(10.0d)
                 .photoList(List.of())
                 .build();
