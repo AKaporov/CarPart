@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-@TestPropertySource(properties = {"spring.datasource.data=analog-test.sql"})
+@TestPropertySource(properties = {"spring.sql.init.data-locations=analog-test.sql"})
 @DisplayName("Репозиторий по работе с Аналогами запчастей")
 class AnalogRepositoryTest {
     private static final Long ANALOG_ID = 2L;

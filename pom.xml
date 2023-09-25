@@ -11,15 +11,16 @@
 
     <groupId>ru.hw</groupId>
     <artifactId>car-part</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.3-SNAPSHOT</version>
     <name>Car-Part</name>
     <description>Auto Parts Demo Project on Spring Boot</description>
 
     <packaging>pom</packaging>
 
     <modules>
-        <module>Spring-Data-JDBC</module>
-        <module>Spring-Data-JPA</module>
+        <module>spring-data-jdbc</module>
+        <module>spring-data-jpa</module>
+        <module>command-line-runner</module>
     </modules>
 
     <properties>

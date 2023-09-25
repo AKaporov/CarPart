@@ -11,7 +11,7 @@
 
     <groupId>ru.hw</groupId>
     <artifactId>car-part-jdbc</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2</version>
     <name>Spring-Data-JDBC</name>
     <description>Auto Parts Demo Project on Spring Boot with Spring Data JDBC</description>
 

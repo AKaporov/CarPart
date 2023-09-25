@@ -65,6 +65,8 @@
 * [Querydsl](https://querydsl.com/static/querydsl/4.4.0/reference/html_single/)
 * [Введение в Querydsl](https://javascopes.com/intro-to-querydsl-f08c8bfd/)
 * [Query Introduction(Описание Query DSL)](https://www.komapper.org/docs/reference/query/introduction/)
+* [Initialize a Database](https://docs.spring.io/spring-boot/docs/current/reference/html/howto.html#howto.data-initialization)
+* [**spring.sql.init.mode**](https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/api/org/springframework/boot/sql/init/DatabaseInitializationMode.html)
 
 ## Используемые версии
 Spring Boot - 3.1.2 (Иначе в Spring Data JDBC не работают методы репозитория по полям "AggregateReference<>")
