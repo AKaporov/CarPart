@@ -16,7 +16,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-@TestPropertySource(properties = {"spring.datasource.data=photo-test.sql"})
+@TestPropertySource(properties = {"spring.sql.init.data-locations=photo-test.sql"})
 @DisplayName("Репозиторий по работе с Фотографиями")
 class PhotoRepositoryTest {
 
