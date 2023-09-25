@@ -20,6 +20,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class ModelRepositoryTest {
     private static final Long URAL_4320_ID = 2L;
     private static final String EXPECTED_NAME = "UAZ-469";
+    private static final String URAL_4320_NAME = "Ural-4320";
+    private static final Integer URAL_4320_YEAR_RELEASE = 1977;
 
     @Autowired
     private ModelRepository repository;
@@ -53,8 +55,21 @@ class ModelRepositoryTest {
 
         Model expectedModel = Model.builder()
                 .id(URAL_4320_ID)
-                .name("Ural-4320")
-                .yearRelease(1977)
+                .name(URAL_4320_NAME)
+                .yearRelease(URAL_4320_YEAR_RELEASE)
+                .build();
+        assertEquals(Optional.of(expectedModel), actualModel);
+    }
+
+    @Test
+    @DisplayName("должен находить модель по её наименования и году выпуска")
+    void shouldFinModelByNameAndYearRelease() {
+        Optional<Model> actualModel = repository.findByNameAndYearRelease(URAL_4320_NAME, URAL_4320_YEAR_RELEASE);
+
+        Model expectedModel = Model.builder()
+                .id(URAL_4320_ID)
+                .name(URAL_4320_NAME)
+                .yearRelease(URAL_4320_YEAR_RELEASE)
                 .build();
         assertEquals(Optional.of(expectedModel), actualModel);
     }

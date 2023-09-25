@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import ru.hw.demo.domain.CarPart;
 import ru.hw.demo.domain.Photo;
@@ -16,7 +17,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-@TestPropertySource(properties = {"spring.datasource.data=photo-test.sql"})
+@ActiveProfiles("test")
+@TestPropertySource(properties = {"spring.sql.init.data-locations=photo-test.sql"})
 @DisplayName("Репозиторий по работе с Фотографиями")
 class PhotoRepositoryTest {
 
@@ -64,9 +66,12 @@ class PhotoRepositoryTest {
         List<Photo> beforeAllPhotoList = photoRepository.findAll();
 
         Optional<CarPart> carPartFound = carPartRepository.findById(1L);
+
         carPartFound.ifPresent(cp -> {
-            cp.getPhotoList().remove(1);
+            Photo remove = cp.getPhotoList().remove(1);
             carPartRepository.save(cp);
+            photoRepository.delete(remove);
+
         });
 
         List<Photo> actualAllPhotoList = photoRepository.findAll();
@@ -76,4 +81,5 @@ class PhotoRepositoryTest {
             assertEquals(beforeAllPhotoList.size() - 1, actualAllPhotoList.size());
         });
     }
+
 }

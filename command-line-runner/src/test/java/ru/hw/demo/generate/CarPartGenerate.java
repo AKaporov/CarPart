@@ -1,9 +1,12 @@
 package ru.hw.demo.generate;
 
+import org.springframework.stereotype.Component;
 import ru.hw.demo.domain.*;
+import ru.hw.demo.enums.EngineType;
 
 import java.util.ArrayList;
 
+@Component
 public class CarPartGenerate {
 
     public static CarPart getUaz446(Long id) {
@@ -11,7 +14,7 @@ public class CarPartGenerate {
         CarPart carPart = CarPart.builder()
                 .brand(Brand.builder().name("UAZ").build())
                 .model(Model.builder().name("UAZ-469").yearRelease(1972).build())
-                .engine(Engine.builder().name("Turbocharged petrol").build())
+                .engine(Engine.builder().name(EngineType.TURBOCHARGED_DIESEL.getName()).build())
                 .country(Country.builder().name("Morocco").build())
                 .photoList(new ArrayList<>(1))
                 .analogList(new ArrayList<>(1))
@@ -35,7 +38,7 @@ public class CarPartGenerate {
         CarPart carPart = CarPart.builder()
                 .brand(Brand.builder().name("Moskvich").build())
                 .model(Model.builder().name("Moskvich 2141").yearRelease(2000).build())
-                .engine(Engine.builder().name("Petrol Turbocharged").build())
+                .engine(Engine.builder().name(EngineType.TURBOCHARGED_DIESEL.getName()).build())
                 .country(Country.builder().name("Lithuania").build())
                 .photoList(null)
                 .analogList(null)

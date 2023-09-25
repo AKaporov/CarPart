@@ -68,42 +68,42 @@ public class CarPart {
     /**
      * марка
      */
-    @ManyToOne(targetEntity = Brand.class, cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Brand.class, cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "brand_id", nullable = false)
     private Brand brand;
 
     /**
      * модель
      */
-    @ManyToOne(targetEntity = Model.class, cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Model.class, cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "model_id", nullable = false)
     private Model model;
 
     /**
      * двигатель
      */
-    @ManyToOne(targetEntity = Engine.class, cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Engine.class, cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "engine_id", nullable = false)
     private Engine engine;
 
     /**
      *  Страна производства
      */
-    @ManyToOne(targetEntity = Country.class, cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Country.class, cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id", nullable = false)
     private Country country;
 
     /**
      * фотографии
      */
-    @OneToMany(targetEntity = Photo.class, cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(targetEntity = Photo.class, cascade = CascadeType.MERGE, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "car_part_id", nullable = true)
     private List<Photo> photoList;
 
     /**
      * аналоги
      */
-    @OneToMany(targetEntity = Analog.class, cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = Analog.class, cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinTable(name = "car_part_analogs",
             joinColumns = @JoinColumn(name = "car_part_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "analog_id", referencedColumnName = "id"))

@@ -6,10 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import ru.hw.demo.domain.*;
-import ru.hw.demo.enums.BrandType;
-import ru.hw.demo.enums.CountryType;
-import ru.hw.demo.enums.EngineType;
-import ru.hw.demo.enums.ModelType;
+import ru.hw.demo.enums.*;
 import ru.hw.demo.repository.*;
 
 import java.util.ArrayList;
@@ -23,10 +20,13 @@ public class CommandLineRunnerConfigurator {
     @Order(1)
     public CommandLineRunner brandsCommandLineRunner(BrandRepository repository) {
         return args -> {
-            repository.save(Brand.builder().name(BrandType.KAMAZ.getName()).build());
-            repository.save(Brand.builder().name(BrandType.URAL.getName()).build());
-            repository.save(Brand.builder().name(BrandType.GAZ.getName()).build());
+            List<Brand> brands = List.of(
+                    Brand.builder().name(BrandType.KAMAZ.getName()).build(),
+                    Brand.builder().name(BrandType.URAL.getName()).build(),
+                    Brand.builder().name(BrandType.GAZ.getName()).build()
+            );
 
+            repository.saveAllAndFlush(brands);
         };
     }
 
@@ -34,18 +34,21 @@ public class CommandLineRunnerConfigurator {
     @Order(2)
     public CommandLineRunner modelsCommandLineRunner(ModelRepository repository) {
         return args -> {
-            repository.save(Model.builder()
+            List<Model> models = new ArrayList<>(3);
+            models.add(Model.builder()
                     .name(ModelType.GAZ_66_1964.getName())
                     .yearRelease(ModelType.GAZ_66_1964.getYearRelease())
                     .build());
-            repository.save(Model.builder()
+            models.add(Model.builder()
                     .name(ModelType.URAL_4320_1977.getName())
                     .yearRelease(ModelType.URAL_4320_1977.getYearRelease())
                     .build());
-            repository.save(Model.builder()
+            models.add(Model.builder()
                     .name(ModelType.KAMAZ_65201_2000.getName())
                     .yearRelease(ModelType.KAMAZ_65201_2000.getYearRelease())
                     .build());
+
+            repository.saveAllAndFlush(models);
         };
     }
 
@@ -53,9 +56,11 @@ public class CommandLineRunnerConfigurator {
     @Order(3)
     public CommandLineRunner enginesCommandLineRunner(EngineRepository repository) {
         return args -> {
-            repository.save(Engine.builder().name(EngineType.DIESEL.getName()).build());
-            repository.save(Engine.builder().name(EngineType.PETROL.getName()).build());
-            repository.save(Engine.builder().name(EngineType.TURBOCHARGED_DIESEL.getName()).build());
+            repository.saveAllAndFlush(List.of(
+                    Engine.builder().name(EngineType.DIESEL.getName()).build(),
+                    Engine.builder().name(EngineType.PETROL.getName()).build(),
+                    Engine.builder().name(EngineType.TURBOCHARGED_DIESEL.getName()).build()
+            ));
         };
     }
 
@@ -63,7 +68,7 @@ public class CommandLineRunnerConfigurator {
     @Order(4)
     public CommandLineRunner countriesCommandLineRunner(CountryRepository repository) {
         return args -> {
-            repository.save(Country.builder().name(CountryType.RUSSIA.getName()).build());
+            repository.saveAndFlush(Country.builder().name(CountryType.RUSSIA.getName()).build());
         };
     }
 
@@ -98,88 +103,53 @@ public class CommandLineRunnerConfigurator {
         return args -> {
             carPartLoader(carPartRepository, brandRepository, modelRepository, engineRepository,
                     countryRepository, photoRepository, analogRepository);
-            analogLoader(analogRepository, carPartRepository);
+            analogLoaderAndLinkToCarPart(analogRepository, carPartRepository);
+            System.out.println("*** CarPart STARTED ***");
         };
     }
 
-    private void analogLoader(AnalogRepository analogRepository, CarPartRepository carPartRepository) {
+    private void analogLoaderAndLinkToCarPart(AnalogRepository analogRepository, CarPartRepository carPartRepository) {
         List<Analog> analogs = new ArrayList<>(4);
 
-        Optional<CarPart> carPartGZ_511 = carPartRepository.findByVendorCode("GZ-511.1601130-280");
+        Optional<CarPart> carPartGZ_511 = carPartRepository.findByVendorCode(CarPartVendorCodeType.GZ_511_1601130_280.getVendorCode());
         carPartGZ_511.ifPresent(carPart -> analogs.add(Analog.builder()
                 .vendor("No name (China)")
                 .carPart(carPart)
                 .build()));
 
-//                    .ifPresent(carPart -> analogs.add(Analog.builder()
-//                            .vendor("No name (China)")
-//                            .carPart(carPart)
-//                            .build()));
-
-        Optional<CarPart> carPartKmz740 = carPartRepository.findByVendorCode("KMZ-740.60-1008025-20");
+        Optional<CarPart> carPartKmz740 = carPartRepository.findByVendorCode(CarPartVendorCodeType.KMZ_740_60_1008025_20.getVendorCode());
         carPartKmz740.ifPresent(carPart -> analogs.add(Analog.builder()
                 .vendor("KAMAZ (Russia)")
                 .carPart(carPart)
                 .build()));
-//                    .ifPresent(carPart -> analogs.add(Analog.builder()
-//                            .vendor("KAMAZ (Russia)")
-//                            .carPart(carPart)
-//                            .build()));
 
-        Optional<CarPart> carPartKmz3937478 = carPartRepository.findByVendorCode("KMZ-3937478-2");
+        Optional<CarPart> carPartKmz3937478 = carPartRepository.findByVendorCode(CarPartVendorCodeType.KMZ_3937478_2.getVendorCode());
         carPartKmz3937478.ifPresent(carPart ->
                 analogs.add(Analog.builder()
                         .vendor("Cummins (China)")
                         .carPart(carPart)
                         .build())
         );
-//                    .ifPresent(carPart -> analogs.add(Analog.builder()
-//                            .vendor("Cummins (China)")
-//                            .carPart(carPart)
-//                            .build()));
 
-        Optional<CarPart> carPartUrl4320 = carPartRepository.findByVendorCode("URL-4320-020");
+        Optional<CarPart> carPartUrl4320 = carPartRepository.findByVendorCode(CarPartVendorCodeType.URL_4320_02.getVendorCode());
         carPartUrl4320.ifPresent(carPart ->
                 analogs.add(Analog.builder()
                         .vendor("URAL (Russia)")
                         .carPart(carPart)
                         .build())
         );
-//                    .ifPresent(carPart -> analogs.add(Analog.builder()
-//                            .vendor("URAL (Russia)")
-//                            .carPart(carPart)
-//                            .build()));
 
         List<Analog> analogsSaved = analogRepository.saveAllAndFlush(analogs);
 
         List<CarPart> carParts = new ArrayList<>();
-        carParts.add(linkCarPartToAnalog(carPartGZ_511, List.of(analogsSaved.get(0))));
-        carParts.add(linkCarPartToAnalog(carPartKmz740, List.of(analogsSaved.get(1), analogsSaved.get(2))));
-        carParts.add(linkCarPartToAnalog(carPartUrl4320, List.of(analogsSaved.get(3))));
-        carPartRepository.saveAllAndFlush(carParts);
+        carParts.add(addAnalogsToCarPart(carPartGZ_511, List.of(analogsSaved.get(0))));
+        carParts.add(addAnalogsToCarPart(carPartKmz740, List.of(analogsSaved.get(1), analogsSaved.get(2))));
+        carParts.add(addAnalogsToCarPart(carPartUrl4320, List.of(analogsSaved.get(3))));
 
-//        carPartGZ_511.ifPresent(carPart -> {
-//            carPart.setAnalogList(List.of(analogsSaved.get(0)));
-//            carPartRepository.save(carPart);
-//        });
-//
-//        carPartKmz740.ifPresent(carPart -> {
-//            carPart.setAnalogList(List.of(analogsSaved.get(1)));
-//            carPartRepository.save(carPart);
-//        });
-//
-//        carPartKmz3937478.ifPresent(carPart -> {
-//            carPart.setAnalogList(List.of(analogsSaved.get(2)));
-//            carPartRepository.save(carPart);
-//        });
-//
-//        carPartUrl4320.ifPresent(carPart -> {
-//            carPart.setAnalogList(List.of(analogsSaved.get(3)));
-//            carPartRepository.save(carPart);
-//        });
+        carPartRepository.saveAllAndFlush(carParts);
     }
 
-    private CarPart linkCarPartToAnalog(Optional<CarPart> carPartOptional, List<Analog> analogs) {
+    private CarPart addAnalogsToCarPart(Optional<CarPart> carPartOptional, List<Analog> analogs) {
         return carPartOptional.map(carPart -> {
                             carPart.setAnalogList(analogs);
                             return carPart;
@@ -218,34 +188,185 @@ public class CommandLineRunnerConfigurator {
         Photo photoOne_One = photos.get(0);
         Photo photoOne_Two = photos.get(1);
         Photo photoOne_Three = photos.get(2);
+        Photo photoTwo_One = photos.get(3);
+        Photo photoTwo_Two = photos.get(4);
+        Photo photoThree_One = photos.get(5);
+        Photo photoFour_One = photos.get(6);
+        Photo photoSix_One = photos.get(7);
 
-
-        CarPart carPartOne = CarPart.builder()
+        // ID = 1
+        CarPart cpGZ_750Z370_S = CarPart.builder()
                 .brand(brandGaz)
                 .model(modelGaz66_1964)
                 .engine(engineDiesel)
                 .country(countryRussia)
-                .vendorCode("GZ-750Z370-S")
+                .vendorCode(CarPartVendorCodeType.GZ_750Z370_S.getVendorCode())
                 .sku("SKU-201902-0057")
                 .name("ДИСК СЦЕПЛЕНИЯ")
                 .description("Диск сцепления передает крутящий момент от ДВС к трансмиссии, выступает в качестве составляющей трения.")
-                .price(59720.66d)
+                .price(59_720.66d)
                 .manufacturer("ZF SACHS")
                 .rating(9.7d)
                 .photoList(List.of(photoOne_One, photoOne_Two, photoOne_Three))
                 .build();
 
-        CarPart savedCarPartOne = carPartRepository.save(carPartOne);
+        // ID = 2
+        CarPart cpURL_4320_01 = CarPart.builder()
+                .brand(brandUral)
+                .model(modelUral4320_1977)
+                .engine(engineDiesel)
+                .country(countryRussia)
+                .vendorCode(CarPartVendorCodeType.URL_4320_01.getVendorCode())
+                .sku("SKU-202212-01/20")
+                .name("КОТЕЛ ПОДОГРЕВАТЕЛЯ")
+                .description("Котел подогревателя предназначен для нагрева жидкости в системе охлаждения и масла в картере двигателя перед его пуском в холодный период времени.")
+                .price(28_390.99d)
+                .manufacturer("Ural")
+                .rating(9.0d)
+                .photoList(List.of(photoTwo_One, photoTwo_Two))
+                .build();
 
-//        Analog analogCarPartOne = Analog.builder().vendor("No name (China)").carPart(savedCarPartOne).build();
-//        savedCarPartOne.setAnalogList(List.of(analogCarPartOne));
-        System.out.println("****** KAPOROV = " + savedCarPartOne);
-//
-//        CarPart save1 = carPartRepository.save(savedCarPartOne);
-//        System.out.println("****** KAPOROV = " + save1);
+        // ID = 3
+        CarPart cpURL_4320_02 = CarPart.builder()
+                .brand(brandUral)
+                .model(modelUral4320_1977)
+                .engine(engineDiesel)
+                .country(countryRussia)
+                .vendorCode(CarPartVendorCodeType.URL_4320_02.getVendorCode())
+                .sku("SKU-202212-3703010")
+                .name("Аккумулятор")
+                .description("Аккумулятор – химический источник тока, выполняющий функции благодаря которым производится старт и движение машины.")
+                .price(14_187d)
+                .manufacturer("Ural")
+                .rating(10.0d)
+                .photoList(List.of(photoThree_One))
+                .build();
 
-        List<CarPart> all = carPartRepository.findAll();
-        all.stream().forEach(System.out::println);
+        // ID = 4
+        CarPart cpKMZ_740_51_1117010_0 = CarPart.builder()
+                .brand(brandKamaz)
+                .model(modelKamaz65301_2000)
+                .engine(engineTurboDiesel)
+                .country(countryRussia)
+                .vendorCode(CarPartVendorCodeType.KMZ_740_51_1117010_01.getVendorCode())
+                .sku("SKU-202212-1117010")
+                .name("ТОПЛИВНЫЙ ТОНКОЙ ОЧИСТКИ ЕВРО С ПОДОГРЕВОМ")
+                .description("Фильтр топливный тонкой очистки ЕВРО с подогревом купить на автомобиль КАМАЗ оптом и в розницу с доставкой по России. Сертификаты соответствия, схемы и инструкции по установке детали.")
+                .price(10_760d)
+                .manufacturer("LAZZ")
+                .rating(10.0d)
+                .photoList(List.of(photoFour_One))
+                .build();
+
+        // ID = 5
+        CarPart cpKMZ_7403_1008021_02 = CarPart.builder()
+                .brand(brandKamaz)
+                .model(modelKamaz65301_2000)
+                .engine(engineTurboDiesel)
+                .country(countryRussia)
+                .vendorCode(CarPartVendorCodeType.KMZ_7403_1008021_02.getVendorCode())
+                .sku("SKU-202212-1008021")
+                .name("КОЛЛЕКТОР ВЫПУСКНОЙ ЕВРО ЛЕВЫЙ")
+                .description("Коллектор выпускной ЕВРО левый купить на автомобиль КАМАЗ оптом и в розницу с доставкой по России. Сертификаты соответствия, схемы и инструкции по установке детали.")
+                .price(8_515d)
+                .manufacturer("POO KAMAZ")
+                .rating(5.0d)
+                .photoList(List.of())
+                .build();
+
+        // ID = 6
+        CarPart cpKMZ_7406_1012010_03 = CarPart.builder()
+                .brand(brandKamaz)
+                .model(modelKamaz65301_2000)
+                .engine(engineTurboDiesel)
+                .country(countryRussia)
+                .vendorCode(CarPartVendorCodeType.KMZ_7406_1012010_03.getVendorCode())
+                .sku("SKU-202212-1012010")
+                .name("ФИЛЬТР МАСЛЯНЫЙ ГРУБОЙ ОЧИСТКИ ЕВРО ЧАСТИЧНОПОТОЧНЫЙ")
+                .description("Фильтр масляный грубой очистки ЕВРО частичнопоточный купить на автомобиль КАМАЗ оптом и в розницу с доставкой по России. Сертификаты соответствия, схемы и инструкции по установке детали.")
+                .price(1_545d)
+                .manufacturer("LAAZ")
+                .rating(7.7d)
+                .photoList(List.of(photoSix_One))
+                .build();
+
+        // ID = 7
+        CarPart cpGZ_511_1601130_280 = CarPart.builder()
+                .brand(brandGaz)
+                .model(modelGaz66_1964)
+                .engine(enginePetrol)
+                .country(countryRussia)
+                .vendorCode(CarPartVendorCodeType.GZ_511_1601130_280.getVendorCode())
+                .sku("SKU-20221228-0948-01")
+                .name("ДИСК СЦЕПЛЕНИЯ ПОД ЛЕПЕСТКОВУЮ КОРЗИНУ ГАЗ-53,3307,66,3308,ПАЗ")
+                .description("диск сцепления под лепестковую корзину ГАЗ-53,3307,66,3308,ПАЗ в упак.(змз).")
+                .price(5_320d)
+                .manufacturer("No name")
+                .rating(3.7d)
+                .photoList(List.of())
+                .build();
+
+        // ID = 8
+        CarPart cpKMZ_740_60_1008025_20 = CarPart.builder()
+                .brand(brandKamaz)
+                .model(modelKamaz65301_2000)
+                .engine(engineTurboDiesel)
+                .country(countryRussia)
+                .vendorCode(CarPartVendorCodeType.KMZ_740_60_1008025_20.getVendorCode())
+                .sku("SKU-6520-6020-43-01")
+                .name("Коллектор камаз-евро-3,4,5 выпускной")
+                .description("Коллектор выпускной КАМАЗ левый. ДВС- КАМАЗ 740- Евро 3,4,5. В наличии. Возможно отправка ч/з ТК.")
+                .price(5_000d)
+                .manufacturer("KAMAZ (Russia)")
+                .rating(5.5d)
+                .photoList(List.of())
+                .build();
+
+        // ID = 9
+        CarPart cpKMZ_3937478_2 = CarPart.builder()
+                .brand(brandKamaz)
+                .model(modelKamaz65301_2000)
+                .engine(engineTurboDiesel)
+                .country(countryRussia)
+                .vendorCode(CarPartVendorCodeType.KMZ_3937478_2.getVendorCode())
+                .sku("SKU-3937478-01")
+                .name("Коллектор выпускной 1-2 цилиндров ISLe 3937478")
+                .description("Новый оригинальный! Коллектор выпускной малый (1-2 цилиндра) 3937478, 3943850, 39377477, 3968361 на двигатель Cummins ISLe, L345, ISCE, QSC8.3, QSL9.")
+                .price(23_000d)
+                .manufacturer("KAMAZ (Russia)")
+                .rating(10.0d)
+                .photoList(List.of())
+                .build();
+
+        // ID = 10
+        CarPart cpURL_4320_020 = CarPart.builder()
+                .brand(brandUral)
+                .model(modelUral4320_1977)
+                .engine(engineDiesel)
+                .country(countryRussia)
+                .vendorCode(CarPartVendorCodeType.URL_4320_020.getVendorCode())
+                .sku("SKU-20221228-1032-01")
+                .name("Аккумулятор 190 АЧ")
+                .description("Аккумулятор 190 ач на Камаз. Цена указана с учетом сдачи старого АКБ. Без обмена цена 9500р.")
+                .price(7_500d)
+                .manufacturer("Ural")
+                .rating(10.0d)
+                .photoList(List.of())
+                .build();
+
+        carPartRepository.saveAllAndFlush(List.of(
+                cpGZ_750Z370_S,
+                cpURL_4320_01,
+                cpURL_4320_02,
+                cpKMZ_740_51_1117010_0,
+                cpKMZ_7403_1008021_02,
+                cpKMZ_7406_1012010_03,
+                cpGZ_511_1601130_280,
+                cpKMZ_740_60_1008025_20,
+                cpKMZ_3937478_2,
+                cpURL_4320_020
+        ));
+
     }
 
     private Country getCountryByType(List<Country> countries, CountryType countryType) {
