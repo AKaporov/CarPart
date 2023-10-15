@@ -6,11 +6,11 @@
     <parent>
         <groupId>ru.hw</groupId>
         <artifactId>car-part</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>3.0.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>car-part-jpa-command-line-runner</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <name>Spring-Data-JPA + Command-Line-Runner</name>
     <description>Предварительная загрузка данных с помощью CommandLineRunner (на основе Spring-Data-JPA)</description>
 
@@ -27,10 +27,6 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>${h2.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
     </dependencies>
 
