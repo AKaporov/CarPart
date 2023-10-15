@@ -11,13 +11,13 @@
 
     <groupId>ru.hw</groupId>
     <artifactId>car-part</artifactId>
-    <version>0.0.3-SNAPSHOT</version>
+    <version>3.0.1-SNAPSHOT</version>
     <name>Car-Part</name>
     <description>Auto Parts Demo Project on Spring Boot</description>
 
     <packaging>pom</packaging>
 
-    <modules>
+     <modules>
         <module>spring-data-jdbc</module>
         <module>spring-data-jpa</module>
         <module>command-line-runner</module>
@@ -27,6 +27,7 @@
         <java.version>17</java.version>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
@@ -37,6 +38,10 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
     </dependencies>
 
