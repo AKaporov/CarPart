@@ -4,13 +4,13 @@
     <parent>
         <groupId>ru.hw</groupId>
         <artifactId>car-part</artifactId>
-        <version>0.0.4-SNAPSHOT</version>
+        <version>3.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>car-part-jpa-docker</artifactId>
+    <artifactId>command-line-runner-docker</artifactId>
     <version>0.0.1</version>
-    <name>Spring-Data-JPA + Docker(Image+PostgreSQL)</name>
-    <description>Создание Docker образа и подключение контейнера PostgreSQL (на основе Spring-Data-JPA)</description>
+    <name>Command-Line-Runner + Docker(Image+PostgreSQL)</name>
+    <description>Создание Docker образа и подключение контейнера PostgreSQL и PgAdmin (на основе Command-Line-Runner)</description>
     <packaging>jar</packaging>
     <url>http://maven.apache.org</url>
 

@@ -1,13 +1,13 @@
 spring:
   sql:
     init:
-      data-locations: classpath:carpart-test.sql #Locations of the data (DML) scripts to apply to the database.
+      data-locations: #classpath:carpart-test.sql #Locations of the data (DML) scripts to apply to the database.
       mode: always # initialize an SQL database
   messages:
     basename: i18n.messages
     fallback-to-system-locale: false
   datasource:
-    url: jdbc:h2:mem:testdb
+    url: jdbc:h2:mem:Docker_Test_DB
 #    data: classpath:carpart-test.sql #Spring boot verion 2.7 and onwards is not any more depracated.
 #    initialization-mode: always #Spring boot verion 2.7 and onwards is not any more depracated.
   h2:

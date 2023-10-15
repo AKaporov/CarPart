@@ -18,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestPropertySource(properties = {"spring.sql.init.data-locations=classpath:brand-test.sql"})
 @DisplayName("Репозиторий по работе с Маркой автомобиля")
 class BrandRepositoryTest {
+
     private static final long URAL_ID = 2L;
     private static final String URAL_NAME = "Ural";
     private static final String EXPECTED_NAME = "GAZ";
@@ -32,7 +33,7 @@ class BrandRepositoryTest {
 
     @Test
     @DisplayName("должен корректно сохранять новую марку автомобиля")
-    void shouldSave() {
+    void shouldSaveBrand() {
         Brand brand = Brand.builder()
                 .name(EXPECTED_NAME)
                 .build();
@@ -48,8 +49,20 @@ class BrandRepositoryTest {
 
     @Test
     @DisplayName("должен находить марку по её идентификатору")
-    void shouldFindById() {
+    void shouldFindBrandById() {
         Optional<Brand> actualBrand = repository.findById(URAL_ID);
+
+        Brand expectedBrand = Brand.builder()
+                .id(URAL_ID)
+                .name(URAL_NAME)
+                .build();
+        assertEquals(Optional.of(expectedBrand), actualBrand);
+    }
+
+    @Test
+    @DisplayName("должен находить марку по её названию")
+    void shouldFindBrandByName() {
+        Optional<Brand> actualBrand = repository.findByName(URAL_NAME);
 
         Brand expectedBrand = Brand.builder()
                 .id(URAL_ID)

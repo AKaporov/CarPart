@@ -57,4 +57,16 @@ class CountryRepositoryTest {
                 .build();
         assertEquals(Optional.of(expectedCountry), actualCountry);
     }
+
+    @Test
+    @DisplayName("должен находить страну по её наименованию")
+    void shouldFindCountryByName() {
+        Optional<Country> actualCountry = repository.findByName(CANADA_NAME);
+
+        Country expectedCountry = Country.builder()
+                .id(CANADA_ID)
+                .name(CANADA_NAME)
+                .build();
+        assertEquals(Optional.of(expectedCountry), actualCountry);
+    }
 }

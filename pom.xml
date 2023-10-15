@@ -21,6 +21,7 @@
         <module>spring-data-jdbc</module>
         <module>spring-data-jpa</module>
         <module>command-line-runner</module>
+         <module>docker</module>
     </modules>
 
     <properties>

@@ -40,13 +40,13 @@ public class CarPartSpecification {
             List<Predicate> predicateList = new ArrayList<>(3);
 
             getBrandPredicate(root.get("brand"), filterCarPart)
-                    .ifPresent(brand -> predicateList.add(brand));
+                    .ifPresent(predicateList::add);
 
             getModelPredicate(root.get("model"), filterCarPart)
-                    .ifPresent(model -> predicateList.add(model));
+                    .ifPresent(predicateList::add);
 
             getEnginePredicate(root.get("engine"), filterCarPart)
-                    .ifPresent(engine -> predicateList.add(engine));
+                    .ifPresent(predicateList::add);
 
             return criteriaBuilder.and(predicateList.toArray(new Predicate[0]));
         };

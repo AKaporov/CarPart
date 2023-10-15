@@ -4,7 +4,6 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -121,7 +120,7 @@ class CarPartServiceImplTest {
 
         List<CarPartRecommendedDto> actualCarPart = carPartService.getByFilter(filter);
 
-        Assertions.assertThat(actualCarPart).isNotNull().isNotEmpty().hasSize(List.of(expectedCarPart).size())
+        assertThat(actualCarPart).isNotNull().isNotEmpty().hasSize(List.of(expectedCarPart).size())
                 .usingRecursiveComparison()
                 .isEqualTo(List.of(expectedCarPart));
     }
@@ -131,6 +130,6 @@ class CarPartServiceImplTest {
     void shouldReturnEmptyListIfFilterIsNull() {
         List<CarPartRecommendedDto> actualList = carPartService.getByFilter(null);
 
-        Assertions.assertThat(actualList).isNotNull().isEmpty();
+        assertThat(actualList).isNotNull().isEmpty();
     }
 }

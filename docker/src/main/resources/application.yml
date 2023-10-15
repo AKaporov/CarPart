@@ -3,24 +3,22 @@ server:
 spring:
   sql:
     init:
-      data-locations: classpath:data.sql #Locations of the data (DML) scripts to apply to the database.
+      data-locations: #classpath:data.sql #Locations of the data (DML) scripts to apply to the database.
       mode: always # initialize an SQL database
   messages:
     basename: i18n.messages
     fallback-to-system-locale: false
   datasource:
-    url: jdbc:h2:mem:CarPartDB
+    url: jdbc:h2:mem:CarPartDB_Docker
     schema: classpath:schema.sql
     driver: org.h2.Driver
     password:
     username: sa
-#      data: classpath:carpart-test.sql #Spring boot verion 2.7 and onwards is not any more depracated.
-#      initialization-mode: always #Spring boot verion 2.7 and onwards is not any more depracated.
   jpa:
     show-sql: false
     generate-ddl: false
     hibernate:
-      ddl-auto: none # отключаем автоматическое создание схемы Hibernate
+      ddl-auto: none #отключаем автоматическое создание схемы Hibernate
     properties:
       hibernate:
         format_sql: false
@@ -36,4 +34,4 @@ logging:
       querydsl:
         sql: DEBUG #is for logging statements in querydsl
   pattern:
-    console: KAPOROV %d{dd-MM-yyyy HH:mm:ss} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n
+    console: KAPOROV-Docker %d{dd-MM-yyyy HH:mm:ss} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n

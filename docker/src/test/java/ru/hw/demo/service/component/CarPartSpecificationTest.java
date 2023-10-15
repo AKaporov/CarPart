@@ -1,6 +1,5 @@
 package ru.hw.demo.service.component;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +42,7 @@ class CarPartSpecificationTest {
 
         List<CarPart> actualList = carPartRepository.findAll(specification);
 
-        Assertions.assertThat(actualList).isNotNull().isNotEmpty().hasSize(List.of(expected).size())
+        assertThat(actualList).isNotNull().isNotEmpty().hasSize(List.of(expected).size())
                 .usingElementComparatorIgnoringFields("brand", "model", "engine", "country", "photoList", "analogList")
                 .hasSameElementsAs(List.of(expected));
     }
@@ -69,7 +68,7 @@ class CarPartSpecificationTest {
         expectedList.add(carPartOne);
         expectedList.add(carPartTwo);
 
-        Assertions.assertThat(actualList).isNotNull().isNotEmpty().hasSize(expectedList.size())
+        assertThat(actualList).isNotNull().isNotEmpty().hasSize(expectedList.size())
                 .usingElementComparatorIgnoringFields("brand", "model", "engine", "country", "photoList", "analogList")
                 .hasSameElementsAs(expectedList);
     }
@@ -87,6 +86,6 @@ class CarPartSpecificationTest {
 
         List<CarPart> actualList = carPartRepository.findAll(specification);
 
-        Assertions.assertThat(actualList).isNotNull().isEmpty();
+        assertThat(actualList).isNotNull().isEmpty();
     }
 }
