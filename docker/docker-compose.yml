@@ -1,0 +1,49 @@
+version: "0.0.1"
+services:
+  car-part-db-container:
+    container_name: "CarPart-DB-Container"
+    image: postgres:12.3-alpine
+    restart: always
+    working_dir: /carPart_db
+    ports:
+      - "5430:5432"
+    environment:
+      POSTGRES_PASSWORD: "cp_PostgreSQL"
+      POSTGRES_USER: "cp_usr"
+      POSTGRES_DB: "CarPartDB_Docker"
+      PG-DATA: "/var/lib/postgresql/data/pgdata"
+    volumes:
+      - ./1. Init Database:/docker-entrypoint-initdb.d
+#      - ./src/main/resources:/docker-entrypoint-initdb.d
+      - CarPart-DB-data:/var/lib/postgresql/data
+    networks:
+      - postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  pgAdmin:
+    container_name: "CarPart-PgAdmin-Container"
+    image: dpage/pgadmin4:6.20
+    restart: unless-stopped
+    ports:
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "cp@hwdemo.com"
+      PGADMIN_DEFAULT_PASSWORD: "cp_PgAdmin"
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+    volumes:
+      - CarPrt-PgAdmin-data:/var/lib/pgadmin
+    networks:
+      - postgres
+
+volumes:
+  CarPart-DB-data:
+  CarPrt-PgAdmin-data:
+
+networks:
+  postgres:
+    driver: bridge

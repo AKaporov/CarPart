@@ -106,6 +106,7 @@ public class CommandLineRunnerConfigurator {
                     countryRepository, photoRepository);
             analogLoaderAndLinkToCarPart(analogRepository, carPartRepository);
             log.info("*** CarPart STARTED ***");
+            System.out.println("*** CarPart STARTED ***");
         };
     }
 
