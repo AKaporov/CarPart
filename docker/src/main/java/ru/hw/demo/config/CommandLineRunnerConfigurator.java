@@ -105,7 +105,7 @@ public class CommandLineRunnerConfigurator {
             carPartLoader(carPartRepository, brandRepository, modelRepository, engineRepository,
                     countryRepository, photoRepository);
             analogLoaderAndLinkToCarPart(analogRepository, carPartRepository);
-            log.info("*** CarPart STARTED ***");
+            log.info("*** CarPart STARTED ***"); // TODO: 20.10.2023 Почему не отображается в консоле?
             System.out.println("*** CarPart STARTED ***");
         };
     }

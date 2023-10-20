@@ -1,7 +1,7 @@
 # В проекте (на основе модуля Command-Line-Runner) применяется Docker
 
 В проекте создается Image приложения. Тестирование производиться на базе PostgreSQl из контейнера, так же подключен 
-контейнер PgAdmin.
+контейнер [PgAdmin](http://localhost:5050/browser/) для просмотра базы данных после запуска приложения.
 
 ### Docker Compose
 * это инструмент, который упрощает управление многоконтейнерными приложениями с использованием Docker. Он позволяет 
@@ -187,6 +187,26 @@ WORKDIR /app
 COPY package*.json ./
 ```
 
+## Порядок запуска контейнеров
+1) Запуск docker-compose из корня модуля docker (С:\Java\CarPart\docker> docker-compose up -d)
+```
+doker-compose up -d
+```
+2) Проверяем создание контейнеров
+```
+docker-compose ps
+```
+![alt-текст][logo_docker_compose_ps]
+ 
+5) Для просмотра логов используем команду
+```
+docker-compose logs -f <имя SERVICE. Например PostgreSQL-Container>
+```
+4) Пример настройки подключения к БД:
+
+![alt-текст][logo_PgAdmin_DB_Connection]
+![alt-текст][logo_IDEA_DB_Connection]
+
 
 ### Ссылки
 * [Официальный сайт](https://docs.docker.com/get-started/)
@@ -195,3 +215,9 @@ COPY package*.json ./
 * [Docker и Docker Compose: Полное руководство для начинающих](https://dzen.ru/a/ZSJCuZCwPUXxX3TD)
 * [Overview of best practices for writing Dockerfiles](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#run)
 * [Compose file](https://docs.docker.com/compose/compose-file/)
+* [Варианты запуска docker-compose](https://docs.docker.com/engine/reference/commandline/compose_up/)
+
+
+[logo_PgAdmin_DB_Connection]: E:\Education\Programming\Java\CarPart\docker\image\db.connection\pgadmin.png "Через PgAdmin (в браузере)"
+[logo_IDEA_DB_Connection]: E:\Education\Programming\Java\CarPart\docker\image\db.connection\idea.png "Через IDEA"
+[logo_docker_compose_ps]: E:\Education\Programming\Java\CarPart\docker\image\docker-compose\ps.png "Результат работы команды docker-compose ps"

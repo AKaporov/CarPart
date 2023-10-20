@@ -51,7 +51,6 @@ create TABLE CAR_PARTS(
                        CONSTRAINT FK01_BRAND  FOREIGN KEY (BRAND_ID)  REFERENCES BRANDS(ID)  ON delete CASCADE,
                        CONSTRAINT FK02_MODEL  FOREIGN KEY (MODEL_ID)  REFERENCES MODELS(ID)  ON delete CASCADE,
                        CONSTRAINT FK03_ENGINE FOREIGN KEY (ENGINE_ID) REFERENCES ENGINES(ID) ON delete CASCADE
-
                       );
 
 -- фотографии

@@ -1,10 +1,12 @@
-version: "0.0.1"
+version: "1.0"
 services:
-  car-part-db-container:
-    container_name: "CarPart-DB-Container"
+  PostgreSQL-Container:
+    container_name: "CarPart-PostgreSQL-Container"
     image: postgres:12.3-alpine
     restart: always
-    working_dir: /carPart_db
+    working_dir: /car-part-db
+    mem_limit: 1536MB
+    mem_reservation: 1G
     ports:
       - "5430:5432"
     environment:
@@ -14,18 +16,18 @@ services:
       PG-DATA: "/var/lib/postgresql/data/pgdata"
     volumes:
       - ./1. Init Database:/docker-entrypoint-initdb.d
-#      - ./src/main/resources:/docker-entrypoint-initdb.d
-      - CarPart-DB-data:/var/lib/postgresql/data
+      - CarPart-DB-Data:/var/lib/postgresql/data
     networks:
-      - postgres
+      - car-part-networks
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+#      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      test: ["CMD-SHELL", "pg_isready -U cp_usr -d CarPartDB_Docker"]
       interval: 20s
       timeout: 5s
       retries: 5
       start_period: 10s
 
-  pgAdmin:
+  PgAdmin-Container:
     container_name: "CarPart-PgAdmin-Container"
     image: dpage/pgadmin4:6.20
     restart: unless-stopped
@@ -36,14 +38,16 @@ services:
       PGADMIN_DEFAULT_PASSWORD: "cp_PgAdmin"
       PGADMIN_CONFIG_SERVER_MODE: "False"
     volumes:
-      - CarPrt-PgAdmin-data:/var/lib/pgadmin
+      - CarPart-PgAdmin-Data:/var/lib/pgadmin
     networks:
-      - postgres
+      - car-part-networks
+    depends_on:
+      - PostgreSQL-Container
 
 volumes:
-  CarPart-DB-data:
-  CarPrt-PgAdmin-data:
+  CarPart-DB-Data:
+  CarPart-PgAdmin-Data:
 
 networks:
-  postgres:
+  car-part-networks:
     driver: bridge
