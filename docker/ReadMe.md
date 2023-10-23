@@ -1,5 +1,12 @@
 # В проекте (на основе модуля Command-Line-Runner) применяется Docker
 
+### **application.yml** 
+* для запуска из IDEA
+### **application-docker.yml** 
+* для запуска из docker-а. В **spring.datasource.url:** указано имя контейнера, что бы приложение в Docker-е смогло 
+достучаться к БД. Потому что они запустятся в рамках одного docker-compose и будут знать друг о друге. Это нужно, чтобы
+у нас была одна закрытая инфраструктура для проекта.
+
 В проекте создается Image приложения. Тестирование производиться на базе PostgreSQl из контейнера, так же подключен 
 контейнер [PgAdmin](http://localhost:5050/browser/) для просмотра базы данных после запуска приложения.
 
@@ -205,18 +212,30 @@ docker-compose logs -f <имя SERVICE. Например PostgreSQL-Container>
 4) Пример настройки подключения к БД:
 
 ![alt-текст][logo_PgAdmin_DB_Connection]
+
 ![alt-текст][logo_IDEA_DB_Connection]
 
 
-### Ссылки
-* [Официальный сайт](https://docs.docker.com/get-started/)
+### Ссылки для Docker-compose
+* [Официальный сайт](https://docs.docker.com/)
 * [Справочная информация по Dockerfile](https://docs.docker.com/engine/reference/builder/#dockerfile-reference)
 * [Капитан грузового судна, или Как начать использовать Docker в своих проектах](https://tproger.ru/translations/how-to-start-using-docker)
 * [Docker и Docker Compose: Полное руководство для начинающих](https://dzen.ru/a/ZSJCuZCwPUXxX3TD)
 * [Overview of best practices for writing Dockerfiles](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#run)
 * [Compose file](https://docs.docker.com/compose/compose-file/)
-* [Варианты запуска docker-compose](https://docs.docker.com/engine/reference/commandline/compose_up/)
+* [Overview of Docker Compose (официальный сайт)](https://docs.docker.com/compose/)
+* [Варианты запуска docker-compose up](https://docs.docker.com/engine/reference/commandline/compose_up/)
+* [Шпаргалка по DockerCompose](https://devops.org.ru/dockercompose-summary)
+* [Полное практическое руководство по Docker: с нуля до кластера на AWS](https://habr.com/ru/articles/310460/)
+* [Поняв Docker](https://habr.com/ru/articles/277699/)
+* [Полная автоматизация «development» среды с помощью docker-compose](https://habr.com/ru/articles/322440/)
+* [Docker-compose: идеальное рабочее окружение](https://habr.com/ru/articles/346086/)
+* [Добавляем все, что связано с БД. (Часть 1) - "Java-проект от А до Я"](https://javarush.com/groups/posts/3262-java-proekt-ot-a-do-ja-dobavljaem-vse-chto-svjazano-s-bd-chastjh-1)
+* [Добавляем все, что связано с БД. (Часть 2) - "Java-проект от А до Я"](https://javarush.com/groups/posts/3264-java-proekt-ot-a-do-ja-dobavljaem-vse-chto-svjazano-s-bd-chastjh-2)
 
+### Ссылки для testcontainers
+* [TESTCONTAINERS Simple example with PostgreSQL](https://www.youtube.com/watch?v=VfwP3GOridU)
+* [Тестирование с помощью Testcontainers: как поднять в контейнере тестовую базу](https://sysout.ru/testirovanie-s-pomoshhyu-testcontainers-ili-kak-podnyat-v-kontejnere-testovuyu-bazu/)
 
 [logo_PgAdmin_DB_Connection]: E:\Education\Programming\Java\CarPart\docker\image\db.connection\pgadmin.png "Через PgAdmin (в браузере)"
 [logo_IDEA_DB_Connection]: E:\Education\Programming\Java\CarPart\docker\image\db.connection\idea.png "Через IDEA"

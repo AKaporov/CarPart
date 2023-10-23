@@ -13,7 +13,7 @@ spring:
 #    url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5430/postgres}
 #    password: ${DATASOURCE_PASSWORD:cp_usr}
 #    username: ${DATASOURCE_USER:cp_PostgreSQL}
-    url: jdbc:postgresql://localhost:5430/CarPartDB_Docker
+    url: jdbc:postgresql://PostgreSQL-Container:5430/CarPartDB_Docker_Container # Указано имя контейнера, что бы приложение в Docker-е смогло достучаться к БД. Потому что они запустятся в рамках одного docker-compose и будут знать друг о друге. Это нужно, чтобы у нас была одна закрытая инфраструктура для проекта.
     username: cp_usr
     password: cp_PostgreSQL
     schema: classpath:schema.sql # todo Закоментарить после создания Docker-Image и упаковки приложения в контейнер
@@ -23,7 +23,6 @@ spring:
     generate-ddl: false
     hibernate:
       ddl-auto: none #отключаем автоматическое создание схемы Hibernate
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
     properties:
       hibernate:
         format_sql: false
