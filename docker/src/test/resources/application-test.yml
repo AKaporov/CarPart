@@ -7,9 +7,9 @@ spring:
     basename: i18n.messages
     fallback-to-system-locale: false
   datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+#    url: ${DB_URL}
+#    username: ${DB_USERNAME}
+#    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
 #    data: classpath:carpart-test.sql #Spring boot verion 2.7 and onwards is not any more depracated.
 #    initialization-mode: always #Spring boot verion 2.7 and onwards is not any more depracated.

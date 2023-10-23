@@ -15,7 +15,7 @@ public class PostgresTestContainer extends PostgreSQLContainer<PostgresTestConta
 
     public static PostgreSQLContainer getInstance() {
         if (Objects.isNull(postgreSQLContainer)) {
-            postgreSQLContainer = new PostgreSQLContainer(DOCKER_IMAGE_NAME)
+            postgreSQLContainer = new PostgreSQLContainer<>(DOCKER_IMAGE_NAME)
                     .withDatabaseName(DATABASE_NAME)
                     .withUsername("cp_usr")
                     .withPassword("cp_PostgreSQL");
