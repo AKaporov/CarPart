@@ -1,21 +1,25 @@
 spring:
-  sql:
-    init:
-      data-locations: #classpath:carpart-test.sql #Locations of the data (DML) scripts to apply to the database.
-      mode: always # initialize an SQL database
+#  sql:
+#    init:
+#      data-locations: #classpath:carpart-test.sql #Locations of the data (DML) scripts to apply to the database.
+#      mode: always # initialize an SQL database
   messages:
     basename: i18n.messages
     fallback-to-system-locale: false
   datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
 #    data: classpath:carpart-test.sql #Spring boot verion 2.7 and onwards is not any more depracated.
 #    initialization-mode: always #Spring boot verion 2.7 and onwards is not any more depracated.
-    url: jdbc:postgresql://localhost:5430/CarPartDB_Docker_Test
-    password: cp_PostgreSQL
-    username: cp_usr
+#    url: jdbc:postgresql://localhost:5430/CarPartDB_Docker_Test
+#    password: cp_PostgreSQL
+#    username: cp_usr
 #    schema: classpath:schema.sql
-    driver-class-name: org.postgresql.Driver
   jpa:
     show-sql: true
     generate-ddl: false
     hibernate:
       ddl-auto: none
+    database-platform: org.hibernate.dialect.PostgreSQLDialect

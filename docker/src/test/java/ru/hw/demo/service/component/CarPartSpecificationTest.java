@@ -3,9 +3,14 @@ package ru.hw.demo.service.component;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
+import ru.hw.demo.config.TestContainersEnvironment;
 import ru.hw.demo.domain.CarPart;
 import ru.hw.demo.pojo.FilterCarPart;
 import ru.hw.demo.repository.CarPartRepository;
@@ -15,15 +20,15 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
+@ActiveProfiles("test")
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("Компонент по созданию предиката для поиска запчасти по фильтру")
-class CarPartSpecificationTest {
+class CarPartSpecificationTest extends TestContainersEnvironment {
 
     @Autowired
     private CarPartSpecification carPartSpecification;
     @Autowired
     private CarPartRepository carPartRepository;
-
 
     @Transactional  // только для того, что бы достать информацию из Lazy-полей
     @Test

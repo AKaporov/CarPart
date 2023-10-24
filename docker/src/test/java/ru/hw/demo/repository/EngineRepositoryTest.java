@@ -5,9 +5,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
+import ru.hw.demo.config.TestContainersEnvironment;
 import ru.hw.demo.domain.Engine;
 
 import java.util.Optional;
@@ -17,10 +19,11 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 @ActiveProfiles("test")
 @TestPropertySource(properties = {"spring.sql.init.data-locations=engine-test.sql"})
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @DisplayName("Репозиторий по работе с Двигателем")
-class EngineRepositoryTest {
-    private static final Long PETROL_ID = 2L;
-    private static final String PETROL_NAME = "Petrol";
+class EngineRepositoryTest extends TestContainersEnvironment {
+    private static final Long PETROL_ID = 4L;
+    private static final String PETROL_NAME = "Petrol-Petrol";
     private static final String EXPECTED_NAME = "Turbocharged petrol";
 
     @Autowired

@@ -5,9 +5,12 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
+import ru.hw.demo.config.TestContainersEnvironment;
 import ru.hw.demo.domain.*;
 import ru.hw.demo.enums.CountryType;
 import ru.hw.demo.enums.EngineType;
@@ -21,9 +24,11 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @DataJpaTest
+@ActiveProfiles("test")
 @TestPropertySource(properties = {"spring.sql.init.data-locations=carpart-test.sql"})
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @DisplayName("Репозиторий по работе с Запчасти автомобиля")
-class CarPartRepositoryTest {
+class CarPartRepositoryTest extends TestContainersEnvironment {
 
     private static final int EXPECTED_QUERIES_COUNT = 2;
     @Autowired

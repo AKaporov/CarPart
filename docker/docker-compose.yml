@@ -15,7 +15,7 @@ services:
       POSTGRES_DB: "CarPartDB_Docker"
       PG-DATA: "/var/lib/postgresql/data/pgdata"
     volumes:
-      - ./1. Init Database:/docker-entrypoint-initdb.d
+#      - ./1. Init Database:/docker-entrypoint-initdb.d
       - CarPart-DB-Data:/var/lib/postgresql/data
     networks:
       - car-part-networks
