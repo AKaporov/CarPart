@@ -234,8 +234,12 @@ docker-compose logs -f <имя SERVICE. Например PostgreSQL-Container>
 * [Добавляем все, что связано с БД. (Часть 2) - "Java-проект от А до Я"](https://javarush.com/groups/posts/3264-java-proekt-ot-a-do-ja-dobavljaem-vse-chto-svjazano-s-bd-chastjh-2)
 
 ### Ссылки для testcontainers
-* [TESTCONTAINERS Simple example with PostgreSQL](https://www.youtube.com/watch?v=VfwP3GOridU)
-* [Тестирование с помощью Testcontainers: как поднять в контейнере тестовую базу](https://sysout.ru/testirovanie-s-pomoshhyu-testcontainers-ili-kak-podnyat-v-kontejnere-testovuyu-bazu/)
+* [Пример с использованием "static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext>" - Тестирование с помощью Testcontainers: как поднять в контейнере тестовую базу](https://sysout.ru/testirovanie-s-pomoshhyu-testcontainers-ili-kak-podnyat-v-kontejnere-testovuyu-bazu/)
+* [Baeldung - DB Integration Tests with Spring Boot and Testcontainers](https://www.baeldung.com/spring-boot-testcontainers-integration-test)
+* [Baeldung - использование @ServiceConnection для автоконфигурации настроек для подключения к БД (spring.datasource.url/username/password и т.д.)](https://www.baeldung.com/spring-boot-built-in-testcontainers)
+* [Habr - Testcontainers: тестирование с реальными зависимостями(пример использования @AutoConfigureTestDatabase)](https://habr.com/ru/articles/700286/)
+* [Использование управления жизненным циклом контейнеров](https://www.atomicjar.com/2022/08/testcontainers-and-junit-integration/)
+* [Для тестирования баз данных Testcontainers предоставляют специальную поддержку JDBC URL](https://java.testcontainers.org/modules/databases/jdbc/)
 
 [logo_PgAdmin_DB_Connection]: E:\Education\Programming\Java\CarPart\docker\image\db.connection\pgadmin.png "Через PgAdmin (в браузере)"
 [logo_IDEA_DB_Connection]: E:\Education\Programming\Java\CarPart\docker\image\db.connection\idea.png "Через IDEA"

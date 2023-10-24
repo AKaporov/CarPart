@@ -6,7 +6,8 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import ru.hw.demo.containers.PostgresTestContainer;
 
 @Testcontainers
-public class ContainersEnvironment {
+//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)  // Без поднятия приложения
+public class TestContainersEnvironment {
     @Container
-    public static PostgreSQLContainer<?> postgreSQLContainer = PostgresTestContainer.getInstance();
+    public static PostgreSQLContainer<?> postgresTestContainer = PostgresTestContainer.getInstance();
 }

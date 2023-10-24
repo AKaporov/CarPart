@@ -4,9 +4,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
+import ru.hw.demo.config.TestContainersEnvironment;
 import ru.hw.demo.domain.Model;
 
 import java.util.Optional;
@@ -16,8 +18,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 @ActiveProfiles("test")
 @TestPropertySource(properties = {"spring.sql.init.data-locations=classpath:model-test.sql"})
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @DisplayName("Репозиторий по работе с Моделями автомобилей")
-class ModelRepositoryTest {
+class ModelRepositoryTest extends TestContainersEnvironment {
     private static final Long URAL_4320_ID = 2L;
     private static final String EXPECTED_NAME = "UAZ-469";
     private static final String URAL_4320_NAME = "Ural-4320";
