@@ -79,6 +79,10 @@ docker exec -it container_id /bin/bash
 docker logs container_id
 ```
 10) Команда **docker stats** выводит статистику использования ресурсов контейнера.
+11) Команда **docker build** создаёт образы Docker из файла Dockerfile и «контекста».
+
+* [Справочная информация по docker командам (например "docker buid -t carpart_docker:0.0.1 .")](https://docs.docker.com/engine/reference/run/)
+* [Docker Командная строка](https://digitology.tech/docs/docker/engine/reference/commandline/index.html)
 
 ### Основные флаги Docker команд:
 1) Загрузка образа и создание контейнера:
@@ -162,6 +166,10 @@ CMD ["command", "arg1", "arg2"]
 ```Пример:
 FROM ubuntu:20.04
 ```
+Инструкция **LABEL** описывает метаданные. Например — сведения о том, кто создал и поддерживает образ.
+```Пример:
+LABEL authors="Artem"
+```
 Инструкция **RUN** выполняет команду внутри контейнера во время создания образа. Это может использоваться для установки пакетов, обновления системы и выполнения других операций. 
 ```Пример:
 RUN apt-get update && apt-get install -y package_name
@@ -186,15 +194,71 @@ EXPOSE 80
 ```Пример:
 CMD ["command", "arg1", "arg2"]
 ```
-### Пример полного Dockerfile для простого веб-приложения на Node.js:
+Инструкция **ADD** копирует файлы и папки в контейнер, может распаковывать локальные .tar-файлы, а так же получать на вход URL и скачивать файл внутрь image.
+```Пример:
+# Копирование локальных файлов с хоста в целевую директорию
+COPY /source/path  /destination/path
+ADD /source/path  /destination/path
+
+# Загрузка внешнего файла и копирование его в целевую директорию
+ADD http://external.file/url  /destination/path
+
+# Копирование и распаковка локального сжатого файла
+ADD source.file.tar.gz /destination/path
 ```
-# Используем официальный образ Node.js
-FROM node:14
-# Создаем рабочую директорию внутри контейнера
-WORKDIR /app
-# Копируем файлы package.json и package-lock.json
-COPY package*.json ./
+Инструкция **WORKDIR** задаёт рабочую директорию для следующей инструкции.
+```Пример:
+WORKDIR /opt/app
 ```
+Инструкция **ARG** задаёт переменные для передачи Docker во время сборки образа.
+```Пример:
+# Добавить пользователя приложения
+ARG APPLICATION_USER=appuser
+RUN adduser --no-create-home -u 1000 -D $APPLICATION_USER
+```
+Инструкция **ENTRYPOINT** предоставляет команду с аргументами для вызова во время выполнения контейнера. Аргументы не переопределяются.
+```Пример:
+ENTRYPOINT [ "java", "-jar", "/app/app.jar" ]
+```
+Инструкция **VOLUME** создаёт точку монтирования для работы с постоянным хранилищем.
+```Пример:
+VOLUME ["/var/www", "/var/log/apache2", "/etc/apache2"]
+```
+
+### Пример Dockerfile:
+```
+# В качестве родителя используем Python v3.8 основанный на Ubuntu
+FROM python:3.8
+
+# Просим Python не писать .pyc файлы
+ENV PYTHONDONTWRITEBYTECODE 1
+
+# Просим Python не буферизовать stdin/stdout
+ENV PYTHONUNBUFFERED 1
+
+# Задаем рабочую директорию
+WORKDIR /opt/app
+
+# Копируем файл с зависимостями
+COPY ./req.txt /opt/app/requirements.txt
+
+# Устанавливаем зависимости
+RUN pip install -r /opt/app/requirements.txt
+
+# Копируем исходный код приложения
+COPY ./src /opt/app
+
+# Говорим что надо открыть снаружи порт 8000
+EXPOSE 8000
+
+# Команда которая должна быть выполнена при запуске контейнера
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+
+```
+### Ссылки для Dockerfile
+* [Шпаргалка по Dockerfile](https://devops.org.ru/dockerfile-summary)
+* [Справочная информация по Dockerfile (Правый столбик со всеми командами)](https://docs.docker.com/engine/reference/builder/#dockerfile-reference)
+
 
 ## Порядок запуска контейнеров
 1) Запуск docker-compose из корня модуля docker (С:\Java\CarPart\docker> docker-compose up -d)
@@ -217,10 +281,30 @@ docker-compose logs -f <имя SERVICE. Например PostgreSQL-Container>
 
 ![alt-текст][logo_IDEA_DB_Connection]
 
+## Ошибки при использовании .dockerignore
+- Ошибка 1: Исключение Dockerfile или .dockerignore
+```
+# Не надо исключать эти файлы. Они нужны Docker для процесса сборки, и игнорирование их может привести к неожиданным результатам.
+Dockerfile
+.dockerignore
+```
+- Ошибка 2: Исключение нужных файлов
+- Ошибка 3: Исключение всего (всех файлов и директорий) используя звуздочку (*)
+```
+# Исключение всего
+*
+
+# Пример НЕ игнорирования файлов т.е. включение в docker-образ
+!.dockerignore
+!Dockerfile
+!src/
+```
+
+
+
 
 ### Ссылки для Docker-compose
 * [Официальный сайт](https://docs.docker.com/)
-* [Справочная информация по Dockerfile](https://docs.docker.com/engine/reference/builder/#dockerfile-reference)
 * [Капитан грузового судна, или Как начать использовать Docker в своих проектах](https://tproger.ru/translations/how-to-start-using-docker)
 * [Docker и Docker Compose: Полное руководство для начинающих](https://dzen.ru/a/ZSJCuZCwPUXxX3TD)
 * [Overview of best practices for writing Dockerfiles](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#run)
@@ -242,6 +326,12 @@ docker-compose logs -f <имя SERVICE. Например PostgreSQL-Container>
 * [Habr - Testcontainers: тестирование с реальными зависимостями(пример использования @AutoConfigureTestDatabase)](https://habr.com/ru/articles/700286/)
 * [Использование управления жизненным циклом контейнеров](https://www.atomicjar.com/2022/08/testcontainers-and-junit-integration/)
 * [Для тестирования баз данных Testcontainers предоставляют специальную поддержку JDBC URL](https://java.testcontainers.org/modules/databases/jdbc/)
+
+### Ссылка для dockerignore
+* [Кк использовать .dockerignore - файл (см. раздел Common Pitfalls and How to Avoid Them)](https://hn.mrugesh.dev/how-to-use-a-dockerignore-file-a-comprehensive-guide-with-examples)
+
+### Общие ссылки про Docker
+* [Глоссарий Docker Docs](https://docs.docker.com/glossary/#base-image)
 
 [logo_PgAdmin_DB_Connection]: E:\Education\Programming\Java\CarPart\docker\image\db.connection\pgadmin.png "Через PgAdmin (в браузере)"
 [logo_IDEA_DB_Connection]: E:\Education\Programming\Java\CarPart\docker\image\db.connection\idea.png "Через IDEA"
