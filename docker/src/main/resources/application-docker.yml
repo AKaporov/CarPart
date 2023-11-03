@@ -12,7 +12,7 @@ spring:
     url: ${APPLICATION_DATASOURCE_URL_DOCKER}
     password: ${APPLICATION_DATASOURCE_PASSWORD_DOCKER}
     username: ${APPLICATION_DATASOURCE_USER_DOCKER}
-    schema: classpath:schema.sql # todo Закоментарить после создания Docker-Image и упаковки приложения в контейнер
+#    schema: classpath:schema.sql # todo Закоментарить после создания Docker-Image и упаковки приложения в контейнер
     driver-class-name: org.postgresql.Driver
   jpa:
     show-sql: false
