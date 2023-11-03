@@ -1,5 +1,5 @@
 server:
-  port: ${APPLICATION_PORT:8080}
+  port: ${APPLICATION_PORT_DOCKER}
 spring:
   sql:
     init:
@@ -9,13 +9,9 @@ spring:
     basename: i18n.messages
     fallback-to-system-locale: false
   datasource:
-#    url: ${DATASOURCE_URL:jdbc:postgresql://car-part-db-container:5430/CarPartDB_Docker}
-#    url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5430/postgres}
-#    password: ${DATASOURCE_PASSWORD:cp_usr}
-#    username: ${DATASOURCE_USER:cp_PostgreSQL}
-    url: jdbc:postgresql://PostgreSQL-Container:5430/CarPartDB_Docker_Container # Указано имя контейнера, что бы приложение в Docker-е смогло достучаться к БД. Потому что они запустятся в рамках одного docker-compose и будут знать друг о друге. Это нужно, чтобы у нас была одна закрытая инфраструктура для проекта.
-    username: cp_usr
-    password: cp_PostgreSQL
+    url: ${APPLICATION_DATASOURCE_URL_DOCKER}
+    password: ${APPLICATION_DATASOURCE_PASSWORD_DOCKER}
+    username: ${APPLICATION_DATASOURCE_USER_DOCKER}
     schema: classpath:schema.sql # todo Закоментарить после создания Docker-Image и упаковки приложения в контейнер
     driver-class-name: org.postgresql.Driver
   jpa:

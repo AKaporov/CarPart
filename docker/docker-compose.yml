@@ -1,4 +1,5 @@
-version: "1.0"
+version: "2.0"
+
 services:
   PostgreSQL-Container:
     container_name: "CarPart-PostgreSQL-Container"
@@ -10,9 +11,9 @@ services:
     ports:
       - "5430:5432"
     environment:
-      POSTGRES_PASSWORD: "cp_PostgreSQL"
-      POSTGRES_USER: "cp_usr"
-      POSTGRES_DB: "CarPartDB_Docker"
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD_DOCKER}
+      POSTGRES_USER: ${POSTGRES_USER_DOCKER}
+      POSTGRES_DB: ${POSTGRES_DB_DOCKER}
       PG-DATA: "/var/lib/postgresql/data/pgdata"
     volumes:
 #      - ./1. Init Database:/docker-entrypoint-initdb.d
@@ -20,12 +21,12 @@ services:
     networks:
       - car-part-networks
     healthcheck:
-#      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
-      test: ["CMD-SHELL", "pg_isready -U cp_usr -d CarPartDB_Docker"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER_DOCKER} -d ${POSTGRES_DB_DOCKER}"]
       interval: 20s
       timeout: 5s
       retries: 5
       start_period: 10s
+
 
   PgAdmin-Container:
     container_name: "CarPart-PgAdmin-Container"
@@ -39,6 +40,39 @@ services:
       PGADMIN_CONFIG_SERVER_MODE: "False"
     volumes:
       - CarPart-PgAdmin-Data:/var/lib/pgadmin
+    networks:
+      - car-part-networks
+    depends_on:
+      - PostgreSQL-Container
+
+
+# Упаковываем приложение в контейнер
+  command-line-runner-docker-container:
+    container_name: "CommandLineRunner-Docker-Container"
+    image: command-line-runner-docker-application:1.0.0
+    environment:
+      APPLICATION_PORT_DOCKER: 9090
+      APPLICATION_DATASOURCE_URL_DOCKER: jdbc:postgresql://CarPart-PostgreSQL-Container:5432/${POSTGRES_DB_DOCKER}
+      APPLICATION_DATASOURCE_PASSWORD_DOCKER: ${POSTGRES_PASSWORD_DOCKER}
+      APPLICATION_DATASOURCE_USER_DOCKER: ${POSTGRES_USER_DOCKER}
+      SPRING_PROFILES_ACTIVE: docker
+#    environment:
+#      - "APPLICATION_PORT_DOCKER=9090"
+#      - "APPLICATION_DATASOURCE_URL_DOCKER=jdbc:postgresql://CarPart-PostgreSQL-Container:5432/CarPartDB_Docker"
+#      - "APPLICATION_DATASOURCE_PASSWORD_DOCKER=cp_PostgreSQL"
+#      - "APPLICATION_DATASOURCE_USER_DOCKER=cp_usr"
+##      - "SPRING_PROFILES_ACTIVE=docker"
+#    Говорим что его надо будет собрать - в качестве контекста
+#    передаем текущую директорию - в ней лежит Dockerfile
+    build:
+      context: .
+      dockerfile: Dockerfile
+#    Монтируем локальную директорию ./src в директорию внутри контейнера /app
+    volumes:
+      - ./src:/app
+#    Говорим пробросить порт 8080 хоста в порт 8080 контейнера
+    ports:
+      - "8080:9090"
     networks:
       - car-part-networks
     depends_on:

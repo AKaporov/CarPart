@@ -132,6 +132,29 @@ docker logs container_id
 
 Эти флаги при запуске контейнера позволяют настраивать его режим работы для конкретных задач.
 
+## Порядок запуска контейнеров
+1) Запуск docker-compose из корня модуля docker (С:\Java\CarPart\docker> docker-compose up -d)
+```
+doker-compose up -d
+```
+2) Проверяем создание контейнеров
+```
+docker-compose ps
+```
+![alt-текст][logo_docker_compose_ps]
+
+5) Для просмотра логов используем команду
+```
+docker-compose logs -f <имя SERVICE. Например PostgreSQL-Container>
+```
+4) Пример настройки подключения к БД:
+
+![alt-текст][logo_PgAdmin_DB_Connection]
+
+![alt-текст][logo_IDEA_DB_Connection]
+
+5) **В браузере (postman) можно выполнить REST-ы указанные в разделе "Команды для запуска в браузере (после запуска приложения)" из основного ReadMe.md**
+
 ### Основные команды Docker Compose
 После создания файла docker-compose.yml, вы можете использовать следующие основные команды Docker Compose для управления вашим приложением:
 - docker-compose up: Запускает приложение на основе файла docker-compose.yml. Если контейнеры не существуют, они будут созданы, и приложение будет запущено в фоновом режиме.
@@ -259,29 +282,7 @@ CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 * [Шпаргалка по Dockerfile](https://devops.org.ru/dockerfile-summary)
 * [Справочная информация по Dockerfile (Правый столбик со всеми командами)](https://docs.docker.com/engine/reference/builder/#dockerfile-reference)
 
-
-## Порядок запуска контейнеров
-1) Запуск docker-compose из корня модуля docker (С:\Java\CarPart\docker> docker-compose up -d)
-```
-doker-compose up -d
-```
-2) Проверяем создание контейнеров
-```
-docker-compose ps
-```
-![alt-текст][logo_docker_compose_ps]
- 
-5) Для просмотра логов используем команду
-```
-docker-compose logs -f <имя SERVICE. Например PostgreSQL-Container>
-```
-4) Пример настройки подключения к БД:
-
-![alt-текст][logo_PgAdmin_DB_Connection]
-
-![alt-текст][logo_IDEA_DB_Connection]
-
-## Ошибки при использовании .dockerignore
+### Ошибки при использовании .dockerignore
 - Ошибка 1: Исключение Dockerfile или .dockerignore
 ```
 # Не надо исключать эти файлы. Они нужны Docker для процесса сборки, и игнорирование их может привести к неожиданным результатам.
@@ -300,7 +301,14 @@ Dockerfile
 !src/
 ```
 
-
+### Решения возможных ошибок:
+1. **org.postgresql.util.PSQLException: Connection to localhost:5433 refused**
+> Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections. 
+> When you are running a container (docker) then: **localhost** - the container you are in.**host.docker.internal** - the host of the docker (your localhost).
+> So, when ever you are trying to call the localhost you should use host.docker.internal.
+> If you sometimes run in container and sometimes as a stand alone, you need to use a flag of some kind (spring profile/property),
+> and use it to select the appropriate host.
+* [spring boot app in docker image error Connection to localhost:5433 refused](https://stackoverflow.com/questions/72673047/spring-boot-app-in-docker-image-error-connection-to-localhost5433-refused)
 
 
 ### Ссылки для Docker-compose
@@ -332,6 +340,7 @@ Dockerfile
 
 ### Общие ссылки про Docker
 * [Глоссарий Docker Docs](https://docs.docker.com/glossary/#base-image)
+* [Запуск приложения с profile в docker-е](https://www.baeldung.com/spring-boot-docker-start-with-profile)
 
 [logo_PgAdmin_DB_Connection]: E:\Education\Programming\Java\CarPart\docker\image\db.connection\pgadmin.png "Через PgAdmin (в браузере)"
 [logo_IDEA_DB_Connection]: E:\Education\Programming\Java\CarPart\docker\image\db.connection\idea.png "Через IDEA"

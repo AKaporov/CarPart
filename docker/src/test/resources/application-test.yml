@@ -11,12 +11,6 @@ spring:
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
-#    data: classpath:carpart-test.sql #Spring boot verion 2.7 and onwards is not any more depracated.
-#    initialization-mode: always #Spring boot verion 2.7 and onwards is not any more depracated.
-#    url: jdbc:postgresql://localhost:5430/CarPartDB_Docker_Test
-#    password: cp_PostgreSQL
-#    username: cp_usr
-#    schema: classpath:schema.sql
   jpa:
     show-sql: true
     generate-ddl: false

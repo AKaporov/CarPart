@@ -7,5 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class DockerApplication {
     public static void main(String[] args) {
         SpringApplication.run(DockerApplication.class, args);
+        // TODO: 03.11.2023 В stdout вывести Port на котором запустилось приложение
     }
 }

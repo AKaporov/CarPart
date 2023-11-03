@@ -16,7 +16,7 @@ temp?
 
 .git
 .gitignore
-.env
+.env*
 
 
 # Ошибка 1: Исключение Dockerfile или .dockerignore
