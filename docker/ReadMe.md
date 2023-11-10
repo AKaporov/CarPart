@@ -5,10 +5,33 @@
 
 **Перед запуском приложения/тестов запустить Docker Desktop**
 
-### **application.yml** 
-* для запуска из IDEA
-### **application-docker.yml** 
-* для запуска из docker-а. В **spring.datasource.url:** указано имя контейнера, что бы приложение в Docker-е смогло 
+## **Пример порядка запуска контейнеров на локальном компьютере**
+1) Запуск docker-compose из корня модуля docker (С:\Java\CarPart\docker> docker-compose up -d)
+```
+doker-compose up -d
+```
+2) Проверяем создание контейнеров
+```
+docker-compose ps
+```
+![alt-текст][logo_docker_compose_ps]
+
+5) Для просмотра логов используем команду
+```
+docker-compose logs -f <имя SERVICE. Например PostgreSQL-Container>
+```
+4) Пример настройки подключения к БД:
+
+![alt-текст][logo_PgAdmin_DB_Connection]
+
+![alt-текст][logo_IDEA_DB_Connection]
+
+5) **В браузере (postman) можно выполнить REST-ы указанные в разделе "Команды для запуска в браузере (после запуска приложения)" из основного ReadMe.md**
+
+### **docker/src/main/resources/application.yml** 
+* для запуска приложения из IDEA
+### **docker/src/main/resources/application-docker.yml** 
+* для запуска приложения в контейнере. В **spring.datasource.url:** указано имя контейнера, что бы приложение в Docker-е смогло 
 достучаться к БД. Потому что они запустятся в рамках одного docker-compose и будут знать друг о друге. Это нужно, чтобы
 у нас была одна закрытая инфраструктура для проекта.
 
@@ -79,7 +102,7 @@ docker exec -it container_id /bin/bash
 docker logs container_id
 ```
 10) Команда **docker stats** выводит статистику использования ресурсов контейнера.
-11) Команда **docker build** создаёт образы Docker из файла Dockerfile и «контекста».
+11) Команда **docker build .** создаёт образы Docker из файла Dockerfile и «контекста».
 
 * [Справочная информация по docker командам (например "docker buid -t carpart_docker:0.0.1 .")](https://docs.docker.com/engine/reference/run/)
 * [Docker Командная строка](https://digitology.tech/docs/docker/engine/reference/commandline/index.html)
@@ -108,15 +131,22 @@ docker logs container_id
 --network=my_network
 ```
 
-### Управление контейнерами:
-- docker start: Запускает остановленный контейнер.
-- docker stop: Останавливает работающий контейнер.
-- docker restart: Перезапускает контейнер.
-- docker pause: Приостанавливает выполнение контейнера.
-- docker unpause: Возобновляет выполнение приостановленного контейнера.
-- docker kill: Прерывает выполнение контейнера насильно.
-- docker rm: Удаляет контейнер.
-- docker rmi: Удаляет образ.
+### Основные команды управления контейнерами (Docker Compose):
+После создания файла docker-compose.yml, вы можете использовать следующие основные команды Docker Compose для управления вашим приложением:
+- docker-compose start: Запускает остановленный контейнер.
+- docker-compose stop: Останавливает работающий контейнер.
+- docker-compose restart: Перезапускает контейнер.
+- docker-compose pause: Приостанавливает выполнение контейнера.
+- docker-compose unpause: Возобновляет выполнение приостановленного контейнера.
+- docker-compose kill: Прерывает выполнение контейнера насильно.
+- docker-compose rm: Удаляет контейнер.
+- docker-compose rmi: Удаляет образ.
+- docker-compose up -d: Создание контейнера в demon описанного в docker-compose.yml
+- docker-compose up: Запускает приложение на основе файла docker-compose.yml. Если контейнеры не существуют, они будут созданы, и приложение будет запущено в фоновом режиме.
+- docker-compose down: Останавливает и удаляет все контейнеры, сети и объемы, связанные с приложением, определенным в файле docker-compose.yml.
+- docker-compose ps: Показывает статус всех сервисов, определенных в файле docker-compose.yml.
+- docker-compose logs: Отображает логи всех сервисов в реальном времени.
+- docker-compose exec <service-name> <command>: Запускает команду внутри контейнера сервиса. Например, docker-compose exec app bash запустит интерактивный shell в контейнере app.
 
 #### Удаление контейнеров и образов
     -f, --force: Принудительное удаление контейнера, даже если он запущен. Используется вместе с командой docker rm.
@@ -131,38 +161,6 @@ docker logs container_id
     -t: Подключает tty (терминал) контейнера к вашему терминалу.
 
 Эти флаги при запуске контейнера позволяют настраивать его режим работы для конкретных задач.
-
-## Порядок запуска контейнеров
-1) Запуск docker-compose из корня модуля docker (С:\Java\CarPart\docker> docker-compose up -d)
-```
-doker-compose up -d
-```
-2) Проверяем создание контейнеров
-```
-docker-compose ps
-```
-![alt-текст][logo_docker_compose_ps]
-
-5) Для просмотра логов используем команду
-```
-docker-compose logs -f <имя SERVICE. Например PostgreSQL-Container>
-```
-4) Пример настройки подключения к БД:
-
-![alt-текст][logo_PgAdmin_DB_Connection]
-
-![alt-текст][logo_IDEA_DB_Connection]
-
-5) **В браузере (postman) можно выполнить REST-ы указанные в разделе "Команды для запуска в браузере (после запуска приложения)" из основного ReadMe.md**
-
-### Основные команды Docker Compose
-После создания файла docker-compose.yml, вы можете использовать следующие основные команды Docker Compose для управления вашим приложением:
-- docker-compose up: Запускает приложение на основе файла docker-compose.yml. Если контейнеры не существуют, они будут созданы, и приложение будет запущено в фоновом режиме.
-- docker-compose down: Останавливает и удаляет все контейнеры, сети и объемы, связанные с приложением, определенным в файле docker-compose.yml.
-- docker-compose ps: Показывает статус всех сервисов, определенных в файле docker-compose.yml.
-- docker-compose logs: Отображает логи всех сервисов в реальном времени.
-- docker-compose exec <service-name> <command>: Запускает команду внутри контейнера сервиса. Например, docker-compose exec app bash запустит интерактивный shell в контейнере app.
-
 
 ## Структура Dockerfile
 ```
@@ -341,6 +339,7 @@ Dockerfile
 ### Общие ссылки про Docker
 * [Глоссарий Docker Docs](https://docs.docker.com/glossary/#base-image)
 * [Запуск приложения с profile в docker-е](https://www.baeldung.com/spring-boot-docker-start-with-profile)
+* [Habr - Изучаем Docker(шесть частей)](https://habr.com/ru/companies/ruvds/articles/438796/)
 
 [logo_PgAdmin_DB_Connection]: E:\Education\Programming\Java\CarPart\docker\image\db.connection\pgadmin.png "Через PgAdmin (в браузере)"
 [logo_IDEA_DB_Connection]: E:\Education\Programming\Java\CarPart\docker\image\db.connection\idea.png "Через IDEA"
