@@ -31,7 +31,7 @@ docker-compose logs -f <имя SERVICE. Например PostgreSQL-Container>
 ### **docker/src/main/resources/application.yml** 
 * для запуска приложения из IDEA
 ### **docker/src/main/resources/application-docker.yml** 
-* для запуска приложения в контейнере. В **spring.datasource.url:** указано имя контейнера, что бы приложение в Docker-е смогло 
+* для запуска приложения в контейнереf. В **spring.datasource.url:** указано имя контейнера, что бы приложение в Docker-е смогло 
 достучаться к БД. Потому что они запустятся в рамках одного docker-compose и будут знать друг о друге. Это нужно, чтобы
 у нас была одна закрытая инфраструктура для проекта.
 
@@ -340,6 +340,8 @@ Dockerfile
 * [Глоссарий Docker Docs](https://docs.docker.com/glossary/#base-image)
 * [Запуск приложения с profile в docker-е](https://www.baeldung.com/spring-boot-docker-start-with-profile)
 * [Habr - Изучаем Docker(шесть частей)](https://habr.com/ru/companies/ruvds/articles/438796/)
+* [Multi-stage builds (Многоступенчатая сборка)](https://docs.docker.com/build/building/multi-stage/)
+* [GitHub примеры multi-stage builds](https://github.com/docker/awesome-compose)
 
 [logo_PgAdmin_DB_Connection]: E:\Education\Programming\Java\CarPart\docker\image\db.connection\pgadmin.png "Через PgAdmin (в браузере)"
 [logo_IDEA_DB_Connection]: E:\Education\Programming\Java\CarPart\docker\image\db.connection\idea.png "Через IDEA"
