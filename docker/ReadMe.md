@@ -5,7 +5,7 @@
 
 **Перед запуском приложения/тестов запустить Docker Desktop**
 
-## **Пример порядка запуска контейнеров на локальном компьютере**
+## **Пример порядка запуска контейнеров (docker-compose.yml) на локальном компьютере**
 1) Запуск docker-compose из корня модуля docker (С:\Java\CarPart\docker> docker-compose up -d)
 ```
 doker-compose up -d
@@ -16,7 +16,7 @@ docker-compose ps
 ```
 ![alt-текст][logo_docker_compose_ps]
 
-5) Для просмотра логов используем команду
+3) Для просмотра логов используем команду
 ```
 docker-compose logs -f <имя SERVICE. Например PostgreSQL-Container>
 ```
@@ -26,14 +26,23 @@ docker-compose logs -f <имя SERVICE. Например PostgreSQL-Container>
 
 ![alt-текст][logo_IDEA_DB_Connection]
 
-5) **В браузере (postman) можно выполнить REST-ы указанные в разделе "Команды для запуска в браузере (после запуска приложения)" из основного ReadMe.md**
+5) **В браузере или postman можно выполнить REST-ы указанные в разделе "Команды для запуска в браузере (после запуска приложения)" из основного ReadMe.md**
 
 ### **docker/src/main/resources/application.yml** 
-* для запуска приложения из IDEA
+* для запуска приложения в IDEA или в командной строке.
 ### **docker/src/main/resources/application-docker.yml** 
-* для запуска приложения в контейнереf. В **spring.datasource.url:** указано имя контейнера, что бы приложение в Docker-е смогло 
+* для запуска приложения в контейнере. В **spring.datasource.url:** указано имя контейнера, что бы приложение в Docker-е смогло 
 достучаться к БД. Потому что они запустятся в рамках одного docker-compose и будут знать друг о друге. Это нужно, чтобы
 у нас была одна закрытая инфраструктура для проекта.
+
+## Пример создания Images из Terminal для Multi-Module
+Запуск создания образа для multi-module сборки из родительского каталога нужно производить с флагом **-f**
+(PS E:\Education\Programming\Java\CarPart> docker build -f .\docker\Dockerfile -t car_part:3 .)
+```Пример
+docker build -f .\docker\Dockerfile -t car_part:3 .
+```
+![alt-текст][logo_docker_build]
+* [error "failed to compute cache key: not found"](https://stackoverflow.com/questions/66146088/docker-gets-error-failed-to-compute-cache-key-not-found-runs-fine-in-visual)
 
 ### Docker Compose
 * это инструмент, который упрощает управление многоконтейнерными приложениями с использованием Docker. Он позволяет 
@@ -279,6 +288,7 @@ CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 ### Ссылки для Dockerfile
 * [Шпаргалка по Dockerfile](https://devops.org.ru/dockerfile-summary)
 * [Справочная информация по Dockerfile (Правый столбик со всеми командами)](https://docs.docker.com/engine/reference/builder/#dockerfile-reference)
+* [Пример multi-module сборки (baeldung)](https://www.baeldung.com/ops/docker-cache-maven-dependencies#caching-for-multi-module-maven-projects)
 
 ### Ошибки при использовании .dockerignore
 - Ошибка 1: Исключение Dockerfile или .dockerignore
@@ -346,3 +356,4 @@ Dockerfile
 [logo_PgAdmin_DB_Connection]: E:\Education\Programming\Java\CarPart\docker\image\db.connection\pgadmin.png "Через PgAdmin (в браузере)"
 [logo_IDEA_DB_Connection]: E:\Education\Programming\Java\CarPart\docker\image\db.connection\idea.png "Через IDEA"
 [logo_docker_compose_ps]: E:\Education\Programming\Java\CarPart\docker\image\docker-compose\ps.png "Результат работы команды docker-compose ps"
+[logo_docker_build]: E:\Education\Programming\Java\CarPart\docker\image\docker\docker_build.png "Пример запуска команды docker build для multi-module сборки"
