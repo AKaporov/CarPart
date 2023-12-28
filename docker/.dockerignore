@@ -20,6 +20,7 @@ temp?
 .gitignore
 .env*
 .cache
+target/
 
 
 # Ошибка 1: Исключение Dockerfile или .dockerignore
