@@ -55,13 +55,13 @@ services:
       APPLICATION_DATASOURCE_URL_DOCKER: jdbc:postgresql://CarPart-PostgreSQL-Container:5432/${POSTGRES_DB_DOCKER}
       APPLICATION_DATASOURCE_PASSWORD_DOCKER: ${POSTGRES_PASSWORD_DOCKER}
       APPLICATION_DATASOURCE_USER_DOCKER: ${POSTGRES_USER_DOCKER}
-      SPRING_PROFILES_ACTIVE: docker
+      SPRING_PROFILES_ACTIVE: docker-cmp
 #    environment:
 #      - "APPLICATION_PORT_DOCKER=9090"
 #      - "APPLICATION_DATASOURCE_URL_DOCKER=jdbc:postgresql://CarPart-PostgreSQL-Container:5432/CarPartDB_Docker"
 #      - "APPLICATION_DATASOURCE_PASSWORD_DOCKER=cp_PostgreSQL"
 #      - "APPLICATION_DATASOURCE_USER_DOCKER=cp_usr"
-##      - "SPRING_PROFILES_ACTIVE=docker"
+##      - "SPRING_PROFILES_ACTIVE=docker-cmp"
 #    Говорим что его надо будет собрать - в качестве контекста
 #    передаем текущую директорию - в ней лежит Dockerfile
     build:
@@ -70,7 +70,7 @@ services:
 #    Монтируем локальную директорию ./src в директорию внутри контейнера /app
     volumes:
       - ./src:/app
-#    Говорим пробросить порт 8080 хоста в порт 8080 контейнера
+#    Говорим пробросить порт 8080 хоста в порт 9090 контейнера
     ports:
       - "8080:9090"
     networks:
