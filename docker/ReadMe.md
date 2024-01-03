@@ -30,12 +30,12 @@ docker-compose logs -f <имя SERVICE. Например PostgreSQL-Container>
 
 ### **docker/src/main/resources/application.yml** 
 * для запуска приложения в IDEA или в командной строке.
-### **docker/src/main/resources/application-docker.yml** 
+### **docker/src/main/resources/application-docker-cmp.yml** 
 * для запуска приложения в контейнере. В **spring.datasource.url:** указано имя контейнера, что бы приложение в Docker-е смогло 
 достучаться к БД. Потому что они запустятся в рамках одного docker-compose и будут знать друг о друге. Это нужно, чтобы
 у нас была одна закрытая инфраструктура для проекта.
 
-## Пример создания Images из Terminal для Multi-Module
+## Пример создания Images из Terminal для Multi-Stage-Module
 Запуск создания образа для multi-module сборки из родительского каталога нужно производить с флагом **-f**
 (PS E:\Education\Programming\Java\CarPart> docker build -f .\docker\Dockerfile -t car_part:3 .)
 ```Пример
