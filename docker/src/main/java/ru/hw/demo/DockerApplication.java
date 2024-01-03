@@ -2,11 +2,21 @@ package ru.hw.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 
 @SpringBootApplication
 public class DockerApplication {
+
+
     public static void main(String[] args) {
-        SpringApplication.run(DockerApplication.class, args);
-        // TODO: 03.11.2023 В stdout вывести Port на котором запустилось приложение
+        ConfigurableApplicationContext run = SpringApplication.run(DockerApplication.class, args);
+
+        printApplicationEnvironment(run);
+    }
+
+    private static void printApplicationEnvironment(ConfigurableApplicationContext run) {
+        System.out.println("******** Start application with:");
+        System.out.println(run.getEnvironment().getPropertySources().get("server.ports").getSource());
+        System.out.println("Active Profiles: " + String.join(", ", run.getEnvironment().getActiveProfiles()));
     }
 }
