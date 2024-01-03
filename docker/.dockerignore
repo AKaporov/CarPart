@@ -20,7 +20,7 @@ temp?
 .gitignore
 .env*
 .cache
-target/
+# target/ нужен для одноступенчатой сборке
 
 
 # Ошибка 1: Исключение Dockerfile или .dockerignore
