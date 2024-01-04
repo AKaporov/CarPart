@@ -5,6 +5,8 @@
 
 **Перед запуском приложения/тестов запустить Docker Desktop**
 
+***При одноступечатой сборки создание образа и запуск контейнера(docker-compose = command-line-runner-docker-container) производить из файла docker-compose.yml***
+
 ## **Пример порядка запуска контейнеров (docker-compose.yml) на локальном компьютере**
 1) Запуск docker-compose из корня модуля docker (С:\Java\CarPart\docker> docker-compose up -d)
 ```
@@ -152,9 +154,10 @@ docker logs container_id
 - docker-compose rmi: Удаляет образ.
 - docker-compose up -d: Создание контейнера в demon описанного в docker-compose.yml
 - docker-compose up: Запускает приложение на основе файла docker-compose.yml. Если контейнеры не существуют, они будут созданы, и приложение будет запущено в фоновом режиме.
+- docker-compose up <container_name>: Содание контейнера и запуск приложения на основе файла docker-compose.yml 
 - docker-compose down: Останавливает и удаляет все контейнеры, сети и объемы, связанные с приложением, определенным в файле docker-compose.yml.
-- docker-compose ps: Показывает статус всех сервисов, определенных в файле docker-compose.yml.
-- docker-compose logs: Отображает логи всех сервисов в реальном времени.
+- docker-compose ps: Показывает статус всех контейнеров(сервисов), определенных в файле docker-compose.yml.
+- docker-compose logs: Отображает логи всех контейнеров(сервисов) в реальном времени.
 - docker-compose exec <service-name> <command>: Запускает команду внутри контейнера сервиса. Например, docker-compose exec app bash запустит интерактивный shell в контейнере app.
 
 #### Удаление контейнеров и образов
