@@ -5,7 +5,9 @@
 
 **Перед запуском приложения/тестов запустить Docker Desktop**
 
-***При одноступечатой сборки создание образа и запуск контейнера(docker-compose = command-line-runner-docker-container) производить из файла docker-compose.yml***
+***!!!!Сборку, создание образа (Dockerfile) и запуск контейнера(docker-compose = command-line-runner-docker-container)
+производить из файла docker-compose.yml (через зеленый треугольник напротив контейнера). При запуске из terminal (docker run -p 8083:9090 <первые 4 буквы IMAGE ID>) 
+происходит ошибка!!!!***
 
 ## **Пример порядка запуска контейнеров (docker-compose.yml) на локальном компьютере**
 1) Запуск docker-compose из корня модуля docker (С:\Java\CarPart\docker> docker-compose up -d)
@@ -38,13 +40,21 @@ docker-compose logs -f <имя SERVICE. Например PostgreSQL-Container>
 у нас была одна закрытая инфраструктура для проекта.
 
 ## Пример создания Images из Terminal для Multi-Stage-Module
-Запуск создания образа для multi-module сборки из родительского каталога нужно производить с флагом **-f**
+1) pom-for-docker.xml находиться в ***родительском*** каталоге:
+Создание образа для multi-module сборки из **родительского** каталога нужно производить с флагом ***-f***
 (PS E:\Education\Programming\Java\CarPart> docker build -f .\docker\Dockerfile -t car_part:3 .)
 ```Пример
 docker build -f .\docker\Dockerfile -t car_part:3 .
 ```
 ![alt-текст][logo_docker_build]
 * [error "failed to compute cache key: not found"](https://stackoverflow.com/questions/66146088/docker-gets-error-failed-to-compute-cache-key-not-found-runs-fine-in-visual)
+
+2) pom-for-docker.xml находиться в каталоге из которого запускаем команду:
+(PS E:\Education\Programming\Java\CarPart> docker build -f .\docker\Dockerfile -t car_part:3 .)
+```Пример
+docker build -t car_part_multi:4.0.0 .
+```
+![alt-текст][logo_docker_build_multi]
 
 ### Docker Compose
 * это инструмент, который упрощает управление многоконтейнерными приложениями с использованием Docker. Он позволяет 
@@ -360,3 +370,4 @@ Dockerfile
 [logo_IDEA_DB_Connection]: E:\Education\Programming\Java\CarPart\docker\image\db.connection\idea.png "Через IDEA"
 [logo_docker_compose_ps]: E:\Education\Programming\Java\CarPart\docker\image\docker-compose\ps.png "Результат работы команды docker-compose ps"
 [logo_docker_build]: E:\Education\Programming\Java\CarPart\docker\image\docker\docker_build.png "Пример запуска команды docker build для multi-module сборки"
+[logo_docker_build_multi]: E:\Education\Programming\Java\CarPart\docker\image\docker\docker_build_multi.png "Пример запуска команды docker build для multi-module сборки из каталога с исходными файлами"
