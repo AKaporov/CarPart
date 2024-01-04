@@ -24,7 +24,7 @@ spring:
         format_sql: false
 logging:
   level:
-    ROOT: ERROR
+    ROOT: INFO
     com:
       querydsl:
         sql: DEBUG #is for logging statements in querydsl
