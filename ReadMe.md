@@ -54,6 +54,7 @@
 3. Запуск всего решения API + PostgreSQL через docker compose или kubernetes
 
 ## Команды для запуска в браузере (после запуска приложения):
+* [все запчасти](http://localhost:8080/api/v1/carparts)
 * [пример фильтра по марке](http://localhost:8080/api/v1/carparts?brandName=Ural)
 * [пример фильтра по марке и году выпуска](http://localhost:8080/api/v1/carparts?brandName=Ural&modelName=Ural-4320&yearRelease=1977)
 * [пример ошибочного фильтра](http://localhost:8080/api/v1/carparts?brandName=Ural&modelName=Ural-4320&yearRelease=19)
