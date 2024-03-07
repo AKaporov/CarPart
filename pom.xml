@@ -11,7 +11,7 @@
 
     <groupId>ru.hw</groupId>
     <artifactId>car-part</artifactId>
-    <version>4.0.0-SNAPSHOT</version>
+    <version>5.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Car-Part</name>
     <description>Auto Parts Demo Project on Spring Boot</description>
@@ -21,6 +21,7 @@
         <module>spring-data-jpa</module>
         <module>command-line-runner</module>
         <module>docker</module>
+        <module>kafka</module>
     </modules>
 
     <properties>

@@ -4,7 +4,7 @@
     <parent>
         <groupId>ru.hw</groupId>
         <artifactId>car-part</artifactId>
-        <version>3.0.1-SNAPSHOT</version>
+        <version>5.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>command-line-runner-docker</artifactId>
