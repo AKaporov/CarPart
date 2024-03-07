@@ -1,5 +1,7 @@
 # В проекте (на основе Spring-Data-JPA) применяется Spring Kafka
 
+Будем использовать Kafka через docker. 
+
 ## Ссылки
 * [Apache Kafka](https://kafka.apache.org/)
 * [Работа с Apache Kafka в приложениях на Spring Boot, часть 1](https://www.youtube.com/watch?v=9FikRH8rXas)
