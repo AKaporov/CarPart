@@ -16,8 +16,8 @@
     <description>Auto Parts Demo Project on Spring Boot with Spring-Kafka</description>
 
     <modules>
-        <module>consumer</module>
         <module>producer</module>
+        <module>consumer</module>
     </modules>
 
 <!--    <properties>-->
