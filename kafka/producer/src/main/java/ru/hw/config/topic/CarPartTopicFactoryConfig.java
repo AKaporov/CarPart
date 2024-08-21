@@ -2,8 +2,6 @@ package ru.hw.config.topic;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,25 +15,34 @@ import java.util.Map;
 
 /**
  * @author Artem
- * Класс - конфигурации для отправки в kafka объекта типа CarPart.
- * Этот bean создается стартером невидимо для нас, но для кастомизации default параметров стартера его приходится
- * переопределять вручную и явно прописать использоваие ObjectMapper
+ * Класс - конфигурации для отправки объекта типа CarPart в carpart-topic.
+ * <p>
+ * Этот bean создается стартером невидимо для нас, но для кастомизации default параметров приходится переопределять
+ * вручную и явно прописать использоваие ObjectMapper/
  */
 @Configuration
 public class CarPartTopicFactoryConfig {
-    private static final Logger log = LoggerFactory.getLogger(CarPartTopicFactoryConfig.class);
-
+    /**
+     * Переопределение default producer-а для carpart-topic.
+     *
+     * @param kafkaProperties    свойства kafka
+     * @param objectMapperConfig правила mapping объекта
+     * @return доработанный producer для отправки сообщения с использованием нашего ObjectMapper
+     */
     @Bean
-    public ProducerFactory<String, CarPart> producerFactory(KafkaProperties kafkaProperties, ObjectMapperConfig objectMapperConfig) {
+    public ProducerFactory<String, CarPart> producerFactory(KafkaProperties kafkaProperties,
+                                                            ObjectMapperConfig objectMapperConfig) {
         Map<String, Object> props = kafkaProperties.buildProducerProperties();
+//        С точки зрения приложения gараметра serializable всегда будет константы (для всех сред, где будет запускаться
+//        сервис). Поэтому логично, что они указаны тут, а не в application
         // serializable для Ключа
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         // serializable для Значения
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
 
         // что бы стартер использовал ObjectMapper который мы определили, а не созданный по-умолчанию, нужно:
-        var carPartKafkaProducerFactory = new DefaultKafkaProducerFactory<String, CarPart>(props);
-        carPartKafkaProducerFactory.setValueSerializer(new JsonSerializer<>(objectMapperConfig.objectMapper()));
-        return carPartKafkaProducerFactory;
+        var topicProducerFactory = new DefaultKafkaProducerFactory<String, CarPart>(props);
+        topicProducerFactory.setValueSerializer(new JsonSerializer<>(objectMapperConfig.objectMapper()));
+        return topicProducerFactory;
     }
 }
