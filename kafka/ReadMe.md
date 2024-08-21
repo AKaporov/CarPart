@@ -3,9 +3,10 @@
 Будем использовать Kafka через docker (см. [docker-compose.yml](docker%2Fdocker-compose.yml)). 
 
 Проект состоит из модулей **consumer** (получатель) и модуля **producer** (отправитель). Topic kafka для передачи 
-автозапчастей называется "**carpart-topic**", для аналагов называется "**analog-topic**".  Все topic kafka находятся в 
+автозапчастей называется "**carpart-topic**", для аналогов называется "**analog-topic**".  Все topic kafka находятся в 
 группе "**car-part-kafka-group**" (указывается в application.kafka.topic). Producer отправляет сообщения в topic kafka, 
 consumer получает по пачкам (настройка **ConsumerConfig.MAX_POLL_RECORDS_CONFIG**). Оправка и получение данных в формате JSON.
+Полученные объекты в БД не сохраняются.
 
 Kafka-ui, от команды provectus - это инструмент для визуализации данных Kafka.
 

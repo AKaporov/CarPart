@@ -1,4 +1,4 @@
-package ru.hw.config;
+package ru.hw.config.topic;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,11 +17,11 @@ import java.util.stream.Collectors;
  */
 
 @Configuration
-public class KafkaProducerConfig {
-    private static final Logger log = LoggerFactory.getLogger(KafkaProducerConfig.class);
+public class TopicConfig {
+    private static final Logger log = LoggerFactory.getLogger(TopicConfig.class);
     public final Set<String> topicNames = Collections.emptySet();
 
-    public KafkaProducerConfig(@Value("${application.kafka.topics}") String topicNames) {
+    public TopicConfig(@Value("${application.kafka.topics}") String topicNames) {
         Set<String> topics = Pattern.compile(",")
                 .splitAsStream(topicNames)
                 .map(String::trim)
