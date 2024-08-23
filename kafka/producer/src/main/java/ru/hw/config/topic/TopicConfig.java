@@ -1,11 +1,15 @@
 package ru.hw.config.topic;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.config.TopicBuilder;
+import org.springframework.kafka.core.KafkaAdmin;
+import ru.hw.enums.TopicConstant;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -18,7 +22,6 @@ import java.util.stream.Collectors;
 
 @Configuration
 public class TopicConfig {
-    private static final Logger log = LoggerFactory.getLogger(TopicConfig.class);
     public final Set<String> topicNames = Collections.emptySet();
 
     public TopicConfig(@Value("${application.kafka.topics}") String topicNames) {
@@ -28,5 +31,25 @@ public class TopicConfig {
                 .collect(Collectors.toSet());
 
         this.topicNames.addAll(topics);
+    }
+
+    /**
+     * Создание topic-ов по указанному списку в application.kafka.topics
+     *
+     * @return созданные topic-и
+     */
+    @Bean
+    public KafkaAdmin.NewTopics createKafkaTopics() {
+
+        List<NewTopic> topics = topicNames.stream()
+                .map(name -> TopicBuilder
+                        .name(name)
+                        .partitions(TopicConstant.PARTITION.count())
+                        .replicas(TopicConstant.REPLICA.count())
+                        .build())
+                .toList();
+
+        return new KafkaAdmin.NewTopics(topics.toArray(NewTopic[]::new));
+
     }
 }

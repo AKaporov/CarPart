@@ -28,8 +28,8 @@ public class AnalogProducerFactoryConfig {
      * @return доработанный producer для отправки сообщения с использованием нашего ObjectMapper.
      */
     @Bean
-    public ProducerFactory<String, Analog> producerFactory(KafkaProperties kafkaProperties,
-                                                           ObjectMapperConfig objectMapperConfig) {
+    public ProducerFactory<String, Analog> analogProducerFactory(KafkaProperties kafkaProperties,
+                                                                 ObjectMapperConfig objectMapperConfig) {
         var props = kafkaProperties.buildProducerProperties();
 //        С точки зрения приложения gараметра serializable всегда будет константы (для всех сред, где будет запускаться
 //        сервис). Поэтому логично, что они указаны тут, а не в application
