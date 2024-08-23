@@ -23,6 +23,9 @@ import java.util.stream.Collectors;
 @Configuration
 public class TopicConfig {
     public final Set<String> topicNames = Collections.emptySet();
+    //пример использования Enum в качестве Constant (по примеру из книги Чистый код Роберт Мартин)
+    private TopicConstant PARTITION = TopicConstant.PARTITION;
+    private TopicConstant REPLICA = TopicConstant.REPLICA;
 
     public TopicConfig(@Value("${application.kafka.topics}") String topicNames) {
         Set<String> topics = Pattern.compile(",")
@@ -40,13 +43,13 @@ public class TopicConfig {
      */
     @Bean
     public KafkaAdmin.NewTopics createKafkaTopics() {
-
         List<NewTopic> topics = topicNames.stream()
                 .map(name -> TopicBuilder
                         .name(name)
-                        .partitions(TopicConstant.PARTITION.count())
-                        .replicas(TopicConstant.REPLICA.count())
-                        .build())
+                        .partitions(PARTITION.count())
+                        .replicas(REPLICA.count())
+                        .build()
+                )
                 .toList();
 
         return new KafkaAdmin.NewTopics(topics.toArray(NewTopic[]::new));
