@@ -11,7 +11,7 @@ consumer получает по пачкам (настройка **ConsumerConfig
 Kafka-ui, от команды provectus - это инструмент для визуализации данных Kafka.
 
 Настройки **[application.properties](\kafka\producer\src\main\resources\application.properties)** для раздела spring.kafka хранятся в фале KafkaProperties.class (файл можно найти через поиск).
-В application указываются настройки, которые могут меняться от запускаемого стенда, а в файлах-config 
+В application указываются настройки, которые могут меняться от запускаемого стенда (тестовый стенд, продакшен и т.д.), а в файлах-config 
 (например AnalogTopicFactoryConfig.java) указываются Константы сервиса. Поэтому логично, что настройки в двух местах.
 
 Правила:
