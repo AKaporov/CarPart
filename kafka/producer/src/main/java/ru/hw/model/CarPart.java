@@ -1,10 +1,12 @@
 package ru.hw.model;
 
+import lombok.Builder;
 import lombok.Getter;
 
 import java.util.List;
 
 @Getter
+@Builder
 public class CarPart {
     private long id;
     private String vendorCode;

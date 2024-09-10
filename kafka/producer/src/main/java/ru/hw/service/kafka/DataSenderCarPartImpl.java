@@ -26,17 +26,17 @@ public class DataSenderCarPartImpl implements DataSenderCarPart {
             kafkaTemplate.send(topicName, value)
                     .whenComplete((result, ex) -> {
                         if (Objects.isNull(ex)) {
-                            log.info("Ураааа, удалось отправить вот этот CarPart с id = {}, его offset: {}", value.getId(), result.getRecordMetadata().offset());
+                            log.info("Ураааа, удалось доставить ДО БРОКЕРА вот эту запчасть с id = {}, его offset: {}", value.getId(), result.getRecordMetadata().offset());
 
-                            sendAsk.accept(value);
+                            sendAsk.accept(value);  // Вызов обработчика! Если мы хотим что-то сделать после успешного доставления сообщения до Брокера. Например, проставить признак на платежке "Доставлено до брокера"
                         } else {
-                            log.error("CarPart with id: {} Ну не смогла я отправить...........", value.getId());
+                            log.error("Error!! CarPart with id: {} Ну не смогла доставить сообщение до брокера...........", value.getId());
                         }
 
                     });
 
         } catch (Exception ex) {
-            log.error("!!! send error, value: {}", value);
+            log.error("!!! Exception !!! Send error, value: {}", value);
         }
     }
 }
