@@ -1,0 +1,23 @@
+server:
+  port: 8080
+
+# !!!! Настройки для раздела spring.kafka хранятся в фале KafkaProperties.class (файл можно найти через поиск) !!!!
+
+# topic которые используются в сервисе
+application:
+  kafka:
+    topics: "carpart-topic,analog-topic"
+
+my:
+  property: value
+
+spring:
+  kafka:
+    producer:
+      # группа в которой будут topic
+      group-id: "car-part-kafka-group"
+      # брокер к которому будем подключаться (указан в docker-compose.yml, секция kafka)
+      bootstrap-servers: "127.0.0.1:29092"
+      # идентификатор клиента, под которым будем подключаться
+      # "ID to pass to the server when making requests. Used for server-side logging." из файла KafkaProperties.class
+      client-id: "carpart-producer-client-id"

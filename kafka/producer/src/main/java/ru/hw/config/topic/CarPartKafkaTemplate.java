@@ -20,7 +20,7 @@ public class CarPartKafkaTemplate {
      * @return bean producer-а carpart-topic.
      */
     @Bean
-    public KafkaTemplate<String, CarPart> kafkaTemplate(ProducerFactory<String, CarPart> carPartProducerFactory) {
+    public KafkaTemplate<String, CarPart> carPartkafkaTemplate(ProducerFactory<String, CarPart> carPartProducerFactory) {
         return new KafkaTemplate<>(carPartProducerFactory);
     }
 }

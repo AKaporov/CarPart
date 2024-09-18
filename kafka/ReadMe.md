@@ -1,4 +1,4 @@
-# В проекте (на основе Spring-Data-JPA) применяется Spring Kafka
+# В проекте применяется Spring Kafka
 
 Будем использовать Kafka через docker (см. [docker-compose.yml](docker%2Fdocker-compose.yml)). 
 
@@ -27,7 +27,7 @@ todo:
 
 ## Ссылки
 * [Apache Kafka](https://kafka.apache.org/)
-* [Настройки kafka через application](https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.integration.spring.kafka.admin.auto-create)
+* [Настройки kafka через application](https://docs.spring.io/spring-boot/appendix/application-properties/index.html#application-properties.integration.spring.kafka.admin.auto-create)
 * [Руководство по настройке Apache Kafka с помощью Docker (Bueldung)](https://www.baeldung.com/ops/kafka-docker-setup)
 * [Kafka UI краткий гайд(Habr)](https://habr.com/ru/articles/753398/)
 * [Работа с Apache Kafka в приложениях на Spring Boot, часть 1](https://www.youtube.com/watch?v=9FikRH8rXas)

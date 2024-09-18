@@ -4,8 +4,8 @@ import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.kafka.config.TopicBuilder;
-import org.springframework.kafka.core.KafkaAdmin;
 import ru.hw.enums.TopicConstant;
 
 import java.util.Collections;
@@ -21,15 +21,38 @@ import java.util.stream.Collectors;
  */
 
 @Configuration
+@PropertySource(value={"classpath:application.yml"})
 public class TopicConfig {
     public final Set<String> topicNames = Collections.emptySet();
     //пример использования Enum в качестве Constant (по примеру из книги Чистый код Роберт Мартин)
     private TopicConstant PARTITION = TopicConstant.PARTITION;
     private TopicConstant REPLICA = TopicConstant.REPLICA;
 
-    public TopicConfig(@Value("${application.kafka.topics}") String topicNames) {
+
+//    public TopicConfig(@Value("${application.kafka.topics}") String topicNames) {
+//        Set<String> topics = Pattern.compile(",")
+//                .splitAsStream(topicNames)
+//                .map(String::trim)
+//                .collect(Collectors.toSet());
+//
+//        this.topicNames.addAll(topics);
+//    }
+
+    public TopicConfig(@Value("${my.property}") String topicNames) {
+//        this.topicNames = topicNames;
+
         Set<String> topics = Pattern.compile(",")
-                .splitAsStream(topicNames)
+                .splitAsStream("carpart-topic,analog-topic")
+                .map(String::trim)
+                .collect(Collectors.toSet());
+
+        this.topicNames.addAll(topics);
+    }
+
+    @Value("${application.kafka.topics}")
+    public void setTopicNames(String topicNames) {
+        Set<String> topics = Pattern.compile(",")
+                .splitAsStream("carpart-topic,analog-topic")
                 .map(String::trim)
                 .collect(Collectors.toSet());
 
@@ -42,7 +65,8 @@ public class TopicConfig {
      * @return созданные topic-и
      */
     @Bean
-    public KafkaAdmin.NewTopics createKafkaTopics() {
+    public List<NewTopic> createKafkaTopics() {
+        System.out.println("topicNames: " + topicNames);
         List<NewTopic> topics = topicNames.stream()
                 .map(name -> TopicBuilder
                         .name(name)
@@ -52,7 +76,8 @@ public class TopicConfig {
                 )
                 .toList();
 
-        return new KafkaAdmin.NewTopics(topics.toArray(NewTopic[]::new));
+//        return new KafkaAdmin.NewTopics(topics.toArray(NewTopic[]::new));
+        return topics;
 
     }
 }
