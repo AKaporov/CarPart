@@ -8,6 +8,5 @@ import ru.hw.model.CarPart;
  */
 public interface DataSenderCarPart {
     // todo Переписать на использование generic вместо конкретного типа CarPart
-
     void send(CarPart value);
 }

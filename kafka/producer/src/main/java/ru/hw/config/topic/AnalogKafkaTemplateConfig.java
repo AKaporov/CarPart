@@ -11,7 +11,7 @@ import ru.hw.model.Analog;
  */
 
 @Configuration
-public class AnalogKafkaTemplate {
+public class AnalogKafkaTemplateConfig {
 
     /**
      * Bean создания producer-а через KafkaTemplate (дополнительная SpringBoot-ая абстракция стартера над натуральным producer-ом)

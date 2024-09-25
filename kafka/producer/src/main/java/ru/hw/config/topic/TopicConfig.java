@@ -4,15 +4,12 @@ import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.kafka.config.TopicBuilder;
 import ru.hw.enums.TopicConstant;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 /**
  * @author Artem
@@ -21,20 +18,40 @@ import java.util.stream.Collectors;
  */
 
 @Configuration
-@PropertySource(value={"classpath:application.yml"})
+//@PropertySource(value={"classpath:application.yml"})
 public class TopicConfig {
-    private final Set<String> topicNames;
     //пример использования Enum в качестве Constant (по примеру из книги Чистый код Роберт Мартин)
     private TopicConstant PARTITION = TopicConstant.PARTITION;
     private TopicConstant REPLICA = TopicConstant.REPLICA;
 
+    private final Set<String> topicNames;
+    private final String carPartTopicName;
+    private final String analogPartTopicName;
 
-    public TopicConfig(@Value("${application.kafka.topics}") String topicNames) {
-        Set<String> topics = Pattern.compile(",")
-                .splitAsStream(topicNames)
-                .map(String::trim)
-                .collect(Collectors.toSet());
+//    @Value("${my_service.kafka.topics.topic_1.name}")
+//    private String carPartTopicName;
+//    @Value("${my_service.kafka.topics.topic_2.name}")
+//    private String analogPartTopicName;
+//
+//    @Value("${application.kafka.topics}")
+//    private String analogPartTopicName111111;
 
+//    public TopicConfig(@Value("${application.kafka.topics}") String topicNames) {
+//        Set<String> topics = Pattern.compile(",")
+//                .splitAsStream(topicNames)
+//                .map(String::trim)
+//                .collect(Collectors.toSet());
+//
+//        this.topicNames = Collections.unmodifiableSet(topics);
+//    }
+
+
+    public TopicConfig(@Value("${my_service.kafka.topics.topic_1.name}") String carPartTopicName,
+                       @Value("${my_service.kafka.topics.topic_2.name}") String analogPartTopicName) {
+        this.carPartTopicName = carPartTopicName;
+        this.analogPartTopicName = analogPartTopicName;
+
+        var topics = Set.of(carPartTopicName, analogPartTopicName);
         this.topicNames = Collections.unmodifiableSet(topics);
     }
 
@@ -56,6 +73,14 @@ public class TopicConfig {
 
 //        return new KafkaAdmin.NewTopics(topics.toArray(NewTopic[]::new));
         return topics;
+    }
 
+    @Bean
+    public NewTopic carPartTopic(){
+        return TopicBuilder
+                .name(carPartTopicName)
+                .partitions(PARTITION.count())
+                .replicas(REPLICA.count())
+                .build();
     }
 }

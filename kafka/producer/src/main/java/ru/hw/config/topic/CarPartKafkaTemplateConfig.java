@@ -12,7 +12,7 @@ import ru.hw.model.CarPart;
  */
 
 @Configuration
-public class CarPartKafkaTemplate {
+public class CarPartKafkaTemplateConfig {
     /**
      * Bean создания реального producer-а через KafkaTemplate (дополнительная SpringBoot-ая абстракция стартера над натуральным producer-ом)
      *
@@ -20,7 +20,7 @@ public class CarPartKafkaTemplate {
      * @return bean producer-а carpart-topic.
      */
     @Bean
-    public KafkaTemplate<String, CarPart> carPartkafkaTemplate(ProducerFactory<String, CarPart> carPartProducerFactory) {
+    public KafkaTemplate<String, CarPart> carPartKafkaTemplate(ProducerFactory<String, CarPart> carPartProducerFactory) {
         return new KafkaTemplate<>(carPartProducerFactory);
     }
 }
