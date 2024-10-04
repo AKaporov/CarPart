@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RunnerApp implements CommandLineRunner {
-
     private final Command command;
 
     public RunnerApp(Command command) {

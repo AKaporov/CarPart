@@ -12,10 +12,6 @@ my_service:
       topic_2:
         name: "analog-topic"
 
-application:
-  kafka:
-    topics: "test,test_2"
-
 spring:
   kafka:
     producer:

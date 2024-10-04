@@ -18,7 +18,6 @@ import java.util.Set;
  */
 
 @Configuration
-//@PropertySource(value={"classpath:application.yml"})
 public class TopicConfig {
     //пример использования Enum в качестве Constant (по примеру из книги Чистый код Роберт Мартин)
     private TopicConstant PARTITION = TopicConstant.PARTITION;
@@ -27,24 +26,6 @@ public class TopicConfig {
     private final Set<String> topicNames;
     private final String carPartTopicName;
     private final String analogPartTopicName;
-
-//    @Value("${my_service.kafka.topics.topic_1.name}")
-//    private String carPartTopicName;
-//    @Value("${my_service.kafka.topics.topic_2.name}")
-//    private String analogPartTopicName;
-//
-//    @Value("${application.kafka.topics}")
-//    private String analogPartTopicName111111;
-
-//    public TopicConfig(@Value("${application.kafka.topics}") String topicNames) {
-//        Set<String> topics = Pattern.compile(",")
-//                .splitAsStream(topicNames)
-//                .map(String::trim)
-//                .collect(Collectors.toSet());
-//
-//        this.topicNames = Collections.unmodifiableSet(topics);
-//    }
-
 
     public TopicConfig(@Value("${my_service.kafka.topics.topic_1.name}") String carPartTopicName,
                        @Value("${my_service.kafka.topics.topic_2.name}") String analogPartTopicName) {
@@ -76,7 +57,7 @@ public class TopicConfig {
     }
 
     @Bean
-    public NewTopic carPartTopic(){
+    public NewTopic carPartTopic() {
         return TopicBuilder
                 .name(carPartTopicName)
                 .partitions(PARTITION.count())

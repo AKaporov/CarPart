@@ -40,7 +40,7 @@ public class CarPartProducerFactoryConfig {
         // serializable для Значения
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
 
-        // что бы стартер использовал ObjectMapper который мы определили, а не созданный по-умолчанию, нужно:
+        // что бы наш стартер использовал ObjectMapper который мы определили, а не созданный по-умолчанию, нужно:
         var topicProducerFactory = new DefaultKafkaProducerFactory<String, CarPart>(props);
         topicProducerFactory.setValueSerializer(new JsonSerializer<>(objectMapperConfig.objectMapper()));
         return topicProducerFactory;
