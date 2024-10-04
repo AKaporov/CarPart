@@ -14,12 +14,7 @@ public class CarPart {
     private String vendorCode;
     private String sku;
     private String name;
-    private String description;
-    private double price;
-    private String manufacturer;
-    private double rating;
     private Brand brand;
-    private Model model;
     private Engine engine;
     private Country country;
     private List<Photo> photoList;

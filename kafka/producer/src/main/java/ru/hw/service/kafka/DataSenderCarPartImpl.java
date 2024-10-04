@@ -1,20 +1,16 @@
 package ru.hw.service.kafka;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.stereotype.Service;
 import ru.hw.model.CarPart;
 
 import java.util.Objects;
 import java.util.function.Consumer;
 
-//@Service
-//@NoArgsConstructor
-//@AllArgsConstructor
+
+@RequiredArgsConstructor
 public class DataSenderCarPartImpl implements DataSenderCarPart {
     private static final Logger log = LoggerFactory.getLogger(DataSenderCarPartImpl.class);
 
@@ -22,19 +18,10 @@ public class DataSenderCarPartImpl implements DataSenderCarPart {
     private final KafkaTemplate<String, CarPart> kafkaTemplate;
     private final Consumer<CarPart> sendAsk;
 
-//    public DataSenderCarPartImpl() {
-//    }
-
-    public DataSenderCarPartImpl(String carPartTopicName, KafkaTemplate<String, CarPart> kafkaTemplate, Consumer<CarPart> sendAsk) {
-        this.carPartTopicName = carPartTopicName;
-        this.kafkaTemplate = kafkaTemplate;
-        this.sendAsk = sendAsk;
-    }
-
     @Override
     public void send(CarPart value) {
+        log.info("Попробую отправить данные в Kafka: {}", value);
         try {
-            log.info("Попробую отправить данные в Kafka: {}", value);
             kafkaTemplate.send(carPartTopicName, value)
                     .whenComplete((result, ex) -> {
                         if (Objects.isNull(ex)) {
