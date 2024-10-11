@@ -9,8 +9,6 @@ my_service:
     topics:
       topic_1:
         name: "carpart-topic"
-      topic_2:
-        name: "analog-topic"
 
 spring:
   kafka:
@@ -22,3 +20,7 @@ spring:
       # идентификатор клиента, под которым будем подключаться
       # "ID to pass to the server when making requests. Used for server-side logging." из файла KafkaProperties.class
       client-id: "carpart-producer-client-id"
+      # Для отладки. На продакшене этот параметр не нужен.
+      # Параметр указывает с какого смещения будем начинать читать (начиная с какого-то сообщения, что бы несколько раз не отправлять
+      # сообщение)
+      auto-offset-reset: earliest

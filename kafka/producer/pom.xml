@@ -13,7 +13,7 @@
     <version>0.0.1</version>
     <name>Producer</name>
 
-<!--    для возможности использовать record-->
+    <!--    для возможности использовать record-->
     <build>
         <plugins>
             <plugin>

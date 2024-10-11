@@ -1,5 +1,6 @@
 package ru.hw.config.topic;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
@@ -8,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
-import ru.hw.config.ObjectMapperConfig;
 import ru.hw.model.CarPart;
 
 import java.util.Map;
@@ -31,9 +31,9 @@ public class CarPartProducerFactoryConfig {
      */
     @Bean
     public ProducerFactory<String, CarPart> carPartProducerFactory(KafkaProperties kafkaProperties,
-                                                                   ObjectMapperConfig objectMapperConfig) {
+                                                                   ObjectMapper objectMapperConfig) {
         Map<String, Object> props = kafkaProperties.buildProducerProperties();
-//        С точки зрения приложения gараметра serializable всегда будет константы (для всех сред, где будет запускаться
+//        С точки зрения приложения параметра serializable всегда будет константы (для всех сред, где будет запускаться
 //        сервис). Поэтому логично, что они указаны тут, а не в application
         // serializable для Ключа
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -42,7 +42,7 @@ public class CarPartProducerFactoryConfig {
 
         // что бы наш стартер использовал ObjectMapper который мы определили, а не созданный по-умолчанию, нужно:
         var topicProducerFactory = new DefaultKafkaProducerFactory<String, CarPart>(props);
-        topicProducerFactory.setValueSerializer(new JsonSerializer<>(objectMapperConfig.objectMapper()));
+        topicProducerFactory.setValueSerializer(new JsonSerializer<>(objectMapperConfig));
         return topicProducerFactory;
     }
 }
