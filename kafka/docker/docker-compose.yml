@@ -39,15 +39,21 @@ services:
       KAFKA_CONFLUENT_LICENSE_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_CONFLUENT_BALANCER_TOPIC_REPLICATION_FACTOR: 1
 
+#failed to register layer: error creating overlay mount to /var/lib/docker/overlay2/361cae93e867b31c42d7d812e83db277c4d0630b3eb8855b30f7fe9e270a5f1e/merged: invalid argument
+#  `docker-compose` process finished with exit code 18
 #  kafka-ui:
 #    image: provectuslabs/kafka-ui:latest
 #    container_name: CarPart-Kafka-UI-Container
 #    ports:
 #      - "8082:8080"
 #    environment:
-#      DYNAMIC_CONFIG_ENABLED: true
+#      DYNAMIC_CONFIG_ENABLED: true  # для возможности изменения конфигурации kafka-ui в режиме реального времени (https://docs.kafka-ui.provectus.io/configuration/misc-configuration-properties)
 #    networks:
 #      - car-part-networks
+
+# альтернатива
+# https://docs.conduktor.io/platform/get-started/installation/get-started/docker/
+# https://habr.com/ru/companies/flant/articles/688190/
 
 networks:
   car-part-networks:

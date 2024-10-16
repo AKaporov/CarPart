@@ -8,22 +8,27 @@
 consumer получает по пачкам (настройка **ConsumerConfig.MAX_POLL_RECORDS_CONFIG**). Оправка и получение данных в формате JSON.
 Полученные объекты в БД не сохраняются.
 
-Kafka-ui, от команды provectus - это инструмент для визуализации данных Kafka.
-
 Настройки **[application.properties](\kafka\producer\src\main\resources\application.properties)** для раздела spring.kafka хранятся в фале KafkaProperties.class (файл можно найти через поиск).
-В application указываются настройки, которые могут меняться от запускаемого стенда (тестовый стенд, продакшен и т.д.), а в файлах-config 
+В application указываются настройки, которые могут меняться от запускаемого стенда (тестовый стенд, продакшен и т.д.), а в файлах-config
 (например AnalogTopicFactoryConfig.java) указываются Константы сервиса. Поэтому логично, что настройки в двух местах.
 
-Topic-и в kafka не обязательно создавать руками. Они создадутся автоматически при обращении к БрокеруСообщений, но для опыта создаю в TopicConfig.java 
+Topic-и в kafka не обязательно создавать руками. Они создадутся автоматически при обращении к БрокеруСообщений, но для опыта создаю в TopicConfig.java
 
-Правила:
+## Правила:
 - **Один** consumer в **Одной** группе! Consumer не может быть больше чем partition (быть больше может, но использовать не получится).
 
 todo:
 1) сделать несколько групп, что бы пощупать работу с partition (задать ключ партиции и т.д.)
-2) используя factory and generic переписать DateSender (config, interface) для отправки различных данных в разные топики 
-(сделать пустой родительский класс и его дочерние классы должны быть указаны как аргументы в DateSender*)
+2) используя factory and generic переписать DateSender (config, interface) для отправки различных данных в разные топики
+   (сделать пустой родительский класс и его дочерние классы должны быть указаны как аргументы в DateSender*)
 
+## Kafka-ui
+Kafka-ui, от команды provectus - это инструмент для визуализации данных Kafka. При установке через docker выдает ошибку
+`failed to register layer: error creating overlay mount to /var/lib/docker/overlay2/361cae93e867b31c42d7d812e83db277c4d0630b3eb8855b30f7fe9e270a5f1e/merged: invalid argument`
+
+Отлично работает Offest Explorer:
+![img.png](image/img.png)
+![img_1.png](image/img_1.png)
 
 ## Ссылки
 * [Apache Kafka](https://kafka.apache.org/)
@@ -34,3 +39,4 @@ todo:
 * [Работа с Apache Kafka в приложениях на Spring Boot, часть 2](https://www.youtube.com/watch?v=Y-ClxJozvCo)
 * [Введение в Apache Kafka с Spring (Baeldung)](https://www.baeldung.com/spring-kafka)
 * [Пример Сергея Петрелевича на GitHub](https://github.com/AKaporov/jvm-digging/tree/master/kafka-spring)
+* [Обзор UI-инструментов для мониторинга и управления кластерами Apache Kafka(Habr)](https://habr.com/ru/companies/flant/articles/688190/)
