@@ -12,7 +12,7 @@ my_service:
 
 spring:
   kafka:
-    producer:
+    consumer:
       # группа в которой будут topic
       group-id: ${spring.application.name} #"car-part-kafka-group"
       # брокер к которому будем подключаться (указан в docker-compose.yml, секция kafka)
