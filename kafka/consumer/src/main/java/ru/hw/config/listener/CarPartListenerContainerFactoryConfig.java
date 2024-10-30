@@ -1,12 +1,19 @@
 package ru.hw.config.listener;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.scheduling.concurrent.ConcurrentTaskExecutor;
 import ru.hw.model.CarPart;
+import ru.hw.service.CarPartConsumer;
+
+import java.util.List;
 
 /**
  * @author Artem
@@ -36,4 +43,22 @@ public class CarPartListenerContainerFactoryConfig {
         return factory;
     }
 
+    public static class CarPartKafkaClient {
+        public static final Logger log = LoggerFactory.getLogger(CarPartKafkaClient.class);
+        private final CarPartConsumer consumer;
+
+        public CarPartKafkaClient(CarPartConsumer consumer) {
+            this.consumer = consumer;
+        }
+
+        @KafkaListener(
+                topics = "${my_service.kafka.topics.topic_1.name}",
+                containerFactory = "carPartListenerContainerFactory"
+//                groupId = "${spring.kafka.consumer.group-id}"
+        )
+        public void carPartListener(@Payload List<CarPart> values) {
+            log.info("values, value.size():{}", values.size());
+            consumer.accept(values);
+        }
+    }
 }
