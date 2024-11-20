@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.TopicBuilder;
+import ru.hw.constant.Constant;
 import ru.hw.enums.TopicConstant;
 
 import java.util.Collections;
@@ -26,8 +27,8 @@ public class TopicConfig {
     private final String carPartTopicName;
     private final String analogPartTopicName;
 
-    public TopicConfig(@Value("${my_service.kafka.topics.topic_1.name}") String carPartTopicName,
-                       @Value("${my_service.kafka.topics.topic_2.name}") String analogPartTopicName) {
+    public TopicConfig(@Value(Constant.MY_SERVICE_KAFKA_TOPICS_TOPIC_1_NAME_CONFIG) String carPartTopicName,
+                       @Value(Constant.MY_SERVICE_KAFKA_TOPICS_TOPIC_2_NAME_CONFIG) String analogPartTopicName) {
         this.carPartTopicName = carPartTopicName;
         this.analogPartTopicName = analogPartTopicName;
 

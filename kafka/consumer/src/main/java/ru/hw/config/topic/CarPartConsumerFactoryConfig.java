@@ -54,7 +54,8 @@ public class CarPartConsumerFactoryConfig {
         props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, 3);
 
         // Важный параметр, чтобы понимать живой ли consumer или нет (Out of memory, или всё еще обрабатывает
-        // сообщения из последней полученной пачки). Если не будет consumer, то брокер сделает ReBalance - дополнительная нагрузка
+        // сообщения из последней полученной пачки). Если не будет consumer, то брокер сделает ReBalance - а это
+        // дополнительная нагрузка. Значение должно быть больше, чем в factory.getContainerProperties().setIdleBetweenPolls()
         props.put(ConsumerConfig.MAX_POLL_INTERVAL_MS_CONFIG, 3_000);
 
         // что бы наш стартер использовал ObjectMapper который мы определили, а не созданный по-умолчанию, нужно:
