@@ -19,19 +19,10 @@ import java.util.Set;
  */
 @Configuration
 public class TopicConfig {
-    //пример использования Enum в качестве Constant (по примеру из книги Чистый код Роберт Мартин)
-    private TopicConstant PARTITION = TopicConstant.PARTITION;
-    private TopicConstant REPLICA = TopicConstant.REPLICA;
-
     private final Set<String> topicNames;
-    private final String carPartTopicName;
-    private final String analogPartTopicName;
 
     public TopicConfig(@Value(Constant.MY_SERVICE_KAFKA_TOPICS_TOPIC_1_NAME_CONFIG) String carPartTopicName,
                        @Value(Constant.MY_SERVICE_KAFKA_TOPICS_TOPIC_2_NAME_CONFIG) String analogPartTopicName) {
-        this.carPartTopicName = carPartTopicName;
-        this.analogPartTopicName = analogPartTopicName;
-
         var topics = Set.of(carPartTopicName, analogPartTopicName);
         this.topicNames = Collections.unmodifiableSet(topics);
     }
@@ -43,35 +34,14 @@ public class TopicConfig {
      */
     @Bean
     public List<NewTopic> createKafkaTopics() {
-        List<NewTopic> topics = topicNames.stream()
+        return topicNames.stream()
                 .map(name -> TopicBuilder
                         .name(name)
-                        .partitions(PARTITION.count())
-                        .replicas(REPLICA.count())
+                        .partitions(TopicConstant.PARTITION.count())
+                        .replicas(TopicConstant.REPLICA.count())
                         .build()
                 )
                 .toList();
-
-//        return new KafkaAdmin.NewTopics(topics.toArray(NewTopic[]::new));
-        return topics;
-    }
-
-    @Bean
-    public NewTopic carPartTopic() {
-        return TopicBuilder
-                .name(carPartTopicName)
-                .partitions(PARTITION.count())
-                .replicas(REPLICA.count())
-                .build();
-    }
-
-    @Bean
-    public NewTopic analogPartTopic() {
-        return TopicBuilder
-                .name(analogPartTopicName)
-                .partitions(PARTITION.count())
-                .replicas(REPLICA.count())
-                .build();
     }
 }
 
