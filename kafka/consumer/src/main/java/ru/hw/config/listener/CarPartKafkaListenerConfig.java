@@ -1,4 +1,4 @@
-package ru.hw.config;
+package ru.hw.config.listener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +31,7 @@ public class CarPartKafkaListenerConfig {
             groupId = Constant.SPRING_KAFKA_CONSUMER_GROUP_ID_CONFIG
     )
     public void carPartListener(@Payload List<CarPart> values) {
-        log.info("Ураааа,я что-то получил пачку сообщений от broker!!!! Размер пачки:{}", values.size());
+        log.info("Ураааа,я получил пачку сообщений от broker!!!! Размер пачки:{}", values.size());
         consumer.accept(values);
     }
 }
