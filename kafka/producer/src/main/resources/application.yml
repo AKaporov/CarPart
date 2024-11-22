@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: ${SERVICE_PORT:8080}
 
 # !!!! Настройки для раздела spring.kafka хранятся в фале KafkaProperties.class (файл можно найти через поиск) !!!!
 
@@ -8,11 +8,13 @@ my_service:
   kafka:
     topics:
       topic_1:
-        name: "carpart-topic"
+        name: ${SERVICE_TOPIC_1:carpart-topic}
       topic_2:
-        name: "analog-topic"
+        name: ${SERVICE_TOPIC_1:analog-topic}
 
 spring:
+  application:
+    name: ${SERVICE_NAME:spring-car-part-kafka-producer}
   kafka:
     producer:
       # группа в которой будут topic
