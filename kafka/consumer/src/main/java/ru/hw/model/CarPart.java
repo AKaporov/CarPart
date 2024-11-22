@@ -1,14 +1,14 @@
 package ru.hw.model;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.List;
 
 @Getter
 @Builder
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class CarPart {
     private long id;
     private String vendorCode;
