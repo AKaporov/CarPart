@@ -2,6 +2,7 @@
 //
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
+//import ru.hw.config.listener.CarPartKafkaListenerConfig;
 //import ru.hw.service.CarPartConsumerService;
 //
 ///**
@@ -12,7 +13,7 @@
 //public class KafkaClientConfig {
 //
 //    @Bean
-//    public CarPartKafkaClient carPartKafkaClient(CarPartConsumerService carPartConsumerService) {
-//        return new CarPartKafkaClient(carPartConsumerService);
+//    public CarPartKafkaListenerConfig carPartKafkaClient(CarPartConsumerService carPartConsumerService) {
+//        return new CarPartKafkaListenerConfig(carPartConsumerService);
 //    }
 //}

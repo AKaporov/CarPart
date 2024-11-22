@@ -51,28 +51,4 @@ public class CarPartListenerContainerFactoryConfig {
 
         return factory;
     }
-
-    /**
-     * Для отделения конфигурирования от бизнес-логики подписку на topic делаем тут, а обработку выносим в CarPartConsumer.
-     * При таком подходе обращение к application и использование будет в одном месте. Например, использование названия topic-а, bean-а
-     */
-//    public static class CarPartKafkaClient {
-//        public static final Logger log = LoggerFactory.getLogger(CarPartKafkaClient.class);
-//        private final CarPartConsumer consumer;
-//
-//        public CarPartKafkaClient(CarPartConsumer consumer) {
-//            this.consumer = consumer;
-//        }
-//
-//        @KafkaListener(
-//                topics = Constant.MY_SERVICE_KAFKA_TOPICS_TOPIC_1_NAME_CONFIG,
-//                containerFactory = Constant.CAR_PART_LISTENER_CONTAINER_FACTORY_CONFIG,  // создает consumer-ы который обрабатываем
-//                groupId = Constant.SPRING_KAFKA_CONSUMER_GROUP_ID_CONFIG
-//        )
-//        // по default будет одно сообщение
-//        public void carPartListener(@Payload List<CarPart> values) {
-//            log.info("Ураааа, что-то получили от broker!!!! value.size():{}", values.size());
-//            consumer.accept(values);
-//        }
-//    }
 }
